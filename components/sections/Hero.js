@@ -130,12 +130,20 @@ export function Hero() {
     <section id="top" className="relative overflow-hidden pt-20 pb-10 sm:pt-32 sm:pb-16 lg:flex lg:min-h-[calc(100dvh-4.25rem)] lg:items-center lg:pt-20 lg:pb-6">
       <div className="bg-grid absolute inset-0 [mask-image:radial-gradient(ellipse_at_top,black_30%,transparent_75%)]" />
 
-      <div className="relative mx-auto grid w-full max-w-7xl grid-cols-12 gap-x-2 gap-y-4 px-4 sm:gap-x-6 sm:px-6 lg:gap-x-16 lg:px-8">
+      <div className="relative mx-auto grid w-full max-w-7xl grid-cols-12 gap-x-2 gap-y-6 px-4 sm:gap-x-6 sm:px-6 lg:gap-x-16 lg:px-8">
 
-        {/* ── Top-Left: Text Content ── */}
-        <div className="col-span-7 lg:col-span-6 lg:row-start-1 lg:row-span-1">
+        {/* ── Mobile: Row 1 | Desktop: Right Column (Row 1 & 2) ── */}
+        <div className="col-span-12 row-start-1 flex items-center justify-center mt-10 sm:mt-12 lg:mt-0 lg:col-span-6 lg:row-start-1 lg:row-span-2">
+          {/* Proportional sizing instead of zoom for perfect aspect ratio across all devices */}
+          <div className="w-[280px] sm:w-[400px] lg:w-[512px] origin-center lg:origin-top-right xl:origin-center">
+            <BrowserMockup card={h.card} onSlideChange={handleSlideChange} />
+          </div>
+        </div>
+
+        {/* ── Mobile: Row 2 | Desktop: Left Column (Row 1) ── */}
+        <div className="col-span-12 row-start-2 lg:col-span-6 lg:row-start-1 lg:row-span-1 text-center lg:text-left flex flex-col items-center lg:items-start">
           <div className={animClass}>
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-200 bg-brand-50 px-2 py-1 text-[9px] font-medium text-brand-800 sm:px-4 sm:py-1.5 sm:text-sm">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-200 bg-brand-50 px-2 py-1 text-[8px] font-medium text-brand-800 sm:px-4 sm:py-1.5 sm:text-xs">
               <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-400 opacity-75" />
                 <span className="relative inline-flex h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-brand-500" />
@@ -143,38 +151,30 @@ export function Hero() {
               {currentHero.badge}
             </span>
 
-            <h1 className="font-display mt-3 sm:mt-6 text-[26px] sm:text-4xl md:text-5xl lg:min-h-[190px] lg:text-6xl font-light tracking-tight text-ink leading-[1.18]">
+            <h1 className="font-display mt-3 sm:mt-6 text-[30px] sm:text-4xl md:text-5xl min-h-[135px] sm:min-h-[145px] lg:min-h-[190px] lg:text-6xl font-light tracking-tight text-ink leading-[1.18]">
               {currentHero.titleA}
               <br />
               {currentHero.titleB}{" "}
-              <span className="relative whitespace-nowrap text-brand-600">
+              <span className="relative inline-block whitespace-nowrap text-brand-600">
                 {currentHero.titleC}
                 <span className="absolute -bottom-0.5 left-0 h-[2px] sm:h-1.5 w-full rounded-full bg-gradient-to-r from-brand-400 via-amber-400 to-transparent" />
               </span>
             </h1>
 
             {DYNAMIC_HERO && DYNAMIC_SUBTITLE && (
-              <p className="mt-3 text-[12.5px] leading-relaxed text-slate-600 sm:mt-6 sm:min-h-[4.5rem] sm:text-base lg:mt-8 lg:max-w-xl lg:text-lg">
+              <p className="mt-3 text-[14px] leading-relaxed text-slate-600 sm:mt-6 min-h-[85px] sm:min-h-[4.5rem] sm:text-base lg:mt-8 lg:max-w-xl lg:text-lg">
                 {currentHero.subtitle}
               </p>
             )}
           </div>
 
           {(!DYNAMIC_HERO || !DYNAMIC_SUBTITLE) && (
-            <p className="mt-3 text-[12.5px] leading-relaxed text-slate-600 sm:mt-6 sm:text-base lg:mt-8 lg:max-w-xl lg:text-lg">{h.subtitle}</p>
+            <p className="mt-3 text-[14px] leading-relaxed text-slate-600 sm:mt-6 min-h-[85px] sm:min-h-[4.5rem] sm:text-base lg:mt-8 lg:max-w-xl lg:text-lg">{h.subtitle}</p>
           )}
         </div>
 
-        {/* ── Top-Right: BrowserMockup ── */}
-        <div className="col-span-5 flex items-start justify-end lg:items-center lg:justify-center lg:col-span-6 lg:row-start-1 lg:row-span-2">
-          {/* Enforce a fixed w-[512px] so that zoom scales it proportionally without squishing */}
-          <div className="w-[512px] [zoom:0.3] sm:[zoom:0.48] md:[zoom:0.58] lg:[zoom:1] origin-top-right lg:origin-center">
-            <BrowserMockup card={h.card} onSlideChange={handleSlideChange} />
-          </div>
-        </div>
-
-        {/* ── Bottom (Mobile) / Left-Bottom (Desktop): CTA Buttons & Points ── */}
-        <div className="col-span-12 mt-2 sm:mt-4 lg:col-span-6 lg:row-start-2 lg:row-span-1 lg:-mt-4">
+        {/* ── Mobile: Row 3 | Desktop: Left Column (Row 2) ── */}
+        <div className="col-span-12 row-start-3 lg:col-span-6 lg:row-start-2 lg:row-span-1 lg:-mt-4 flex flex-col items-center lg:items-start">
           <div className="flex flex-col gap-2.5 sm:flex-row sm:gap-3.5">
             <a
               href={whatsappLink(t.contact.form.intro)}

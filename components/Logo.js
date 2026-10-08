@@ -272,13 +272,13 @@ export function LogoMark({ className = "h-14 w-14" }) {
 
 export function Logo({ className = "", onDark = false }) {
   return (
-    <span className={`inline-flex items-center gap-3 ${className}`}>
-      <LogoMark className="h-[72px] w-[72px] shrink-0 drop-shadow-sm" />
+    <span className={`inline-flex items-center gap-1.5 sm:gap-3 ${className}`}>
+      <LogoMark className="h-[32px] w-[32px] sm:h-[72px] sm:w-[72px] shrink-0 drop-shadow-sm" />
 
       <span
         lang="en"
         translate="no"
-        className={`logo-text text-[24px] font-bold tracking-tight select-none ${
+        className={`logo-text text-[14px] leading-none sm:text-[24px] font-bold tracking-tight select-none ${
           onDark ? "text-slate-100" : "text-ink"
         }`}
       >

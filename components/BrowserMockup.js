@@ -432,18 +432,18 @@ export function BrowserMockup({ card, onSlideChange }) {
           <span className="h-3 w-3 rounded-full bg-rose-400" />
           <span className="h-3 w-3 rounded-full bg-amber-400" />
           <span className="h-3 w-3 rounded-full bg-emerald-400" />
-          <div className="ml-3 flex flex-1 items-center gap-2 rounded-md bg-white px-3 py-1 text-xs text-slate-500 ring-1 ring-slate-200">
-            <svg viewBox="0 0 24 24" className="h-3 w-3 text-brand-600" fill="currentColor" aria-hidden>
+          <div className="ml-3 flex flex-1 items-center gap-2 rounded-md bg-white px-3 py-1 min-h-[24px] text-xs text-slate-500 ring-1 ring-slate-200">
+            <svg viewBox="0 0 24 24" className="h-3 w-3 shrink-0 text-brand-600" fill="currentColor" aria-hidden>
               <path d="M17 10V8A5 5 0 0 0 7 8v2H5v12h14V10h-2Zm-8 0V8a3 3 0 0 1 6 0v2H9Z" />
             </svg>
-            <span className={`border-slate-400 pr-0.5 ${isTyping ? "border-r-2 animate-pulse" : ""}`}>
-              {displayedText}
+            <span className={`border-slate-400 pr-0.5 min-h-[16px] inline-block ${isTyping ? "border-r-2 animate-pulse" : ""}`}>
+              {displayedText}&#8203;
             </span>
           </div>
         </div>
         
-        {/* Dynamic Web Content (Fixed 340px Height) */}
-        <div className="h-[340px] relative bg-white overflow-hidden">
+        {/* Dynamic Web Content */}
+        <div className="aspect-[3/2] relative bg-white overflow-hidden">
           <div className="absolute inset-0" key={currentIndex}>
             {currentMockup.content}
           </div>

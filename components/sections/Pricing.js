@@ -73,7 +73,7 @@ function PricingCard({ plan, p, t }) {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setOpacity(1)}
       onMouseLeave={() => setOpacity(0)}
-      className="group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] p-6 sm:p-8 backdrop-blur transition-colors duration-300 hover:shadow-2xl hover:shadow-brand-950/60 hover:border-brand-400/40 hover:bg-white/[0.07]"
+      className="group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] p-5 sm:p-8 backdrop-blur transition-colors duration-300 hover:shadow-2xl hover:shadow-brand-950/60 hover:border-brand-400/40 hover:bg-white/[0.07]"
     >
       {/* 
         [OPTION 1 & 3] Dotted Grid Spotlight Layer:
@@ -109,25 +109,25 @@ function PricingCard({ plan, p, t }) {
       />
 
       <div className="relative z-10 flex flex-col h-full pointer-events-none">
-        <h3 className="font-display text-xl font-bold text-white">{plan.name}</h3>
-        <p className="mt-2 text-sm text-slate-300/80">{plan.desc}</p>
+        <h3 className="font-display text-[19px] sm:text-xl font-bold text-white">{plan.name}</h3>
+        <p className="mt-1.5 sm:mt-2 text-[13px] sm:text-sm text-slate-300/80">{plan.desc}</p>
 
-        <div className="mt-6 mb-8 relative">
+        <div className="mt-4 mb-6 sm:mt-6 sm:mb-8 relative">
           {/* Subtle separator */}
-          <div className="absolute -bottom-4 left-0 right-0 h-px bg-white/10" />
+          <div className="absolute -bottom-3 sm:-bottom-4 left-0 right-0 h-px bg-white/10" />
           
-          <p className="text-xs font-medium uppercase tracking-wider text-slate-400 mb-1">{p.from}</p>
+          <p className="text-[11px] sm:text-xs font-medium uppercase tracking-wider text-slate-400 mb-0.5 sm:mb-1">{p.from}</p>
           <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-            <span className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white">{plan.price}</span>
-            <span className="text-sm text-brand-300/80 font-medium whitespace-nowrap">· {plan.time}</span>
+            <span className="font-display text-[26px] sm:text-4xl font-bold tracking-tight text-white">{plan.price}</span>
+            <span className="text-[13px] sm:text-sm text-brand-300/80 font-medium whitespace-nowrap">· {plan.time}</span>
           </div>
         </div>
 
-        <ul className="flex-1 space-y-4">
+        <ul className="flex-1 space-y-2.5 sm:space-y-4">
           {plan.features.map((f, idx) => (
-            <li key={idx} className="flex items-start gap-3 text-sm">
-              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/10 text-brand-400 border border-brand-500/20">
-                <Icon name="check" className="h-3 w-3" />
+            <li key={idx} className="flex items-start gap-2.5 sm:gap-3 text-[13px] sm:text-sm">
+              <span className="mt-0.5 flex h-[18px] w-[18px] sm:h-5 sm:w-5 shrink-0 items-center justify-center rounded-full bg-brand-500/10 text-brand-400 border border-brand-500/20">
+                <Icon name="check" className="h-[10px] w-[10px] sm:h-3 sm:w-3" />
               </span>
               <span className="text-slate-200">{f}</span>
             </li>
@@ -169,7 +169,7 @@ function PricingCard({ plan, p, t }) {
             nameInput.focus({ preventScroll: true });
           }
         }}
-        className="relative z-20 mt-10 inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 font-medium transition-all duration-200 btn-fancy bg-brand-500 text-white shadow-lg shadow-brand-500/25 hover:bg-brand-400 hover:shadow-brand-500/40 hover:-translate-y-0.5"
+        className="relative z-20 mt-6 sm:mt-10 inline-flex items-center justify-center gap-2 rounded-full px-5 sm:px-6 py-3 sm:py-3.5 font-medium transition-all duration-200 btn-fancy bg-brand-500 text-white shadow-lg shadow-brand-500/25 hover:bg-brand-400 hover:shadow-brand-500/40 hover:-translate-y-0.5"
       >
         <span>{p.cta}</span>
         <Icon name="arrow" className="h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-x-1" />

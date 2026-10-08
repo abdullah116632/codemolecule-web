@@ -4,21 +4,12 @@ import { useRef, useState, useEffect, useCallback } from "react";
 
 /**
  * MobileCarousel
- * – On mobile (< sm): shows a horizontal snap-scroll carousel with
- *   dot indicators, a right-edge fade, and a swipe hint.
- * – On sm+ breakpoints: renders children unchanged in a regular grid.
- *
- * Props:
- *   children      – array of card elements (each gets snap & sizing applied)
- *   count         – number of cards (used for dots)
- *   cardWidth     – Tailwind arbitrary-value class for card width on mobile, e.g. "w-[76vw]"
- *   fadeColor     – CSS color for the right-edge fade, e.g. "rgba(8,17,29,1)"
- *   gridClass     – Tailwind classes for the sm+ grid layout
- *   className     – extra classes on the outer wrapper
+ * – On mobile (< lg): shows a horizontal snap-scroll carousel with dot indicators.
+ * – On lg+ breakpoints: renders children in a grid.
  */
 export function MobileCarousel({
   children,
-  cardWidth = "w-[82vw] max-w-[340px] sm:w-[46vw] sm:max-w-[380px] md:w-[44vw] md:max-w-[400px]",
+  cardWidth = "w-[85vw] sm:w-[46vw] md:w-[44vw]",
   gridClass = "lg:grid-cols-3",
   className = "",
   dark = false,
@@ -28,7 +19,6 @@ export function MobileCarousel({
 
   const items = Array.isArray(children) ? children : [children];
 
-  // Update active dot on scroll
   const handleScroll = useCallback(() => {
     const el = scrollRef.current;
     if (!el) return;
@@ -74,11 +64,10 @@ export function MobileCarousel({
     <div className={`relative ${className}`}>
       {/* ── Mobile & Tablet (< lg): horizontal touch carousel ── */}
       <div className="lg:hidden">
-        {/* Scrollable track */}
         <div
           ref={scrollRef}
           onScroll={handleScroll}
-          className="-mx-4 sm:-mx-6 flex overflow-x-auto snap-x snap-mandatory gap-4 sm:gap-6 px-4 sm:px-6 pb-2 scroll-pl-4 sm:scroll-pl-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+          className="-mx-4 sm:-mx-6 flex overflow-x-auto snap-x snap-mandatory gap-4 sm:gap-6 px-4 sm:px-6 pb-4 scroll-pl-4 sm:scroll-pl-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
         >
           {items.map((child, i) => (
             <div
@@ -86,19 +75,18 @@ export function MobileCarousel({
               data-slide={i}
               className={`${cardWidth} shrink-0 snap-start flex`}
             >
-              {child}
+              <div className="w-full flex">{child}</div>
             </div>
           ))}
-          <div className="w-1 shrink-0" aria-hidden />
+          <div className="w-2 shrink-0" aria-hidden />
         </div>
 
-        {/* Dot indicators & Arrows */}
         {items.length > 1 && (
-          <div className="mt-5 sm:mt-6 flex items-center justify-center gap-4">
+          <div className="mt-2 sm:mt-4 flex items-center justify-center gap-4">
             <button
               onClick={() => scrollTo(Math.max(0, activeIndex - 1))}
               disabled={activeIndex === 0}
-              className={`p-1 rounded-full transition-colors ${activeIndex === 0 ? "text-slate-300 opacity-50" : dark ? "text-white/70 hover:text-white hover:bg-white/10" : "text-slate-400 hover:text-ink hover:bg-slate-100"}`}
+              className={`p-1.5 rounded-full transition-colors ${activeIndex === 0 ? "text-slate-300 opacity-50" : dark ? "text-white/70 hover:text-white hover:bg-white/10" : "text-slate-400 hover:text-ink hover:bg-slate-100"}`}
               aria-label="Previous"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -106,7 +94,7 @@ export function MobileCarousel({
               </svg>
             </button>
             
-            <div className="flex gap-2">
+            <div className="flex gap-2.5">
               {items.map((_, i) => (
                 <button
                   key={i}
@@ -126,7 +114,7 @@ export function MobileCarousel({
             <button
               onClick={() => scrollTo(Math.min(items.length - 1, activeIndex + 1))}
               disabled={activeIndex === items.length - 1}
-              className={`p-1 rounded-full transition-colors ${activeIndex === items.length - 1 ? "text-slate-300 opacity-50" : dark ? "text-white/70 hover:text-white hover:bg-white/10" : "text-slate-400 hover:text-ink hover:bg-slate-100"}`}
+              className={`p-1.5 rounded-full transition-colors ${activeIndex === items.length - 1 ? "text-slate-300 opacity-50" : dark ? "text-white/70 hover:text-white hover:bg-white/10" : "text-slate-400 hover:text-ink hover:bg-slate-100"}`}
               aria-label="Next"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -139,7 +127,9 @@ export function MobileCarousel({
 
       {/* ── Desktop (lg+): normal grid ── */}
       <div className={`hidden lg:grid gap-6 ${gridClass}`}>
-        {items}
+        {items.map((child, i) => (
+          <div key={i} className="flex">{child}</div>
+        ))}
       </div>
     </div>
   );
