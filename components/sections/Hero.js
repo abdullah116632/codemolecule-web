@@ -36,6 +36,15 @@ const HERO_VARIATIONS = {
       subtitle:
         "Code Molecule designs and builds fast, modern landing pages, portfolios and business websites. Everything is agreed upfront — scope, price and timeline — so there are no surprises.",
     },
+    // 3: yourmobileapp.com
+    {
+      badge: "Cross-Platform Mobile Apps",
+      titleA: "Stunning apps",
+      titleB: "built for iOS",
+      titleC: "& Android",
+      subtitle:
+        "We design and develop beautiful, fast native mobile applications that your users will love. Launch your app on both platforms simultaneously.",
+    },
   ],
   bn: [
     // 0: yourportfolio.com
@@ -64,6 +73,15 @@ const HERO_VARIATIONS = {
       titleC: "মাত্র কয়েক দিনে",
       subtitle:
         "Code Molecule দ্রুত ও আধুনিক ল্যান্ডিং পেজ, পোর্টফোলিও আর বিজনেস ওয়েবসাইট ডিজাইন করে বানিয়ে দেয়। কাজের পরিধি, দাম আর সময় — সবকিছু শুরুর আগেই ঠিক করে নেওয়া হয়, তাই পরে কোনো ঝামেলা নেই।",
+    },
+    // 3: yourmobileapp.com
+    {
+      badge: "ক্রস-প্ল্যাটফর্ম মোবাইল অ্যাপ",
+      titleA: "আপনার বিজনেসের",
+      titleB: "জন্য আইওএস ও",
+      titleC: "অ্যান্ড্রয়েড অ্যাপ",
+      subtitle:
+        "আমরা দৃষ্টিনন্দন ও ফাস্ট নেটিভ মোবাইল অ্যাপ্লিকেশন ডিজাইন এবং ডেভেলপ করি। একই সাথে দুটি প্ল্যাটফর্মেই আপনার অ্যাপ লঞ্চ করুন।",
     },
   ],
 };
@@ -132,7 +150,15 @@ export function Hero() {
 
       <div className="relative mx-auto grid w-full max-w-7xl grid-cols-12 gap-x-2 gap-y-6 px-4 sm:gap-x-6 sm:px-6 lg:gap-x-16 lg:px-8">
 
-        {/* ── Desktop: Left Column (Row 1) | Mobile: Top ── */}
+        {/* ── Desktop: Right Column (Row 1 & 2) | Mobile: Top ── */}
+        <div className="col-span-12 flex items-center justify-center mb-6 lg:mb-0 lg:col-span-6 lg:col-start-7 lg:row-start-1 lg:row-span-2">
+          {/* Proportional sizing instead of zoom for perfect aspect ratio across all devices */}
+          <div className="w-[280px] sm:w-[400px] lg:w-[512px] origin-center lg:origin-top-right xl:origin-center">
+            <BrowserMockup card={h.card} onSlideChange={handleSlideChange} />
+          </div>
+        </div>
+
+        {/* ── Desktop: Left Column (Row 1) | Mobile: Middle ── */}
         <div className="col-span-12 lg:col-span-6 lg:col-start-1 lg:row-start-1 lg:row-span-1 text-center lg:text-left flex flex-col items-center lg:items-start">
           <div className={animClass}>
             <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-200 bg-brand-50 px-2 py-1 text-[8px] font-medium text-brand-800 sm:px-4 sm:py-1.5 sm:text-xs">
@@ -165,7 +191,7 @@ export function Hero() {
           )}
         </div>
 
-        {/* ── Desktop: Left Column (Row 2) | Mobile: Middle ── */}
+        {/* ── Desktop: Left Column (Row 2) | Mobile: Bottom ── */}
         <div className="col-span-12 lg:col-span-6 lg:col-start-1 lg:row-start-2 lg:row-span-1 lg:-mt-4 flex flex-col items-center lg:items-start w-full">
           <div className="flex w-full max-w-[280px] sm:max-w-none flex-col gap-3 sm:flex-row sm:gap-3.5">
             <a
@@ -196,14 +222,6 @@ export function Hero() {
               </li>
             ))}
           </ul>
-        </div>
-
-        {/* ── Desktop: Right Column (Row 1 & 2) | Mobile: Bottom ── */}
-        <div className="col-span-12 flex items-center justify-center mt-10 sm:mt-12 lg:mt-0 lg:col-span-6 lg:col-start-7 lg:row-start-1 lg:row-span-2">
-          {/* Proportional sizing instead of zoom for perfect aspect ratio across all devices */}
-          <div className="w-[280px] sm:w-[400px] lg:w-[512px] origin-center lg:origin-top-right xl:origin-center">
-            <BrowserMockup card={h.card} onSlideChange={handleSlideChange} />
-          </div>
         </div>
 
       </div>
