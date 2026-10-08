@@ -11,7 +11,7 @@ export function Faq() {
   const [open, setOpen] = useState(0);
 
   return (
-    <section id="faq" className="py-16 sm:py-24 lg:py-28">
+    <section id="faq" className="pt-16 pb-8 sm:pt-24 sm:pb-12 lg:pt-28 lg:pb-16">
       <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[1fr_1.6fr] lg:px-8">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <SectionHeading eyebrow={f.eyebrow} title={f.title} center={false} />

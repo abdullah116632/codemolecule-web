@@ -145,21 +145,21 @@ export function Hero() {
       : "hero-text-idle-bottom";
 
   return (
-    <section id="top" className="relative overflow-hidden pt-20 pb-4 sm:pt-32 sm:pb-16 lg:flex lg:min-h-[calc(100dvh-4.25rem)] lg:items-center lg:pt-20 lg:pb-6">
+    <section id="top" className="relative overflow-hidden pt-20 pb-4 sm:pt-32 sm:pb-16 xl:flex xl:min-h-[calc(100dvh-4.25rem)] xl:items-center xl:pt-20 xl:pb-6">
       <div className="bg-grid absolute inset-0 [mask-image:radial-gradient(ellipse_at_top,black_30%,transparent_75%)]" />
 
-      <div className="relative mx-auto grid w-full max-w-7xl grid-cols-12 gap-x-2 gap-y-6 px-4 sm:gap-x-6 sm:px-6 lg:gap-x-16 lg:px-8">
+      <div className="relative mx-auto grid w-full max-w-7xl grid-cols-12 gap-x-2 gap-y-6 px-4 sm:gap-x-6 sm:px-6 xl:gap-x-16 xl:px-8">
 
         {/* ── Desktop: Right Column (Row 1 & 2) | Mobile: Top ── */}
-        <div className="col-span-12 flex items-center justify-center mb-6 lg:mb-0 lg:col-span-6 lg:col-start-7 lg:row-start-1 lg:row-span-2">
+        <div className="col-span-12 flex items-center justify-center mb-6 xl:mb-0 xl:col-span-6 xl:col-start-7 xl:row-start-1 xl:row-span-2">
           {/* Proportional sizing instead of zoom for perfect aspect ratio across all devices */}
-          <div className="w-[280px] sm:w-[400px] lg:w-[512px] origin-center lg:origin-top-right xl:origin-center">
+          <div className="w-[280px] sm:w-[400px] xl:w-[512px] origin-center xl:origin-top-right xl:origin-center">
             <BrowserMockup card={h.card} onSlideChange={handleSlideChange} />
           </div>
         </div>
 
         {/* ── Desktop: Left Column (Row 1) | Mobile: Middle ── */}
-        <div className="col-span-12 lg:col-span-6 lg:col-start-1 lg:row-start-1 lg:row-span-1 text-center lg:text-left flex flex-col items-center lg:items-start">
+        <div className="col-span-12 xl:col-span-6 xl:col-start-1 xl:row-start-1 xl:row-span-1 text-center xl:text-left flex flex-col items-center xl:items-start">
           <div className={animClass}>
             <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-200 bg-brand-50 px-2 py-1 text-[8px] font-medium text-brand-800 sm:px-4 sm:py-1.5 sm:text-xs">
               <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2">
@@ -169,7 +169,7 @@ export function Hero() {
               {currentHero.badge}
             </span>
 
-            <h1 className="font-display mt-3 sm:mt-6 text-[30px] sm:text-4xl md:text-5xl min-h-[135px] sm:min-h-[145px] lg:min-h-[190px] lg:text-6xl font-light tracking-tight text-ink leading-[1.18]">
+            <h1 className="font-display mt-3 sm:mt-6 text-[30px] sm:text-4xl md:text-5xl min-h-[135px] sm:min-h-[145px] xl:min-h-[190px] xl:text-6xl font-light tracking-tight text-ink leading-[1.18]">
               {currentHero.titleA}
               <br />
               {currentHero.titleB}{" "}
@@ -180,32 +180,32 @@ export function Hero() {
             </h1>
 
             {DYNAMIC_HERO && DYNAMIC_SUBTITLE && (
-              <p className="mt-3 text-[14px] leading-relaxed text-slate-600 sm:mt-6 min-h-[85px] sm:min-h-[4.5rem] sm:text-base lg:mt-8 lg:max-w-xl lg:text-lg">
+              <p className="mt-2 text-[14px] leading-relaxed text-slate-600 sm:mt-3 min-h-[85px] sm:min-h-[4.5rem] sm:text-base xl:mt-5 xl:max-w-xl xl:text-lg">
                 {currentHero.subtitle}
               </p>
             )}
           </div>
 
           {(!DYNAMIC_HERO || !DYNAMIC_SUBTITLE) && (
-            <p className="mt-3 text-[14px] leading-relaxed text-slate-600 sm:mt-6 min-h-[85px] sm:min-h-[4.5rem] sm:text-base lg:mt-8 lg:max-w-xl lg:text-lg">{h.subtitle}</p>
+            <p className="mt-2 text-[14px] leading-relaxed text-slate-600 sm:mt-3 min-h-[85px] sm:min-h-[4.5rem] sm:text-base xl:mt-5 xl:max-w-xl xl:text-lg">{h.subtitle}</p>
           )}
         </div>
 
         {/* ── Desktop: Left Column (Row 2) | Mobile: Bottom ── */}
-        <div className="col-span-12 lg:col-span-6 lg:col-start-1 lg:row-start-2 lg:row-span-1 lg:-mt-4 flex flex-col items-center lg:items-start w-full">
-          <div className="flex w-full max-w-[280px] sm:max-w-none flex-col gap-3 sm:flex-row sm:gap-3.5">
+        <div className="col-span-12 xl:col-span-6 xl:col-start-1 xl:row-start-2 xl:row-span-1 xl:-mt-4 flex flex-col items-center xl:items-start w-full">
+          <div className="flex w-full max-w-[280px] xl:max-w-none flex-col gap-3 xl:flex-row xl:gap-3.5">
             <a
               href={whatsappLink(t.contact.form.intro)}
               target="_blank"
               rel="noopener noreferrer"
-              className="group btn-fancy btn-shimmer btn-glow-whatsapp inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-[#25D366] px-5 py-3.5 text-[14px] font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#20ba59] sm:gap-2.5 sm:px-7 sm:py-4 sm:text-base"
+              className="group btn-fancy btn-shimmer btn-glow-whatsapp inline-flex w-full xl:w-auto items-center justify-center gap-2 rounded-full bg-[#25D366] px-5 py-3.5 text-[14px] font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#20ba59] xl:gap-2.5 xl:px-7 xl:py-4 xl:text-base"
             >
               <WhatsAppIcon className="h-4.5 w-4.5 transition-transform duration-200 group-hover:scale-110 sm:h-5 sm:w-5" />
               <span>{h.primary}</span>
             </a>
             <a
               href="#pricing"
-              className="group btn-fancy inline-flex w-full sm:w-auto items-center justify-center gap-1.5 rounded-full border border-brand-200/90 bg-white px-5 py-3.5 text-[14px] font-semibold text-ink shadow-xs transition hover:-translate-y-0.5 hover:border-brand-500 hover:text-brand-600 sm:gap-2 sm:px-7 sm:py-4 sm:text-base"
+              className="group btn-fancy inline-flex w-full xl:w-auto items-center justify-center gap-1.5 rounded-full border border-brand-200/90 bg-white px-5 py-3.5 text-[14px] font-semibold text-ink shadow-xs transition hover:-translate-y-0.5 hover:border-brand-500 hover:text-brand-600 xl:gap-2 xl:px-7 xl:py-4 xl:text-base"
             >
               <span>{h.secondary}</span>
               <Icon name="arrow" className="h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-x-1" />

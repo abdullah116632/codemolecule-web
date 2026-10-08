@@ -144,10 +144,10 @@ export function Contact() {
                   {lang === "bn" ? "ইনস্ট্যান্ট রেসপন্স" : "Instant Response"}
                 </div>
                 <h3 className="font-display text-2xl font-bold tracking-tight text-white">
-                  {lang === "bn" ? "সরাসরি বার্তা পাঠান" : "Send us a message"}
+                  {lang === "bn" ? "আপনার অর্ডার দিন" : "Start your order"}
                 </h3>
                 <p className="mt-1 text-xs sm:text-sm text-slate-400">
-                  {lang === "bn" ? "ফর্মটি পূরণ করে সরাসরি WhatsApp-এ কথা বলুন" : "Connect straight to our WhatsApp team"}
+                  {lang === "bn" ? "ফর্মটি পূরণ করে WhatsApp-এ আপনার প্রজেক্টটি কনফার্ম করুন" : "Fill the form to confirm your order via WhatsApp"}
                 </p>
               </div>
 

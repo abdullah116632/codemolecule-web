@@ -532,32 +532,30 @@ export function BrowserMockup({ card, onSlideChange }) {
       {/* বন্ধ করতে SHOW_LEFT_BADGE = false করুন অথবা এই ব্লকটি কমেন্ট করুন */}
       {/* ============================================================ */}
       {SHOW_LEFT_BADGE && (
-        <div className={`animate-float absolute top-12 sm:top-24 z-40 pointer-events-none transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${currentIndex === 3 ? "left-4 sm:left-6 lg:left-10" : "-left-4 sm:-left-8 lg:-left-16"}`}>
-          <div className="scale-[0.65] sm:scale-100 origin-left">
-            <div 
-              className="rounded-lg lg:rounded-2xl border border-slate-200 bg-white p-1.5 lg:p-4 shadow-xl min-w-[80px] lg:min-w-[136px] pointer-events-auto"
-              style={{
-                transform: badgeVisible ? "translateX(0) scale(1)" : "translateX(-50px) scale(0.75)",
-                opacity: badgeVisible ? 1 : 0,
-                transition: badgeVisible
-                  ? "transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease-out"
-                  : "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease-in",
-              }}
-            >
-              <p className="text-[8px] lg:text-xs font-medium text-slate-500">{currentMockup.badgeLeft.label}</p>
-              <div className="flex items-baseline gap-0.5 lg:gap-1 mt-0.5">
-                <span className={`font-display text-sm sm:text-lg lg:text-2xl font-light ${currentMockup.badgeLeft.textColor}`}>
-                  {currentMockup.badgeLeft.value}
+        <div className={`animate-float absolute top-12 sm:top-24 z-40 pointer-events-none transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${currentIndex === 3 ? "left-[22px] sm:left-[30px] lg:left-12" : "-left-4 sm:-left-8 lg:-left-16"}`}>
+          <div 
+            className="rounded-lg lg:rounded-2xl border border-slate-200 bg-white p-1.5 lg:p-4 shadow-xl min-w-[80px] lg:min-w-[136px] pointer-events-auto origin-left [--badge-scale:0.75] sm:[--badge-scale:0.85] lg:[--badge-scale:1]"
+            style={{
+              transform: badgeVisible ? `translateX(0) scale(var(--badge-scale))` : "translateX(-50px) scale(0.5)",
+              opacity: badgeVisible ? 1 : 0,
+              transition: badgeVisible
+                ? "transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease-out"
+                : "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease-in",
+            }}
+          >
+            <p className="text-[8px] lg:text-xs font-medium text-slate-500">{currentMockup.badgeLeft.label}</p>
+            <div className="flex items-baseline gap-0.5 lg:gap-1 mt-0.5">
+              <span className={`font-display text-sm sm:text-lg lg:text-2xl font-light ${currentMockup.badgeLeft.textColor}`}>
+                {currentMockup.badgeLeft.value}
+              </span>
+              {currentMockup.badgeLeft.unit && (
+                <span className={`text-[9px] lg:text-base font-bold ${currentMockup.badgeLeft.textColor}`}>
+                  {currentMockup.badgeLeft.unit}
                 </span>
-                {currentMockup.badgeLeft.unit && (
-                  <span className={`text-[9px] lg:text-base font-bold ${currentMockup.badgeLeft.textColor}`}>
-                    {currentMockup.badgeLeft.unit}
-                  </span>
-                )}
-              </div>
-              <div className="mt-1 lg:mt-1.5 h-0.5 lg:h-1.5 w-12 lg:w-24 overflow-hidden rounded-full bg-slate-100">
-                <div className={`h-full ${currentMockup.badgeLeft.barWidth} ${currentMockup.badgeLeft.barColor} transition-all duration-500`} />
-              </div>
+              )}
+            </div>
+            <div className="mt-1 lg:mt-1.5 h-0.5 lg:h-1.5 w-12 lg:w-24 overflow-hidden rounded-full bg-slate-100">
+              <div className={`h-full ${currentMockup.badgeLeft.barWidth} ${currentMockup.badgeLeft.barColor} transition-all duration-500`} />
             </div>
           </div>
         </div>
@@ -572,24 +570,22 @@ export function BrowserMockup({ card, onSlideChange }) {
           className={`animate-float absolute bottom-6 sm:bottom-10 z-40 pointer-events-none transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${currentIndex === 3 ? "right-0 sm:right-2 lg:-right-2" : "-right-4 sm:-right-12 lg:-right-24"}`}
           style={{ animationDelay: "1.5s" }}
         >
-          <div className="scale-[0.65] sm:scale-100 origin-right">
-            <div 
-              className="flex items-center gap-1.5 lg:gap-3 rounded-lg lg:rounded-2xl border border-slate-200 bg-white px-2 py-1.5 lg:px-4 lg:py-3 shadow-xl pointer-events-auto"
-              style={{
-                transform: badgeVisible ? "translateX(0) scale(1)" : "translateX(50px) scale(0.75)",
-                opacity: badgeVisible ? 1 : 0,
-                transition: badgeVisible
-                  ? "transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) 150ms, opacity 0.4s ease-out 150ms"
-                  : "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease-in",
-              }}
-            >
-              <span className={`flex h-5 w-5 lg:h-9 lg:w-9 items-center justify-center rounded-full ${currentMockup.badgeRight.iconBg} transition-colors duration-300`}>
-                <Icon name={currentMockup.badgeRight.icon} className="h-3 w-3 lg:h-5 lg:w-5" />
-              </span>
-              <div>
-                <p className="text-[9px] sm:text-[10px] lg:text-sm font-bold text-ink transition-colors duration-300 whitespace-nowrap">{currentMockup.badgeRight.title}</p>
-                <p className="text-[8px] lg:text-xs text-slate-500 whitespace-nowrap">{currentMockup.badgeRight.subtitle}</p>
-              </div>
+          <div 
+            className="flex items-center gap-1.5 lg:gap-3 rounded-lg lg:rounded-2xl border border-slate-200 bg-white px-2 py-1.5 lg:px-4 lg:py-3 shadow-xl pointer-events-auto origin-right [--badge-scale:0.75] sm:[--badge-scale:0.85] lg:[--badge-scale:1]"
+            style={{
+              transform: badgeVisible ? `translateX(0) scale(var(--badge-scale))` : "translateX(50px) scale(0.5)",
+              opacity: badgeVisible ? 1 : 0,
+              transition: badgeVisible
+                ? "transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) 150ms, opacity 0.4s ease-out 150ms"
+                : "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease-in",
+            }}
+          >
+            <span className={`flex h-5 w-5 lg:h-9 lg:w-9 items-center justify-center rounded-full ${currentMockup.badgeRight.iconBg} transition-colors duration-300`}>
+              <Icon name={currentMockup.badgeRight.icon} className="h-3 w-3 lg:h-5 lg:w-5" />
+            </span>
+            <div>
+              <p className="text-[9px] sm:text-[10px] lg:text-sm font-bold text-ink transition-colors duration-300 whitespace-nowrap">{currentMockup.badgeRight.title}</p>
+              <p className="text-[8px] lg:text-xs text-slate-500 whitespace-nowrap">{currentMockup.badgeRight.subtitle}</p>
             </div>
           </div>
         </div>
