@@ -132,16 +132,8 @@ export function Hero() {
 
       <div className="relative mx-auto grid w-full max-w-7xl grid-cols-12 gap-x-2 gap-y-6 px-4 sm:gap-x-6 sm:px-6 lg:gap-x-16 lg:px-8">
 
-        {/* ── Mobile: Row 1 | Desktop: Right Column (Row 1 & 2) ── */}
-        <div className="col-span-12 row-start-1 flex items-center justify-center mt-10 sm:mt-12 lg:mt-0 lg:col-span-6 lg:row-start-1 lg:row-span-2">
-          {/* Proportional sizing instead of zoom for perfect aspect ratio across all devices */}
-          <div className="w-[280px] sm:w-[400px] lg:w-[512px] origin-center lg:origin-top-right xl:origin-center">
-            <BrowserMockup card={h.card} onSlideChange={handleSlideChange} />
-          </div>
-        </div>
-
-        {/* ── Mobile: Row 2 | Desktop: Left Column (Row 1) ── */}
-        <div className="col-span-12 row-start-2 lg:col-span-6 lg:row-start-1 lg:row-span-1 text-center lg:text-left flex flex-col items-center lg:items-start">
+        {/* ── Desktop: Left Column (Row 1) | Mobile: Top ── */}
+        <div className="col-span-12 lg:col-span-6 lg:col-start-1 lg:row-start-1 lg:row-span-1 text-center lg:text-left flex flex-col items-center lg:items-start">
           <div className={animClass}>
             <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-200 bg-brand-50 px-2 py-1 text-[8px] font-medium text-brand-800 sm:px-4 sm:py-1.5 sm:text-xs">
               <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2">
@@ -173,8 +165,8 @@ export function Hero() {
           )}
         </div>
 
-        {/* ── Mobile: Row 3 | Desktop: Left Column (Row 2) ── */}
-        <div className="col-span-12 row-start-3 lg:col-span-6 lg:row-start-2 lg:row-span-1 lg:-mt-4 flex flex-col items-center lg:items-start w-full">
+        {/* ── Desktop: Left Column (Row 2) | Mobile: Middle ── */}
+        <div className="col-span-12 lg:col-span-6 lg:col-start-1 lg:row-start-2 lg:row-span-1 lg:-mt-4 flex flex-col items-center lg:items-start w-full">
           <div className="flex w-full max-w-[280px] sm:max-w-none flex-col gap-3 sm:flex-row sm:gap-3.5">
             <a
               href={whatsappLink(t.contact.form.intro)}
@@ -204,6 +196,14 @@ export function Hero() {
               </li>
             ))}
           </ul>
+        </div>
+
+        {/* ── Desktop: Right Column (Row 1 & 2) | Mobile: Bottom ── */}
+        <div className="col-span-12 flex items-center justify-center mt-10 sm:mt-12 lg:mt-0 lg:col-span-6 lg:col-start-7 lg:row-start-1 lg:row-span-2">
+          {/* Proportional sizing instead of zoom for perfect aspect ratio across all devices */}
+          <div className="w-[280px] sm:w-[400px] lg:w-[512px] origin-center lg:origin-top-right xl:origin-center">
+            <BrowserMockup card={h.card} onSlideChange={handleSlideChange} />
+          </div>
         </div>
 
       </div>
