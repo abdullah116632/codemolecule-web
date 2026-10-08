@@ -403,6 +403,7 @@ export function BrowserMockup({ card, onSlideChange }) {
   const [displayedText, setDisplayedText] = useState(MOCKUPS[2].url);
   const [isTyping, setIsTyping] = useState(false);
   const [badgeVisible, setBadgeVisible] = useState(true);
+  const [showPhone, setShowPhone] = useState(false); // controls phone mockup visibility
 
   useEffect(() => {
     let active = true;
@@ -433,10 +434,33 @@ export function BrowserMockup({ card, onSlideChange }) {
         const nextUrl = MOCKUPS[nextIndex].url;
 
         if (nextIndex === 3) {
-          // Skip typing completely for the Mobile App slide
-          await sleep(200);
-          setIsTyping(false);
+          // Going to Mobile App slide:
+          // 1. Hide browser and show phone
+          setShowPhone(true);
+          
+          // 2. Wait for browser to fade out a bit before switching its content
+          await sleep(350);
+          if (!active) break;
+
+          // 3. Switch index (updates Hero text and internal content silently)
+          index = nextIndex;
+          setCurrentIndex(nextIndex);
+          onSlideChange?.(nextIndex);
+
+          // 4. Wait for phone to fully settle
+          await sleep(650);
+          if (!active) break;
+
+          // 5. Spring badges in
+          setBadgeVisible(true);
         } else {
+          // If coming from slide 3, hide the phone and reveal the browser BEFORE typing
+          if (index === 3) {
+            setShowPhone(false);
+            await sleep(600); // give it time to fade out and browser to fade in
+            if (!active) break;
+          }
+
           // Step 4: Backspace old URL
           setIsTyping(true);
           // If coming from slide 3, the displayed text is actually the URL from slide 2
@@ -465,19 +489,19 @@ export function BrowserMockup({ card, onSlideChange }) {
           setIsTyping(false);
           await sleep(180);
           if (!active) break;
+
+          // Step 8: The link opens the website! Switch page content and notify simultaneously
+          index = nextIndex;
+          setCurrentIndex(nextIndex);
+          onSlideChange?.(nextIndex);
+
+          // Step 9: Wait for page layout elements to cascade into place
+          await sleep(1000);
+          if (!active) break;
+
+          // Step 10: Spring the new badges in from the sides
+          setBadgeVisible(true);
         }
-
-        // Step 8: The link opens the website! Switch page content and notify simultaneously
-        index = nextIndex;
-        setCurrentIndex(nextIndex);
-        onSlideChange?.(nextIndex);
-
-        // Step 9: Wait 1000ms for page layout elements to cascade into place
-        await sleep(1000);
-        if (!active) break;
-
-        // Step 10: Spring the new badges in from the sides
-        setBadgeVisible(true);
       }
     };
 
@@ -499,9 +523,9 @@ export function BrowserMockup({ card, onSlideChange }) {
       <div 
         className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl shadow-slate-900/10 transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
         style={{
-          transform: (currentIndex === 3 && !isTyping) ? "scale(0.95) translateY(10px)" : "scale(1) translateY(0)",
-          opacity: (currentIndex === 3 && !isTyping) ? 0 : 1,
-          pointerEvents: (currentIndex === 3 && !isTyping) ? "none" : "auto",
+          transform: showPhone ? "scale(0.95) translateY(10px)" : "scale(1) translateY(0)",
+          opacity: showPhone ? 0 : 1,
+          pointerEvents: showPhone ? "none" : "auto",
         }}
       >
         {/* Top Browser Bar */}
@@ -532,7 +556,7 @@ export function BrowserMockup({ card, onSlideChange }) {
       {/* বন্ধ করতে SHOW_LEFT_BADGE = false করুন অথবা এই ব্লকটি কমেন্ট করুন */}
       {/* ============================================================ */}
       {SHOW_LEFT_BADGE && (
-        <div className={`animate-float absolute top-12 sm:top-24 z-40 pointer-events-none transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${currentIndex === 3 ? "left-[22px] sm:left-[30px] lg:left-12" : "-left-4 sm:-left-8 lg:-left-16"}`}>
+        <div className={`animate-float absolute top-12 sm:top-24 z-40 pointer-events-none transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${showPhone ? "left-[22px] sm:left-[30px] lg:left-12" : "-left-4 sm:-left-8 lg:-left-16"}`}>
           <div 
             className="rounded-lg lg:rounded-2xl border border-slate-200 bg-white p-1.5 lg:p-4 shadow-xl min-w-[80px] lg:min-w-[136px] pointer-events-auto origin-left [--badge-scale:0.75] sm:[--badge-scale:0.85] lg:[--badge-scale:1]"
             style={{
@@ -567,7 +591,7 @@ export function BrowserMockup({ card, onSlideChange }) {
       {/* ============================================================ */}
       {SHOW_RIGHT_BADGE && (
         <div 
-          className={`animate-float absolute bottom-6 sm:bottom-10 z-40 pointer-events-none transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${currentIndex === 3 ? "right-0 sm:right-2 lg:-right-2" : "-right-4 sm:-right-12 lg:-right-24"}`}
+          className={`animate-float absolute bottom-6 sm:bottom-10 z-40 pointer-events-none transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${showPhone ? "right-0 sm:right-2 lg:-right-2" : "-right-4 sm:-right-12 lg:-right-24"}`}
           style={{ animationDelay: "1.5s" }}
         >
           <div 
@@ -596,9 +620,9 @@ export function BrowserMockup({ card, onSlideChange }) {
       <div 
         className="absolute inset-0 z-30 pointer-events-none flex items-center justify-center"
         style={{
-          transform: (currentIndex === 3 && !isTyping) ? "translateY(0) scale(1)" : "translateY(60px) scale(0.8)",
-          opacity: (currentIndex === 3 && !isTyping) ? 1 : 0,
-          transition: (currentIndex === 3 && !isTyping)
+          transform: showPhone ? "translateY(0) scale(1)" : "translateY(60px) scale(0.8)",
+          opacity: showPhone ? 1 : 0,
+          transition: showPhone
             ? "transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 100ms, opacity 0.5s ease-out 100ms"
             : "transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-in",
         }}
