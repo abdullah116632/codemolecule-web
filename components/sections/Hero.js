@@ -127,7 +127,7 @@ export function Hero() {
       : "hero-text-idle-bottom";
 
   return (
-    <section id="top" className="relative overflow-hidden pt-20 pb-10 sm:pt-32 sm:pb-16 lg:flex lg:min-h-[calc(100dvh-4.25rem)] lg:items-center lg:pt-20 lg:pb-6">
+    <section id="top" className="relative overflow-hidden pt-20 pb-4 sm:pt-32 sm:pb-16 lg:flex lg:min-h-[calc(100dvh-4.25rem)] lg:items-center lg:pt-20 lg:pb-6">
       <div className="bg-grid absolute inset-0 [mask-image:radial-gradient(ellipse_at_top,black_30%,transparent_75%)]" />
 
       <div className="relative mx-auto grid w-full max-w-7xl grid-cols-12 gap-x-2 gap-y-6 px-4 sm:gap-x-6 sm:px-6 lg:gap-x-16 lg:px-8">
@@ -174,31 +174,31 @@ export function Hero() {
         </div>
 
         {/* ── Mobile: Row 3 | Desktop: Left Column (Row 2) ── */}
-        <div className="col-span-12 row-start-3 lg:col-span-6 lg:row-start-2 lg:row-span-1 lg:-mt-4 flex flex-col items-center lg:items-start">
-          <div className="flex flex-col gap-2.5 sm:flex-row sm:gap-3.5">
+        <div className="col-span-12 row-start-3 lg:col-span-6 lg:row-start-2 lg:row-span-1 lg:-mt-4 flex flex-col items-center lg:items-start w-full">
+          <div className="flex w-full max-w-[280px] sm:max-w-none flex-col gap-3 sm:flex-row sm:gap-3.5">
             <a
               href={whatsappLink(t.contact.form.intro)}
               target="_blank"
               rel="noopener noreferrer"
-              className="group btn-fancy btn-shimmer btn-glow-whatsapp inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-4 py-3 text-[12px] font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#20ba59] sm:gap-2.5 sm:px-7 sm:py-4 sm:text-base"
+              className="group btn-fancy btn-shimmer btn-glow-whatsapp inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-[#25D366] px-5 py-3.5 text-[14px] font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#20ba59] sm:gap-2.5 sm:px-7 sm:py-4 sm:text-base"
             >
-              <WhatsAppIcon className="h-4 w-4 transition-transform duration-200 group-hover:scale-110 sm:h-5 sm:w-5" />
+              <WhatsAppIcon className="h-4.5 w-4.5 transition-transform duration-200 group-hover:scale-110 sm:h-5 sm:w-5" />
               <span>{h.primary}</span>
             </a>
             <a
               href="#pricing"
-              className="group btn-fancy inline-flex items-center justify-center gap-1.5 rounded-full border border-brand-200/90 bg-white px-4 py-3 text-[12px] font-semibold text-ink shadow-xs transition hover:-translate-y-0.5 hover:border-brand-500 hover:text-brand-600 sm:gap-2 sm:px-7 sm:py-4 sm:text-base"
+              className="group btn-fancy inline-flex w-full sm:w-auto items-center justify-center gap-1.5 rounded-full border border-brand-200/90 bg-white px-5 py-3.5 text-[14px] font-semibold text-ink shadow-xs transition hover:-translate-y-0.5 hover:border-brand-500 hover:text-brand-600 sm:gap-2 sm:px-7 sm:py-4 sm:text-base"
             >
               <span>{h.secondary}</span>
-              <Icon name="arrow" className="h-3.5 w-3.5 transition-transform duration-200 ease-out group-hover:translate-x-1 sm:h-4 sm:w-4" />
+              <Icon name="arrow" className="h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-x-1" />
             </a>
           </div>
 
-          <ul className="mt-4 flex flex-col gap-2 text-[10px] font-medium text-slate-700 sm:mt-8 sm:flex-row sm:flex-wrap sm:gap-x-6 sm:text-sm">
+          <ul className="mt-6 flex flex-col gap-2.5 text-[13px] font-medium text-slate-700 sm:mt-8 sm:flex-row sm:flex-wrap sm:gap-x-6 sm:text-sm">
             {h.points.map((p) => (
-              <li key={p} className="flex items-center gap-1.5">
-                <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-700 sm:h-5 sm:w-5">
-                  <Icon name="check" className="h-2.5 w-2.5 sm:h-3.5 sm:w-3.5" />
+              <li key={p} className="flex items-center gap-2">
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-700 sm:h-5 sm:w-5">
+                  <Icon name="check" className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                 </span>
                 {p}
               </li>
