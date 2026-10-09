@@ -88,17 +88,27 @@ export function Work() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading eyebrow={w.eyebrow} title={w.title} subtitle={w.subtitle} />
 
-        <div className="mt-16 grid gap-8 md:grid-cols-2">
+        <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {w.items.map((item, i) => (
-            <Reveal key={item.title} delay={(i % 2) * 120}>
-              <SpotlightCard as="article" tilt={true} className="cursor-pointer">
-                <Preview theme={item.theme} title={item.title} />
+            <Reveal key={item.title} delay={(i % 3) * 120}>
+              <SpotlightCard as="a" href={item.backupUrl ? `/api/redirect?primary=${encodeURIComponent(item.url)}&backup=${encodeURIComponent(item.backupUrl)}` : item.url} target="_blank" rel="noopener noreferrer" tilt={true} className="cursor-pointer block">
+                {item.image ? (
+                  <div className="aspect-[16/10] overflow-hidden bg-slate-100 p-5 sm:p-6">
+                    <img src={item.image} alt={item.title} className="h-full w-full object-cover object-top rounded-xl shadow-lg transition-transform duration-500 group-hover:-translate-y-2 group-hover:scale-[1.025]" />
+                  </div>
+                ) : (
+                  <Preview theme={item.theme} title={item.title} />
+                )}
                 <div className="flex items-center justify-between gap-4 p-6">
                   <div>
                     <h3 className="font-display text-lg font-bold text-ink transition-colors duration-200 group-hover:text-brand-800">{item.title}</h3>
                     <p className="text-[15px] text-slate-600">{item.type}</p>
                   </div>
-                  <span className="shrink-0 rounded-full border border-slate-200 px-3 py-1 text-xs font-medium text-slate-500 transition-colors duration-200 group-hover:border-brand-300 group-hover:bg-brand-50/60 group-hover:text-brand-700">
+                  <span className="shrink-0 rounded-full border border-slate-200 px-3 py-1 text-xs font-medium text-slate-500 transition-colors duration-200 group-hover:border-brand-300 group-hover:bg-brand-50/60 group-hover:text-brand-700 flex items-center gap-1.5">
+                    <span className="relative flex h-1.5 w-1.5">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                    </span>
                     {w.label}
                   </span>
                 </div>
