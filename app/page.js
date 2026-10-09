@@ -2,7 +2,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { CoverSheet } from "@/components/CoverSheet";
 import { Hero } from "@/components/sections/Hero";
-import { TechStrip } from "@/components/sections/TechStrip";
+
 import { Services } from "@/components/sections/Services";
 import { WhyUs } from "@/components/sections/WhyUs";
 import { Work } from "@/components/sections/Work";
@@ -20,7 +20,7 @@ export default function Home() {
             the strip stays pinned at the bottom of the screen, and the next section
             slides up over it like a sheet. Phones scroll normally. */}
         <Hero />
-        <TechStrip />
+
         <CoverSheet>
           <Services />
           <WhyUs />

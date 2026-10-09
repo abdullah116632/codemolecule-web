@@ -68,8 +68,8 @@ export function Header() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 border-b ${
         scrolled || open 
-          ? "border-[#0A1118]/8 bg-canvas/90 backdrop-blur-md shadow-sm shadow-black/5" 
-          : "border-transparent bg-transparent"
+          ? "border-[#0A1118]/8 bg-canvas/95 backdrop-blur-md shadow-sm shadow-black/5" 
+          : "border-white/10 bg-transparent"
       }`}
     >
       <div className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
