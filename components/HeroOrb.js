@@ -23,17 +23,17 @@ export default function HeroOrb() {
     // This creates the fluid, waving molecule effect on the stationary ring
     function turbulence(u, v, t) {
       return (
-        Math.sin(u * 6  + t * 1.2) * Math.sin(v * 3  - t * 0.8) * 0.35 +
-        Math.cos(u * 12 - t * 1.5) * Math.sin(v * 6  + t * 1.1) * 0.15 +
-        Math.sin(u * 4  + t * 0.5) * Math.cos(v * 2  - t * 0.4) * 0.20
+        Math.sin(u * 6 + t * 1.2) * Math.sin(v * 3 - t * 0.8) * 0.35 +
+        Math.cos(u * 12 - t * 1.5) * Math.sin(v * 6 + t * 1.1) * 0.15 +
+        Math.sin(u * 4 + t * 0.5) * Math.cos(v * 2 - t * 0.4) * 0.20
       );
     }
 
     const init = async () => {
       THREE = await import("three");
 
-      scene    = new THREE.Scene();
-      camera   = new THREE.PerspectiveCamera(52, W / H, 0.1, 100);
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(52, W / H, 0.1, 100);
       camera.position.z = 3.8;
 
       renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
@@ -43,22 +43,22 @@ export default function HeroOrb() {
       mountRef.current?.appendChild(renderer.domElement);
 
       // ── Particle counts & torus params ──────────────────
-      const RING_PARTICLES  = 8000;  // particles on the main ring
+      const RING_PARTICLES = 8000;  // particles on the main ring
       const SPRAY_PARTICLES = 2000;  // extra "spray" off the ring edge
-      const TOTAL           = RING_PARTICLES + SPRAY_PARTICLES;
+      const TOTAL = RING_PARTICLES + SPRAY_PARTICLES;
 
       const R_MAJOR = 1.75;   // torus major radius (increased to make circle bigger)
-      const R_TUBE  = 0.38;   // torus tube radius
+      const R_TUBE = 0.38;   // torus tube radius
 
-      const positions  = new Float32Array(TOTAL * 3);
-      const colors     = new Float32Array(TOTAL * 3);
-      const metadata   = new Float32Array(TOTAL * 4); // u, v, tubeT, isSpray
+      const positions = new Float32Array(TOTAL * 3);
+      const colors = new Float32Array(TOTAL * 3);
+      const metadata = new Float32Array(TOTAL * 4); // u, v, tubeT, isSpray
 
       // Pure brand palette (Dark Green → Green → Lime)
-      const cGreen  = new THREE.Color("#16A34A"); // brand-600
-      const cLime   = new THREE.Color("#86EFAC"); // brand-300
-      const cTeal   = new THREE.Color("#22C55E"); // brand-500 (replaces teal)
-      const cDeep   = new THREE.Color("#064E3B"); // brand-900
+      const cGreen = new THREE.Color("#16A34A"); // brand-600
+      const cLime = new THREE.Color("#86EFAC"); // brand-300
+      const cTeal = new THREE.Color("#22C55E"); // brand-500 (replaces teal)
+      const cDeep = new THREE.Color("#064E3B"); // brand-900
 
       for (let i = 0; i < TOTAL; i++) {
         const isSpray = i >= RING_PARTICLES ? 1 : 0;
@@ -69,14 +69,14 @@ export default function HeroOrb() {
           ? 0.6 + Math.random() * 0.7   // spray particles pushed outward
           : Math.random();
 
-        metadata[i * 4]     = u;
+        metadata[i * 4] = u;
         metadata[i * 4 + 1] = v;
         metadata[i * 4 + 2] = tubeT;
         metadata[i * 4 + 3] = isSpray;
 
         // Base torus position (will be animated each frame)
         const r = R_MAJOR + R_TUBE * tubeT * Math.cos(v);
-        positions[i * 3]     = r * Math.cos(u);
+        positions[i * 3] = r * Math.cos(u);
         positions[i * 3 + 1] = r * Math.sin(u);
         positions[i * 3 + 2] = R_TUBE * tubeT * Math.sin(v);
 
@@ -95,36 +95,42 @@ export default function HeroOrb() {
         // Spray particles are brighter
         if (isSpray) c.multiplyScalar(1.4);
 
-        colors[i * 3]     = c.r;
+        colors[i * 3] = c.r;
         colors[i * 3 + 1] = c.g;
         colors[i * 3 + 2] = c.b;
       }
 
       geo = new THREE.BufferGeometry();
       geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-      geo.setAttribute("color",    new THREE.BufferAttribute(colors, 3));
+      geo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
       geo.userData.metadata = metadata;
 
-      // Round glow dot sprite
+      // Round soft glow dot sprite
       const dotCanvas = document.createElement("canvas");
-      dotCanvas.width = dotCanvas.height = 64;
-      const dc   = dotCanvas.getContext("2d");
-      const grad = dc.createRadialGradient(32, 32, 0, 32, 32, 32);
-      grad.addColorStop(0,   "rgba(255,255,255,1)");
-      grad.addColorStop(0.35,"rgba(255,255,255,0.8)");
-      grad.addColorStop(1,   "rgba(255,255,255,0)");
+      dotCanvas.width = dotCanvas.height = 128;
+      const dc = dotCanvas.getContext("2d");
+
+      const grad = dc.createRadialGradient(64, 64, 0, 64, 64, 64);
+      grad.addColorStop(0, "rgba(255, 255, 255, 1)");
+      grad.addColorStop(0.25, "rgba(255, 255, 255, 0.7)"); // Softer core brightness
+      grad.addColorStop(0.65, "rgba(255, 255, 255, 0.15)"); // Softer mid brightness
+      grad.addColorStop(1, "rgba(255, 255, 255, 0)");
+
       dc.fillStyle = grad;
-      dc.fillRect(0, 0, 64, 64);
+      dc.fillRect(0, 0, 128, 128);
+
+      const dotTexture = new THREE.CanvasTexture(dotCanvas);
+      dotTexture.needsUpdate = true;
 
       mat = new THREE.PointsMaterial({
-        size: 0.018,
+        size: 0.038, // Slightly reduced size for a softer overlap
         vertexColors: true,
-        map: new THREE.CanvasTexture(dotCanvas),
+        map: dotTexture,
         transparent: true,
         depthWrite: false,
-        blending: THREE.AdditiveBlending,
+        blending: THREE.AdditiveBlending, // This creates the glowing effect when molecules overlap
         sizeAttenuation: true,
-        opacity: 1,
+        opacity: 0.75, // Slightly reduced opacity for a lighter, balanced glow
       });
 
       particles = new THREE.Points(geo, mat);
@@ -150,17 +156,17 @@ export default function HeroOrb() {
       particles.rotation.z = 0;
 
       // Animate positions using turbulence noise so molecules wave
-      const pos  = geo.attributes.position;
+      const pos = geo.attributes.position;
       const meta = geo.userData.metadata;
-      const N    = pos.count;
+      const N = pos.count;
 
       const R_MAJOR = 1.75;
-      const R_TUBE  = 0.38;
+      const R_TUBE = 0.38;
 
       for (let i = 0; i < N; i++) {
-        const u      = meta[i * 4];
-        const v      = meta[i * 4 + 1];
-        const tubeT  = meta[i * 4 + 2];
+        const u = meta[i * 4];
+        const v = meta[i * 4 + 1];
+        const tubeT = meta[i * 4 + 2];
         const isSpray = meta[i * 4 + 3];
 
         // Turbulence displacement — waves on the ring surface
@@ -184,8 +190,8 @@ export default function HeroOrb() {
     const onMouseMove = (e) => {
       const rect = mountRef.current?.getBoundingClientRect();
       if (!rect) return;
-      mouse.x = ((e.clientX - rect.left) / rect.width  - 0.5) * 2;
-      mouse.y = -((e.clientY - rect.top)  / rect.height - 0.5) * 2;
+      mouse.x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+      mouse.y = -((e.clientY - rect.top) / rect.height - 0.5) * 2;
     };
 
     const onResize = () => {
@@ -198,18 +204,18 @@ export default function HeroOrb() {
     };
 
     window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("resize",    onResize);
+    window.addEventListener("resize", onResize);
     init();
 
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("resize",    onResize);
+      window.removeEventListener("resize", onResize);
       geo?.dispose();
       mat?.dispose();
       renderer?.dispose();
       if (mountRef.current && renderer?.domElement) {
-        try { mountRef.current.removeChild(renderer.domElement); } catch {}
+        try { mountRef.current.removeChild(renderer.domElement); } catch { }
       }
     };
   }, []);
