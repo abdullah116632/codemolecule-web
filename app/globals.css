@@ -525,7 +525,7 @@ body { min-width: 0; }
 main, section, footer { min-width: 0; }
 img, video { max-width: 100%; }
 input, select, textarea { min-width: 0; max-width: 100%; }
-.service-honeycomb { --service-size: clamp(210px, 17vw, 280px); --service-gap: clamp(28px, 4vw, 80px); }
+.service-honeycomb { --service-size: clamp(160px, 14vw, 220px); --service-gap: clamp(16px, 3vw, 50px); }
 .service-row { gap: var(--service-gap); width: max-content; max-width: 100%; }
 .service-row-top { margin-left: auto; margin-right: calc((var(--service-size) + var(--service-gap)) / 2); }
 .service-row-bottom { margin-left: auto; }

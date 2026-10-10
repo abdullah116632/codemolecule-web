@@ -137,14 +137,14 @@ export default function HeroOrb() {
       dotTexture.needsUpdate = true;
 
       mat = new THREE.PointsMaterial({
-        size: 0.038, // Slightly reduced size for a softer overlap
+        size: 0.025, // Slightly reduced size for a softer overlap
         vertexColors: true,
         map: dotTexture,
         transparent: true,
         depthWrite: false,
         blending: THREE.AdditiveBlending, // This creates the glowing effect when molecules overlap
         sizeAttenuation: true,
-        opacity: 0.75, // Slightly reduced opacity for a lighter, balanced glow
+        opacity: 0.45, // Slightly reduced opacity for a lighter, balanced glow
       });
 
       particles = new THREE.Points(geo, mat);
@@ -186,8 +186,8 @@ export default function HeroOrb() {
       const halfH = 3.8 * Math.tan(52 * Math.PI / 360);
       const worldPerPixel = halfH * 2 / H;
       const desktop = W >= 1024;
-      let span = desktop ? Math.min(320, ar.width * 0.20) : Math.min(230, W * 0.65);
-      let centerX = ((desktop ? ar.left + span * 0.55 + 24 : W / 2) - W / 2) * worldPerPixel;
+      let span = desktop ? Math.min(240, ar.width * 0.16) : Math.min(180, W * 0.55);
+      let centerX = ((desktop ? ar.left + span * 0.5 - 40 : (W / 2) - 20) - W / 2) * worldPerPixel;
       let centerY = (H / 2 - ar.top - (desktop ? 164 : 48)) * worldPerPixel;
       const heroY = (H / 2 - hr.top - hr.height / 2) * worldPerPixel * (1 - blend);
       mountRef.current.style.visibility = hr.bottom > 0 || sr.bottom > 0 || (transfer > 0 && frameworkVisible) ? "visible" : "hidden";
@@ -295,7 +295,7 @@ export default function HeroOrb() {
           iy = centerY + b * Math.sin(2 * u) + tx / len * tube * Math.cos(v);
           iz = tube * Math.sin(v);
           
-          const baseBrightness = desktop ? 0.35 : 0.1;
+          const baseBrightness = desktop ? 0.20 : 0.1;
           destinationBrightness = i % 7 === 0 ? 0.05 : baseBrightness;
           
           const ribbonMod = 6;
@@ -316,7 +316,7 @@ export default function HeroOrb() {
             ix = start.x + dx * q + dx / length * along - dy / length * (bend + spread);
             iy = start.y + dy * q + dy / length * along + dx / length * (bend + spread);
             iz = Math.sin(v) * streamTube * 0.28;
-            destinationBrightness = 0.3 + 0.2 * (Math.sin(i * 3.71 + t * 0.65) * 0.5 + 0.5);
+            destinationBrightness = 0.2 + 0.1 * (Math.sin(i * 3.71 + t * 0.65) * 0.5 + 0.5);
           }
           
           if (!ribbonParticle || (!segments.length && ribbonParticle)) {
@@ -325,8 +325,26 @@ export default function HeroOrb() {
              }
           }
         } else {
-          // When infinity is disabled, completely hide particles in this section
-          targetAlpha = 0;
+          // Uniformly scattered across the whole screen without any patterns
+          const spanX = W * 1.6 * worldPerPixel;
+          const spanY = Math.max(H * 1.5, sr.height * 1.5) * worldPerPixel;
+          
+          // True uniform pseudo-random distribution using modulo
+          const randX = ((u * 1234.5678) % 1.0) - 0.5;
+          const randY = ((v * 8765.4321) % 1.0) - 0.5;
+          const randZ = (((u + v) * 5432.1098) % 1.0) - 0.5;
+          
+          // Very slow, gentle ambient drifting
+          const driftX = Math.sin(t * 0.15 + u) * 1.5 * worldPerPixel;
+          const driftY = Math.cos(t * 0.15 + v) * 1.5 * worldPerPixel;
+          
+          ix = randX * spanX + driftX;
+          iy = (H / 2 - sr.top - sr.height / 2) * worldPerPixel + randY * spanY + driftY;
+          iz = randZ * 10 * worldPerPixel;
+          
+          // Make them glow brightly (Additive Blending will make values > 1 look like bright neon)
+          destinationBrightness = 1.5 + 0.8 * Math.sin(u * 10 + t * 0.8);
+          targetAlpha = 1.0; 
         }
         // The bridges emerge just after the infinity begins to form.
         const local = ribbonParticle && segments.length
