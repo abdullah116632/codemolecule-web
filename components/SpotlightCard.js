@@ -73,18 +73,19 @@ export function SpotlightCard({
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out"
         style={{
           opacity,
-          backgroundImage: `radial-gradient(rgb(34 197 94 / 0.15) 1.5px, transparent 1.5px)`,
-          backgroundSize: '22px 22px',
-          maskImage: `radial-gradient(260px circle at ${position.x}px ${position.y}px, black 30%, transparent 100%)`,
-          WebkitMaskImage: `radial-gradient(260px circle at ${position.x}px ${position.y}px, black 30%, transparent 100%)`,
+          backgroundImage: `radial-gradient(rgb(34 197 94 / 0.15) 1px, transparent 1px)`,
+          backgroundSize: '28px 28px',
+          maskImage: `radial-gradient(250px circle at ${position.x}px ${position.y}px, black 20%, transparent 100%)`,
+          WebkitMaskImage: `radial-gradient(250px circle at ${position.x}px ${position.y}px, black 20%, transparent 100%)`,
         }}
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out mix-blend-multiply"
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out"
         style={{
           opacity,
-          background: `radial-gradient(380px circle at ${position.x}px ${position.y}px, rgba(34, 197, 94, 0.15), transparent 65%)`,
+          background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, rgba(34, 197, 94, 0.15), transparent 60%)`,
+          mixBlendMode: "screen",
         }}
         aria-hidden="true"
       />
