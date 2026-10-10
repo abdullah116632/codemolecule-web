@@ -9,12 +9,11 @@ import { services } from "@/lib/services";
 import { MobileCarousel } from "../MobileCarousel";
 
 export const serviceAccents = [
-  "bg-brand-50 text-brand-700 ring-brand-200/80",
-  "bg-[#EDF3FA] text-[#39699F] ring-[#86A2D4]/40",
-  "bg-sky-50 text-sky-700 ring-sky-200/80",
-  "bg-blue-50 text-blue-700 ring-blue-200/80",
-  "bg-indigo-50 text-indigo-700 ring-indigo-200/80",
-  "bg-slate-100 text-slate-700 ring-slate-200/80",
+  "bg-[#2DD4BF]/10 text-[#2DD4BF] ring-[#2DD4BF]/20",
+  "bg-sky-500/10 text-sky-400 ring-sky-500/20",
+  "bg-blue-500/10 text-blue-400 ring-blue-500/20",
+  "bg-indigo-500/10 text-indigo-400 ring-indigo-500/20",
+  "bg-white/10 text-slate-300 ring-white/10",
 ];
 
 /* 3. আইকন টুইস্ট, স্কেল এবং কালার্ড নিয়ন গ্লো থিমস */
@@ -104,7 +103,7 @@ function ServiceCard({ service, item, i, t }) {
           : "transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.38s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.38s cubic-bezier(0.16, 1, 0.3, 1)",
       }}
       // ২. কার্ড লিফট-আপ এবং ডিপ শ্যাডো গ্লো (Card Lift & Dynamic Shadow on Hover)
-      className="group relative flex h-full flex-col overflow-hidden rounded-[22px] border-2 border-transparent bg-white p-8 transition-all duration-[380ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:border-brand-400 hover:shadow-[0_22px_50px_rgba(57,105,159,0.16)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-600"
+      className="group relative flex h-full flex-col overflow-hidden rounded-[22px] border-2 border-transparent bg-[#141A28] p-8 transition-all duration-[380ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:border-brand-400 hover:shadow-[0_22px_50px_rgba(57,105,159,0.16)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-600"
     >
       {/* Dotted grid spotlight layer */}
       <div
@@ -136,13 +135,13 @@ function ServiceCard({ service, item, i, t }) {
           <Icon name={service.icon} className="h-7 w-7 text-white" />
         </div>
 
-        <h3 className="font-display mt-6 text-xl font-bold text-ink group-hover:text-brand-800 transition-colors">
+        <h3 className="font-display mt-6 text-xl font-bold text-white group-hover:text-[#4ADE80] transition-colors">
           {item.title}
         </h3>
-        <p className="mt-3 flex-1 text-slate-600 leading-relaxed">{item.summary}</p>
+        <p className="mt-3 flex-1 text-slate-300 leading-relaxed">{item.summary}</p>
 
         {/* ৪. লিংক অ্যারো এক্সপ্যানশন মাইক্রো-ইন্টারেকশন (Arrow Gap Slide) */}
-        <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-brand-600 transition-all duration-200 ease-out group-hover:gap-2.5 group-hover:text-brand-800">
+        <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-[#4ADE80] transition-all duration-200 ease-out group-hover:gap-2.5 group-hover:text-white">
           <span>{t.serviceDetail.viewDetails}</span>
           <Icon name="arrow" className="h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-x-1" />
         </span>

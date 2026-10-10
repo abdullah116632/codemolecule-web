@@ -34,7 +34,7 @@ export function ServiceDetail({ slug }) {
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Link
             href="/#services"
-            className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 transition hover:text-ink"
+            className="inline-flex items-center gap-2 text-sm font-medium text-slate-400 transition hover:text-white"
           >
             <Icon name="arrow" className="h-4 w-4 rotate-180" />
             {d.back}
@@ -47,30 +47,30 @@ export function ServiceDetail({ slug }) {
               >
                 <Icon name={service.icon} className="h-10 w-10 text-white" />
               </div>
-              <h1 className="font-display mt-8 text-4xl font-light tracking-tight text-ink sm:text-5xl lg:text-6xl">
+              <h1 className="font-display mt-8 text-4xl font-light tracking-tight text-white sm:text-5xl lg:text-6xl">
                 {s.title}
               </h1>
-              <p className="font-display mt-4 text-xl font-medium text-brand-700 sm:text-2xl">{s.tagline}</p>
-              <p className="mt-6 max-w-2xl text-lg text-slate-600">{s.intro}</p>
+              <p className="font-display mt-4 text-xl font-medium text-[#4ADE80] sm:text-2xl">{s.tagline}</p>
+              <p className="mt-6 max-w-2xl text-lg text-slate-400">{s.intro}</p>
             </div>
 
             <SpotlightCard as="aside" className="p-8 shadow-2xl shadow-slate-900/10 lg:sticky lg:top-28">
               <p className="text-sm text-slate-500">{d.from}</p>
-              <p className="font-display mt-1 text-4xl font-light tracking-tight text-ink">{s.price}</p>
-              <div className="mt-5 flex items-center gap-3 rounded-2xl bg-canvas px-4 py-3">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-100 text-brand-700">
+              <p className="font-display mt-1 text-4xl font-light tracking-tight text-white">{s.price}</p>
+              <div className="mt-5 flex items-center gap-3 rounded-2xl bg-[#151b23] px-4 py-3">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-100 text-[#4ADE80]">
                   <Icon name="bolt" className="h-5 w-5" />
                 </span>
                 <div>
                   <p className="text-xs text-slate-500">{d.timeline}</p>
-                  <p className="font-medium text-ink">{s.time}</p>
+                  <p className="font-medium text-white">{s.time}</p>
                 </div>
               </div>
               <ul className="mt-6 space-y-3">
                 {/* Skip the hero's "delivery from 3 days" point — each service shows its own timeline. */}
                 {t.hero.points.slice(1).map((p) => (
-                  <li key={p} className="flex items-start gap-3 text-[15px] text-slate-700">
-                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-700">
+                  <li key={p} className="flex items-start gap-3 text-[15px] text-slate-300">
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-100 text-[#4ADE80]">
                       <Icon name="check" className="h-3.5 w-3.5" />
                     </span>
                     {p}
@@ -88,7 +88,7 @@ export function ServiceDetail({ slug }) {
               </a>
               <Link
                 href="/#pricing"
-                className="mt-3 group btn-fancy inline-flex w-full items-center justify-center gap-2 rounded-full border border-slate-300 px-6 py-3.5 font-semibold text-ink transition hover:border-brand-500 hover:text-brand-600 hover:-translate-y-0.5"
+                className="mt-3 group btn-fancy inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-3.5 font-semibold text-white transition hover:border-brand-500 hover:text-brand-600 hover:-translate-y-0.5"
               >
                 <span>{d.ctaSecondary}</span>
                 <Icon name="arrow" className="h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-x-1" />
@@ -103,19 +103,19 @@ export function ServiceDetail({ slug }) {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Reveal className="max-w-2xl">
             <Eyebrow>{s.title}</Eyebrow>
-            <h2 className="font-display mt-3 text-3xl font-light tracking-tight text-ink sm:text-4xl">{d.included}</h2>
-            <p className="mt-4 text-lg text-slate-600">{d.includedSub}</p>
+            <h2 className="font-display mt-3 text-3xl font-light tracking-tight text-white sm:text-4xl">{d.included}</h2>
+            <p className="mt-4 text-lg text-slate-400">{d.includedSub}</p>
           </Reveal>
 
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {s.features.map((f, i) => (
               <Reveal key={f.title} delay={(i % 3) * 90}>
                 <SpotlightCard className="h-full p-7">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-brand-700 ring-1 ring-brand-100">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#2DD4BF]/10 text-[#4ADE80] ring-1 ring-white/10">
                   <Icon name="check" className="h-5 w-5" />
                 </span>
-                <h3 className="font-display mt-5 text-lg font-bold text-ink">{f.title}</h3>
-                <p className="mt-2 text-[15px] text-slate-600">{f.desc}</p>
+                <h3 className="font-display mt-5 text-lg font-bold text-white">{f.title}</h3>
+                <p className="mt-2 text-[15px] text-slate-400">{f.desc}</p>
               </SpotlightCard>
               </Reveal>
             ))}
@@ -124,7 +124,7 @@ export function ServiceDetail({ slug }) {
       </section>
 
       {/* Ideal for */}
-      <section className="bg-ink py-20 text-white sm:py-24">
+      <section className="bg-transparent py-20 text-white sm:py-24">
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_2fr] lg:px-8">
           <Reveal>
             <Eyebrow className="text-brand-400">{s.title}</Eyebrow>
@@ -144,11 +144,11 @@ export function ServiceDetail({ slug }) {
       </section>
 
       {/* Process */}
-      <section className="bg-canvas-alt py-20 sm:py-24">
+      <section className="bg-transparent py-20 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Reveal className="max-w-2xl">
             <Eyebrow>{t.process.eyebrow}</Eyebrow>
-            <h2 className="font-display mt-3 text-3xl font-light tracking-tight text-ink sm:text-4xl">{d.process}</h2>
+            <h2 className="font-display mt-3 text-3xl font-light tracking-tight text-white sm:text-4xl">{d.process}</h2>
           </Reveal>
           <ol className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
             {t.process.steps.map((step, i) => {
@@ -159,8 +159,8 @@ export function ServiceDetail({ slug }) {
                   <span className="font-display text-sm font-light text-brand-600">
                     {lang === "bn" ? toBanglaDigits(num) : num}
                   </span>
-                  <h3 className="font-display mt-3 text-lg font-bold text-ink">{step.title}</h3>
-                  <p className="mt-2 text-[15px] text-slate-600">{step.desc}</p>
+                  <h3 className="font-display mt-3 text-lg font-bold text-white">{step.title}</h3>
+                  <p className="mt-2 text-[15px] text-slate-400">{step.desc}</p>
                 </SpotlightCard>
                 </Reveal>
               );
@@ -174,18 +174,18 @@ export function ServiceDetail({ slug }) {
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <Reveal className="text-center">
             <Eyebrow>{t.faq.eyebrow}</Eyebrow>
-            <h2 className="font-display mt-3 text-3xl font-light tracking-tight text-ink sm:text-4xl">{d.faq}</h2>
+            <h2 className="font-display mt-3 text-3xl font-light tracking-tight text-white sm:text-4xl">{d.faq}</h2>
           </Reveal>
-          <Reveal className="mt-10 divide-y divide-slate-200 border-y border-slate-200">
+          <Reveal className="mt-10 divide-y divide-white/10 border-y border-white/10">
             {s.faq.map((item) => (
               <details key={item.q} className="group py-5">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-6 [&::-webkit-details-marker]:hidden">
-                  <span className="font-display text-lg font-bold text-ink">{item.q}</span>
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-300 text-slate-600 transition duration-300 group-open:rotate-45 group-open:border-ink group-open:bg-ink group-open:text-white">
+                  <span className="font-display text-lg font-bold text-white">{item.q}</span>
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/20 text-slate-400 transition duration-300 group-open:rotate-45 group-open:border-white group-open:bg-white group-open:text-black">
                     <Icon name="plus" className="h-4 w-4" />
                   </span>
                 </summary>
-                <p className="mt-3 pr-12 text-slate-600">{item.a}</p>
+                <p className="mt-3 pr-12 text-slate-400">{item.a}</p>
               </details>
             ))}
           </Reveal>
@@ -203,7 +203,7 @@ export function ServiceDetail({ slug }) {
               href={quoteLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-8 group btn-fancy btn-shimmer inline-flex items-center justify-center gap-2.5 rounded-full bg-white px-7 py-4 font-bold text-brand-950 shadow-xl transition hover:-translate-y-0.5 hover:bg-brand-50 hover:shadow-2xl"
+              className="mt-8 group btn-fancy btn-shimmer inline-flex items-center justify-center gap-2.5 rounded-full bg-white px-7 py-4 font-bold text-brand-950 shadow-xl transition hover:-translate-y-0.5 hover:bg-[#2DD4BF]/10 hover:shadow-2xl"
             >
               <WhatsAppIcon className="h-5 w-5 text-[#25D366] transition-transform duration-200 group-hover:scale-110" />
               <span>{d.ctaPrimary}</span>
@@ -213,9 +213,9 @@ export function ServiceDetail({ slug }) {
       </section>
 
       {/* Other services */}
-      <section className="border-t border-slate-200 py-20">
+      <section className="border-t border-white/10 py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="font-display text-2xl font-light tracking-tight text-ink">{d.others}</h2>
+          <h2 className="font-display text-2xl font-light tracking-tight text-white">{d.others}</h2>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {others.map((o) => {
               const oTheme = serviceIconThemes[services.indexOf(o) % serviceIconThemes.length];
@@ -231,7 +231,7 @@ export function ServiceDetail({ slug }) {
                 >
                   <Icon name={o.icon} className="h-5 w-5 text-white" />
                 </div>
-                <span className="font-medium text-ink group-hover:text-brand-800 transition-colors">{o[lang].title}</span>
+                <span className="font-medium text-white group-hover:text-[#4ADE80] transition-colors">{o[lang].title}</span>
               </SpotlightCard>
             )})}
           </div>

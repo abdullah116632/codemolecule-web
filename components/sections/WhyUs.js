@@ -25,7 +25,7 @@ export function WhyUs() {
   const w = t.why;
 
   return (
-    <section className="relative overflow-hidden bg-ink py-16 sm:py-24 lg:py-28">
+    <section className="relative overflow-hidden bg-transparent py-16 sm:py-24 lg:py-28">
       {/* Background Dots: Only visible in Option 2 & Option 3 */}
       {(SPOTLIGHT_OPTION === 2 || SPOTLIGHT_OPTION === 3) && (
         <div className="absolute inset-0 opacity-[0.07] bg-[radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] bg-size-[28px_28px]" />
@@ -74,7 +74,7 @@ function WhyUsCard({ item, i }) {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setOpacity(1)}
       onMouseLeave={() => setOpacity(0)}
-      className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/4 p-7 backdrop-blur transition duration-300 hover:-translate-y-1 hover:border-brand-400/40 hover:bg-white/7 hover:shadow-2xl hover:shadow-black/40"
+      className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#141A28] p-7 backdrop-blur transition duration-300 hover:-translate-y-1 hover:border-brand-400/40 hover:bg-[#1E2536] hover:shadow-2xl hover:shadow-black/40"
     >
       {/* 
         [OPTION 1 & 3] Dotted Grid Spotlight Layer:

@@ -7,22 +7,22 @@ import { SpotlightCard } from "../SpotlightCard";
 // Each concept is drawn with CSS only, so there are no placeholder images to replace.
 // Swap these for real screenshots once you have client work.
 const themes = {
-  amber: { bg: "from-amber-400 to-orange-500", soft: "bg-amber-50", dot: "bg-orange-500", layout: "food" },
-  violet: { bg: "from-violet-500 to-fuchsia-500", soft: "bg-violet-50", dot: "bg-violet-500", layout: "gallery" },
-  emerald: { bg: "from-brand-500 to-teal-600", soft: "bg-brand-50", dot: "bg-brand-600", layout: "edu" },
-  sky: { bg: "from-sky-500 to-blue-600", soft: "bg-sky-50", dot: "bg-sky-600", layout: "clinic" },
+  amber: { bg: "from-amber-400 to-orange-500", soft: "bg-[#2dd4bf]/10", dot: "bg-orange-500", layout: "food" },
+  violet: { bg: "from-violet-500 to-fuchsia-500", soft: "bg-violet-500/10", dot: "bg-violet-500", layout: "gallery" },
+  emerald: { bg: "from-brand-500 to-teal-600", soft: "bg-[#2dd4bf]/10", dot: "bg-brand-600", layout: "edu" },
+  sky: { bg: "from-sky-500 to-blue-600", soft: "bg-sky-500/10", dot: "bg-sky-600", layout: "clinic" },
 };
 
 function Preview({ theme, title }) {
   const th = themes[theme];
   return (
     <div className={`aspect-[16/10] overflow-hidden ${th.soft} p-5 sm:p-6 transition-colors duration-300`}>
-      <div className="flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-lg shadow-slate-900/10 transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:scale-[1.025] group-hover:shadow-2xl group-hover:shadow-slate-900/20">
-        <div className="flex items-center justify-between border-b border-slate-100 px-4 py-2.5">
-          <span className="text-[11px] font-bold tracking-tight text-ink">{title}</span>
+      <div className="flex h-full flex-col overflow-hidden rounded-xl bg-[#0B1120] shadow-lg shadow-black/40 transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:scale-[1.025] group-hover:shadow-2xl group-hover:shadow-black/50">
+        <div className="flex items-center justify-between border-b border-white/5 px-4 py-2.5">
+          <span className="text-[11px] font-bold tracking-tight text-white/90">{title}</span>
           <div className="flex gap-1.5">
-            <span className="h-1.5 w-6 rounded-full bg-slate-200" />
-            <span className="h-1.5 w-6 rounded-full bg-slate-200" />
+            <span className="h-1.5 w-6 rounded-full bg-white/10" />
+            <span className="h-1.5 w-6 rounded-full bg-white/10" />
             <span className={`h-1.5 w-8 rounded-full ${th.dot}`} />
           </div>
         </div>
@@ -30,11 +30,11 @@ function Preview({ theme, title }) {
         {th.layout === "gallery" ? (
           <div className="grid flex-1 grid-cols-3 gap-1.5 p-3">
             <div className={`col-span-2 row-span-2 rounded-lg bg-linear-to-br ${th.bg}`} />
-            <div className="rounded-lg bg-slate-800" />
-            <div className="rounded-lg bg-violet-200" />
-            <div className="rounded-lg bg-fuchsia-200" />
-            <div className="rounded-lg bg-slate-300" />
-            <div className="rounded-lg bg-violet-300" />
+            <div className="rounded-lg bg-white/10" />
+            <div className="rounded-lg bg-white/5" />
+            <div className="rounded-lg bg-white/5" />
+            <div className="rounded-lg bg-white/10" />
+            <div className="rounded-lg bg-white/5" />
           </div>
         ) : (
           <div className={`relative flex flex-1 items-center bg-linear-to-br ${th.bg} px-5`}>
@@ -69,8 +69,8 @@ function Preview({ theme, title }) {
         <div className="grid grid-cols-3 gap-2 p-3">
           {[0, 1, 2].map((n) => (
             <div key={n} className="space-y-1">
-              <div className="h-1.5 w-full rounded-full bg-slate-200" />
-              <div className="h-1.5 w-2/3 rounded-full bg-slate-100" />
+              <div className="h-1.5 w-full rounded-full bg-white/20" />
+              <div className="h-1.5 w-2/3 rounded-full bg-white/10" />
             </div>
           ))}
         </div>
@@ -95,10 +95,10 @@ export function Work() {
                 <Preview theme={item.theme} title={item.title} />
                 <div className="flex items-center justify-between gap-4 p-6">
                   <div>
-                    <h3 className="font-display text-lg font-bold text-ink transition-colors duration-200 group-hover:text-brand-800">{item.title}</h3>
-                    <p className="text-[15px] text-slate-600">{item.type}</p>
+                    <h3 className="font-display text-lg font-bold text-white transition-colors duration-200 group-hover:text-[#4ADE80]">{item.title}</h3>
+                    <p className="text-[15px] text-slate-300">{item.type}</p>
                   </div>
-                  <span className="shrink-0 rounded-full border border-slate-200 px-3 py-1 text-xs font-medium text-slate-500 transition-colors duration-200 group-hover:border-brand-300 group-hover:bg-brand-50/60 group-hover:text-brand-700">
+                  <span className="shrink-0 rounded-full border border-white/10 px-3 py-1 text-xs font-medium text-slate-300 transition-colors duration-200 group-hover:border-[#2DD4BF]/20 group-hover:bg-[#2DD4BF]/10 group-hover:text-[#4ADE80]">
                     {w.label}
                   </span>
                 </div>

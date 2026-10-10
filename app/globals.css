@@ -5,10 +5,10 @@
   --font-sans: var(--font-lato), var(--font-noto), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-lato), var(--font-noto), ui-sans-serif, system-ui, sans-serif;
 
-  --color-ink: #0A1118;
-  /* Soft sage off-white instead of pure white; -alt is for alternating sections. */
-  --color-canvas: #F6F6F1;
-  --color-canvas-alt: #EBEBE4;
+  --color-ink: #F8FAFC;
+  /* Dark mode background for the rest of the web pages */
+  --color-canvas: #0B1120;
+  --color-canvas-alt: #0D1426;
     --color-brand-50: #F0FDF4;
   --color-brand-100: #DCFCE7;
   --color-brand-200: #BBF7D0;

@@ -64,7 +64,7 @@ export function SpotlightCard({
         ...(transformStyle ? { transform: transformStyle } : {}),
         ...(transitionStyle ? { transition: transitionStyle } : {}),
       }}
-      className={`group relative overflow-hidden rounded-3xl border border-brand-200/80 bg-white transition duration-300 hover:border-brand-400 hover:shadow-2xl hover:shadow-brand-950/10 ${
+      className={`group relative overflow-hidden rounded-3xl border border-white/10 bg-[#141A28] transition duration-300 hover:border-brand-400/40 hover:bg-[#1E2536] hover:shadow-2xl hover:shadow-brand-950/40 ${
         !tilt ? "hover:-translate-y-1" : ""
       } ${className}`}
       {...props}
@@ -73,7 +73,7 @@ export function SpotlightCard({
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out"
         style={{
           opacity,
-          backgroundImage: `radial-gradient(rgb(34 197 94 / 0.35) 1.5px, transparent 1.5px)`,
+          backgroundImage: `radial-gradient(rgb(34 197 94 / 0.15) 1.5px, transparent 1.5px)`,
           backgroundSize: '22px 22px',
           maskImage: `radial-gradient(260px circle at ${position.x}px ${position.y}px, black 30%, transparent 100%)`,
           WebkitMaskImage: `radial-gradient(260px circle at ${position.x}px ${position.y}px, black 30%, transparent 100%)`,

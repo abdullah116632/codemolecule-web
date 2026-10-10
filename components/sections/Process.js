@@ -23,12 +23,12 @@ export function Process() {
             const num = String(i + 1).padStart(2, "0");
             return (
               <Reveal as="li" key={step.title} delay={i * 100} className="relative flex gap-5 lg:flex-col lg:items-center lg:text-center">
-                <span className="font-display relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border-4 border-canvas-alt bg-ink text-lg font-bold text-white shadow-lg">
+                <span className="font-display relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border-4 border-canvas-alt bg-white/10 text-lg font-bold text-white shadow-lg">
                   {lang === "bn" ? toBanglaDigits(num) : num}
                 </span>
                 <div>
-                  <h3 className="font-display text-lg font-bold text-ink lg:mt-5">{step.title}</h3>
-                  <p className="mt-2 text-[15px] text-slate-600">{step.desc}</p>
+                  <h3 className="font-display text-lg font-bold text-white lg:mt-5">{step.title}</h3>
+                  <p className="mt-2 text-[15px] text-slate-400">{step.desc}</p>
                 </div>
               </Reveal>
             );

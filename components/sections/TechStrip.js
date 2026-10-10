@@ -11,11 +11,11 @@ const AUTO_SPEED = 45; // px per second while idle
 const HOVER_SPEED = 8; // px per second while the pointer is over the strip
 const FRICTION = 4; // how fast drag momentum fades (per second)
 
-// Near-white logos would vanish on the light strip, so they get a dark slate instead.
+// Dark logos would vanish on the dark strip, so they get a light slate instead.
 function logoColor(hex) {
   const n = parseInt(hex, 16);
   const lum = 0.2126 * (n >> 16) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255);
-  return lum > 215 ? "#334155" : `#${hex}`;
+  return lum < 50 ? "#cbd5e1" : `#${hex}`;
 }
 
 const logos = mixedTechLogos.map((icon) => ({ icon, color: logoColor(icon.hex) }));
@@ -106,7 +106,7 @@ export function TechStrip() {
   }, []);
 
   return (
-    <section aria-label={t.techStrip.label} className="relative h-17 border-y border-brand-100 bg-brand-50 hidden lg:block lg:sticky lg:top-[calc(100dvh-4.25rem)]">
+    <section aria-label={t.techStrip.label} className="relative h-17 border-y border-white/5 bg-[#0D1426] hidden lg:block lg:sticky lg:top-[calc(100dvh-4.25rem)]">
       <p className="sr-only">
         {t.techStrip.label}: {mixedTechLogos.map((i) => i.title).join(", ")}
       </p>
