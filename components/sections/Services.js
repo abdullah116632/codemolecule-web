@@ -62,10 +62,10 @@ function ServiceCard({ service, item, i, t }) {
           ? "transform 0.12s ease-out, box-shadow 0.38s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.38s cubic-bezier(0.16, 1, 0.3, 1)"
           : "transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.38s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.38s cubic-bezier(0.16, 1, 0.3, 1)",
       }}
-      className={`group relative flex flex-col items-center justify-center text-center overflow-hidden border-2 border-transparent bg-white/[0.04] p-5 xl:p-7 transition-all duration-[380ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:border-brand-400 hover:shadow-[0_22px_50px_rgba(57,105,159,0.20)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-600 ${
+      className={`group relative flex flex-col text-center overflow-hidden border-2 border-transparent bg-white/[0.04] p-6 xl:p-8 transition-all duration-[380ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:border-brand-400 hover:shadow-[0_22px_50px_rgba(57,105,159,0.20)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-600 ${
         site.showInfinity 
-          ? "aspect-square w-[min(280px,100%)] shrink-0 lg:w-[var(--service-size)] rounded-full" 
-          : "w-full rounded-2xl aspect-[4/3] sm:aspect-square lg:aspect-[4/3]"
+          ? "aspect-square w-[min(280px,100%)] shrink-0 lg:w-[var(--service-size)] rounded-full items-center justify-center" 
+          : "w-full h-full rounded-3xl items-center justify-start"
       }`}
     >
       {/* Dotted spotlight */}
