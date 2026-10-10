@@ -62,7 +62,11 @@ function ServiceCard({ service, item, i, t }) {
           ? "transform 0.12s ease-out, box-shadow 0.38s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.38s cubic-bezier(0.16, 1, 0.3, 1)"
           : "transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.38s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.38s cubic-bezier(0.16, 1, 0.3, 1)",
       }}
-      className="group relative flex aspect-square w-[min(280px,100%)] shrink-0 lg:w-[var(--service-size)] flex-col items-center justify-center text-center overflow-hidden rounded-full border-2 border-transparent bg-white/[0.04] p-5 xl:p-7 transition-all duration-[380ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:border-brand-400 hover:shadow-[0_22px_50px_rgba(57,105,159,0.20)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-600"
+      className={`group relative flex flex-col items-center justify-center text-center overflow-hidden border-2 border-transparent bg-white/[0.04] p-5 xl:p-7 transition-all duration-[380ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:border-brand-400 hover:shadow-[0_22px_50px_rgba(57,105,159,0.20)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-600 ${
+        site.showInfinity 
+          ? "aspect-square w-[min(280px,100%)] shrink-0 lg:w-[var(--service-size)] rounded-full" 
+          : "w-full rounded-2xl aspect-[4/3] sm:aspect-square lg:aspect-[4/3]"
+      }`}
     >
       {/* Dotted spotlight */}
       <div
@@ -121,6 +125,7 @@ export function Services() {
                 <div className="flex flex-col w-full items-center -space-y-16 sm:-space-y-20">
                   {services.map((service, i) => {
                     const item = service[lang];
+                    // Offset right for even, left for odd
                     const offsetClass = i % 2 === 0 ? "ml-auto mr-8 sm:mr-16" : "mr-auto ml-8 sm:ml-16";
                     return (
                       <div key={service.slug} className={`flex w-[38%] sm:w-[30%] justify-center ${offsetClass}`}>
@@ -131,66 +136,58 @@ export function Services() {
                 </div>
               </div>
 
-              {/* Desktop: W-shape honeycomb */}
+              {/* Desktop: W-shape honeycomb with molecule canvas overlay */}
               <div data-molecule-cards className="service-honeycomb hidden lg:block relative py-6">
                 <div className="flex flex-col w-full items-center">
-                  <div className={`service-row service-row-top flex`}>
-                    {services.slice(0, 3).map((service, i) => (
-                      <ServiceCard key={service.slug} service={service} item={service[lang]} i={i} t={t} />
-                    ))}
+                  {/* Top row */}
+                  <div className="service-row service-row-top flex">
+                    {services.slice(0, 3).map((service, i) => {
+                      const item = service[lang];
+                      return (
+                        <ServiceCard
+                          key={service.slug}
+                          service={service}
+                          item={item}
+                          i={i}
+                          t={t}
+                        />
+                      );
+                    })}
                   </div>
+                  {/* Bottom row: cards 3, 4, 5 — offset right by half-stride (+175px) to form W */}
                   <div className="service-row service-row-bottom flex mt-8">
-                    {services.slice(3, 6).map((service, i) => (
-                      <ServiceCard key={service.slug} service={service} item={service[lang]} i={i + 3} t={t} />
-                    ))}
+                    {services.slice(3, 6).map((service, i) => {
+                      const item = service[lang];
+                      return (
+                        <ServiceCard
+                          key={service.slug}
+                          service={service}
+                          item={item}
+                          i={i + 3}
+                          t={t}
+                        />
+                      );
+                    })}
                   </div>
                 </div>
               </div>
             </>
           ) : (
-            <>
-              {/* Orbital Flow Ecosystem (Mobile & Desktop) */}
-              <div data-molecule-cards className="relative w-full flex items-center justify-center min-h-[700px] lg:min-h-[850px] py-12 lg:py-24 overflow-visible">
-                {/* Central Core Hub */}
-                <div data-molecule-hub className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center justify-center w-28 h-28 lg:w-40 lg:h-40 rounded-full border border-brand-500/40 bg-[#0f172a]/80 backdrop-blur-md shadow-[0_0_50px_rgba(34,197,94,0.25)]">
-                  <Icon name="molecule" className="w-10 h-10 lg:w-14 lg:h-14 text-brand-400" />
-                  <span className="mt-2 text-[10px] lg:text-xs font-bold text-white tracking-widest uppercase">Core</span>
-                </div>
-                
-                {/* Orbiting Cards */}
-                <style>{`
-                  ${services.map((_, i) => {
-                    const angle = (i * 360) / 6 - 90;
-                    const rad = angle * (Math.PI / 180);
-                    // Mobile Ellipse: rx = 130, ry = 270
-                    const mx = Math.cos(rad) * 140;
-                    const my = Math.sin(rad) * 280;
-                    // Desktop Circle: r = 320
-                    const dx = Math.cos(rad) * 340;
-                    const dy = Math.sin(rad) * 320;
-                    return `
-                      .orbit-card-${i} { transform: translate(${mx}px, ${my}px); }
-                      @media (min-width: 1024px) {
-                        .orbit-card-${i} { transform: translate(${dx}px, ${dy}px); }
-                      }
-                    `;
-                  }).join("\n")}
-                `}</style>
-
-                {services.map((service, i) => {
-                  const item = service[lang];
-                  return (
-                    <div key={service.slug} className="absolute top-1/2 left-1/2 w-0 h-0 z-20">
-                      <div className={`orbit-card-${i} transition-transform duration-500`}>
-                        <div className="absolute -translate-x-1/2 -translate-y-1/2">
-                          <ServiceCard service={service} item={item} i={i} t={t} />
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </>
+            /* Standard Grid Layout when Infinity is disabled */
+            <div data-molecule-cards className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-12 pb-8">
+              {services.map((service, i) => {
+                const item = service[lang];
+                return (
+                  <ServiceCard
+                    key={service.slug}
+                    service={service}
+                    item={item}
+                    i={i}
+                    t={t}
+                  />
+                );
+              })}
+            </div>
           )}
         </Reveal>
       </div>

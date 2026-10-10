@@ -198,73 +198,52 @@ export default function HeroOrb() {
 
       // Stable particle ribbons, from circle perimeter to circle perimeter.
       // These particles belong to the hero ring too: no second cloud is spawned.
-      const allContainers = services.querySelectorAll("[data-molecule-cards]");
-      let cardsContainer = null;
-      for (const el of allContainers) {
-        if (window.getComputedStyle(el).display !== "none") {
-          cardsContainer = el;
-          break;
-        }
+      let cardsContainer;
+      if (showInfinity) {
+        cardsContainer = desktop ? services.querySelector(".hidden.lg\\:block[data-molecule-cards]") : services.querySelector(".block.lg\\:hidden[data-molecule-cards]");
+      } else {
+        cardsContainer = services.querySelector("[data-molecule-cards]");
       }
-      if (!cardsContainer) cardsContainer = allContainers[0];
       const cardNodes = cardsContainer ? cardsContainer.querySelectorAll("[data-molecule-card]") : [];
       const cards = Array.from(cardNodes, (node) => {
         const rect = node.getBoundingClientRect();
-        return { x: (rect.left + rect.width / 2 - W / 2) * worldPerPixel,
+        return { 
+          x: (rect.left + rect.width / 2 - W / 2) * worldPerPixel,
           y: (H / 2 - rect.top - rect.height / 2) * worldPerPixel,
-          radius: Math.max(rect.width, rect.height) * 0.5 * worldPerPixel };
+          width: rect.width * worldPerPixel,
+          height: rect.height * worldPerPixel,
+          radius: Math.max(rect.width, rect.height) * 0.5 * worldPerPixel 
+        };
       });
       const segments = [];
-      if (cards.length === 6) {
-        if (!showInfinity) {
-          // Solar Ecosystem: stream from central hub to all cards
-          const hubNode = document.querySelector("[data-molecule-hub]");
-          let hub = { x: 0, y: 0, radius: 0 };
-          if (hubNode) {
-            const hr = hubNode.getBoundingClientRect();
-            hub = {
-              x: (hr.left + hr.width / 2 - W / 2) * worldPerPixel,
-              y: (H / 2 - hr.top - hr.height / 2) * worldPerPixel,
-              radius: Math.max(hr.width, hr.height) * 0.5 * worldPerPixel
-            };
-          }
-          
-          for (let n = 0; n < 6; n++) {
-            const from = hub, to = cards[n];
-            const dx = to.x - from.x, dy = to.y - from.y;
-            const length = Math.hypot(dx, dy) || 1;
-            const gap = -18 * worldPerPixel;
-            const startInset = from.radius ? gap : 0;
-            const start = { x: from.x + dx / length * (from.radius + startInset), y: from.y + dy / length * (from.radius + startInset) };
-            const end = { x: to.x - dx / length * (to.radius + gap), y: to.y - dy / length * (to.radius + gap) };
-            segments.push({ start, end });
-          }
+      if (cards.length === 6 && showInfinity) {
+        let chain;
+        if (desktop) {
+          const available = (cards[0].x - cards[0].radius) / worldPerPixel + W / 2 - ar.left - 24;
+          span = Math.min(span, Math.max(64, available * 0.85));
+          centerY = cards[0].y;
+          // Keep the infinity and its first bridge clear of the first card.
+          centerX = Math.min(centerX, cards[0].x - cards[0].radius - span * 0.58 * worldPerPixel - 18 * worldPerPixel);
+          const tip = { x: centerX + span * 0.5 * worldPerPixel, y: centerY, radius: 0 };
+          chain = [tip, cards[0], cards[3], cards[1], cards[4], cards[2], cards[5]];
         } else {
-          let chain;
-          if (desktop) {
-            const available = (cards[0].x - cards[0].radius) / worldPerPixel + W / 2 - ar.left - 24;
-            span = Math.min(span, Math.max(64, available * 0.85));
-            centerY = cards[0].y;
-            centerX = Math.min(centerX, cards[0].x - cards[0].radius - span * 0.58 * worldPerPixel - 18 * worldPerPixel);
-            const tip = { x: centerX + span * 0.5 * worldPerPixel, y: centerY, radius: 0 };
-            chain = [tip, cards[0], cards[3], cards[1], cards[4], cards[2], cards[5]];
-          } else {
-            span = Math.min(130, W * 0.38);
-            centerX = -W * 0.22 * worldPerPixel; 
-            centerY = cards[0].y + cards[0].radius + span * 0.35 * worldPerPixel + 2 * worldPerPixel;
-            const tip = { x: centerX + span * 0.5 * 0.707 * worldPerPixel, y: centerY - span * 0.23 * worldPerPixel, radius: 0 };
-            chain = [tip, cards[0], cards[1], cards[2], cards[3], cards[4], cards[5]];
-          }
-          for (let n = 0; n < chain.length - 1; n++) {
-            const from = chain[n], to = chain[n + 1];
-            const dx = to.x - from.x, dy = to.y - from.y;
-            const length = Math.hypot(dx, dy) || 1;
-            const gap = -18 * worldPerPixel;
-            const startInset = from.radius ? gap : 0;
-            const start = { x: from.x + dx / length * (from.radius + startInset), y: from.y + dy / length * (from.radius + startInset) };
-            const end = { x: to.x - dx / length * (to.radius + gap), y: to.y - dy / length * (to.radius + gap) };
-            segments.push({ start, end });
-          }
+          span = Math.min(130, W * 0.38);
+          centerX = -W * 0.22 * worldPerPixel; // Shift left more
+          // Place infinity above the first card, closer to it
+          centerY = cards[0].y + cards[0].radius + span * 0.35 * worldPerPixel + 2 * worldPerPixel;
+          const tip = { x: centerX + span * 0.5 * 0.707 * worldPerPixel, y: centerY - span * 0.23 * worldPerPixel, radius: 0 };
+          chain = [tip, cards[0], cards[1], cards[2], cards[3], cards[4], cards[5]];
+        }
+        for (let n = 0; n < chain.length - 1; n++) {
+          const from = chain[n], to = chain[n + 1];
+          const dx = to.x - from.x, dy = to.y - from.y;
+          const length = Math.hypot(dx, dy) || 1;
+          // Let the last molecules rest just inside each card edge.
+          const gap = -18 * worldPerPixel;
+          const startInset = from.radius ? gap : 0;
+          const start = { x: from.x + dx / length * (from.radius + startInset), y: from.y + dy / length * (from.radius + startInset) };
+          const end = { x: to.x - dx / length * (to.radius + gap), y: to.y - dy / length * (to.radius + gap) };
+          segments.push({ start, end });
         }
       }
       const color = geo.attributes.color;
@@ -301,49 +280,74 @@ export default function HeroOrb() {
         const effectiveTube = tubeT + noise;
 
         const r = R_MAJOR + R_TUBE * effectiveTube * Math.cos(v);
-        const a = span * 0.5 * worldPerPixel;
-        const b = span * 0.23 * worldPerPixel;
-        const tx = -a * Math.sin(u), ty = 2 * b * Math.cos(2 * u);
-        const len = Math.hypot(tx, ty) || 1;
-        const tube = span * 0.065 * worldPerPixel * effectiveTube;
-        let ix = centerX + a * Math.cos(u) - ty / len * tube * Math.cos(v);
-        let iy = centerY + b * Math.sin(2 * u) + tx / len * tube * Math.cos(v);
-        let iz = tube * Math.sin(v);
-        // Keep the finished infinity airy, like the reference image.
-        // On mobile, particles are denser, so we reduce the brightness.
-        const baseBrightness = desktop ? 0.35 : 0.1;
-        let destinationBrightness = i % 7 === 0 ? 0.05 : baseBrightness;
-
-        // If infinity is hidden, use more particles for the stream and hide the rest
-        const ribbonMod = showInfinity ? 6 : 2;
-        const ribbonParticle = i % ribbonMod === 0;
-
-        if (ribbonParticle && segments.length) {
-          const ribbonIndex = Math.floor(i / ribbonMod);
-          const segment = segments[ribbonIndex % segments.length];
-          const q = u / (Math.PI * 2);
-          const { start, end } = segment;
-          const dx = end.x - start.x, dy = end.y - start.y;
-          const length = Math.hypot(dx, dy) || 1;
-          // Use the hero ring?s own noisy tube cross-section at a smaller scale.
-          // Fewer of those same particles are distributed along each connection.
-          const envelope = 0.72 + 0.28 * Math.sin(q * Math.PI);
-          const bend = (Math.sin(q * 8 + t * 0.4) * 4 + Math.sin(q * 21 - t * 0.3) * 2) * worldPerPixel;
-          const streamTube = (5.5 + 8.5 * Math.max(0, effectiveTube)) * worldPerPixel * envelope;
-          const spread = Math.cos(v) * streamTube;
-          const along = Math.sin(v) * 3 * worldPerPixel;
-          ix = start.x + dx * q + dx / length * along - dy / length * (bend + spread);
-          iy = start.y + dy * q + dy / length * along + dx / length * (bend + spread);
-          iz = Math.sin(v) * streamTube * 0.28;
-          destinationBrightness = 0.3 + 0.2 * (Math.sin(i * 3.71 + t * 0.65) * 0.5 + 0.5);
-        }
-        
+        let ix = 0, iy = 0, iz = 0;
+        let destinationBrightness = 0;
         let targetAlpha = 1;
-        if (!ribbonParticle || (!segments.length && ribbonParticle)) {
-           // Hide extra particles, or hide off-screen bridges on mobile
-           if (!showInfinity || (!segments.length && ribbonParticle)) {
-             targetAlpha = 0;
-           }
+        let ribbonParticle = false;
+
+        if (showInfinity) {
+          const a = span * 0.5 * worldPerPixel;
+          const b = span * 0.23 * worldPerPixel;
+          const tx = -a * Math.sin(u), ty = 2 * b * Math.cos(2 * u);
+          const len = Math.hypot(tx, ty) || 1;
+          const tube = span * 0.065 * worldPerPixel * effectiveTube;
+          ix = centerX + a * Math.cos(u) - ty / len * tube * Math.cos(v);
+          iy = centerY + b * Math.sin(2 * u) + tx / len * tube * Math.cos(v);
+          iz = tube * Math.sin(v);
+          
+          const baseBrightness = desktop ? 0.35 : 0.1;
+          destinationBrightness = i % 7 === 0 ? 0.05 : baseBrightness;
+          
+          const ribbonMod = 6;
+          ribbonParticle = i % ribbonMod === 0;
+
+          if (ribbonParticle && segments.length) {
+            const ribbonIndex = Math.floor(i / ribbonMod);
+            const segment = segments[ribbonIndex % segments.length];
+            const q = u / (Math.PI * 2);
+            const { start, end } = segment;
+            const dx = end.x - start.x, dy = end.y - start.y;
+            const length = Math.hypot(dx, dy) || 1;
+            const envelope = 0.72 + 0.28 * Math.sin(q * Math.PI);
+            const bend = (Math.sin(q * 8 + t * 0.4) * 4 + Math.sin(q * 21 - t * 0.3) * 2) * worldPerPixel;
+            const streamTube = (5.5 + 8.5 * Math.max(0, effectiveTube)) * worldPerPixel * envelope;
+            const spread = Math.cos(v) * streamTube;
+            const along = Math.sin(v) * 3 * worldPerPixel;
+            ix = start.x + dx * q + dx / length * along - dy / length * (bend + spread);
+            iy = start.y + dy * q + dy / length * along + dx / length * (bend + spread);
+            iz = Math.sin(v) * streamTube * 0.28;
+            destinationBrightness = 0.3 + 0.2 * (Math.sin(i * 3.71 + t * 0.65) * 0.5 + 0.5);
+          }
+          
+          if (!ribbonParticle || (!segments.length && ribbonParticle)) {
+             if (!segments.length && ribbonParticle) {
+               targetAlpha = 0;
+             }
+          }
+        } else {
+          // Distributed inside the 6 boxes
+          if (cards.length === 6) {
+            const card = cards[i % 6];
+            // Map u,v to [-1, 1] range to fill the box
+            const nx = (u / Math.PI) - 1;
+            const ny = (v / Math.PI) - 1;
+            
+            // Distribute particles across the card's rectangular bounds, keeping them slightly inside
+            const spreadX = nx * (card.width * 0.45); 
+            const spreadY = ny * (card.height * 0.45);
+            
+            const swirlX = Math.sin(t * 2 + v) * 4 * worldPerPixel;
+            const swirlY = Math.cos(t * 2 + u) * 4 * worldPerPixel;
+            
+            ix = card.x + spreadX + swirlX;
+            iy = card.y + spreadY + swirlY;
+            iz = Math.sin(u * 13) * 10 * worldPerPixel; // Add some depth
+            
+            destinationBrightness = 0.2 + 0.3 * (Math.sin(i * 2 + t) * 0.5 + 0.5); // Lively glow
+            targetAlpha = 1;
+          } else {
+            targetAlpha = 0;
+          }
         }
         // The bridges emerge just after the infinity begins to form.
         const local = ribbonParticle && segments.length
