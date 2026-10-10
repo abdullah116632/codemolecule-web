@@ -295,14 +295,15 @@ export default function HeroOrb() {
           ? Math.max(0, Math.min(1, (morph - 0.08) / 0.92)) : morph;
         const particleBlend = ribbonParticle && segments.length
           ? local ** 3 * (local * (local * 6 - 15) + 10) : blend;
-        const heroScale = Math.min(1, W * worldPerPixel / 4.8, hr.height * worldPerPixel / 4.8);
-        const heroScaleY = W < 768 ? Math.min(1, hr.height * worldPerPixel / 5.5) : heroScale;
-        const hx = r * Math.cos(u) * heroScale, hy = heroY + r * Math.sin(u) * heroScaleY;
+        const unifiedScale = W < 768 
+          ? Math.min(1, hr.height * worldPerPixel / 5.5) 
+          : Math.min(1, W * worldPerPixel / 4.8, hr.height * worldPerPixel / 4.8);
+        const hx = r * Math.cos(u) * unifiedScale, hy = heroY + r * Math.sin(u) * unifiedScale;
         const arc = Math.sin(particleBlend * Math.PI) * Math.sin(u) * 0.15;
         pos.setXYZ(i,
           hx + (ix - hx) * particleBlend,
           hy + (iy - hy) * particleBlend + arc,
-          R_TUBE * effectiveTube * Math.sin(v) * heroScale * (1 - particleBlend) + iz * particleBlend
+          R_TUBE * effectiveTube * Math.sin(v) * unifiedScale * (1 - particleBlend) + iz * particleBlend
         );
         let brightness = 1 + (destinationBrightness - 1) * particleBlend;
         if (transfer > 0 && frameworkRect) {

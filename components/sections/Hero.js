@@ -100,19 +100,33 @@ export function Hero() {
 
       {/* Soft vignette — center stays clear so ring shows, outer edge fades */}
       <div
-        className="pointer-events-none absolute inset-0"
+        className="pointer-events-none absolute inset-0 hidden sm:block"
         style={{
           background:
             "radial-gradient(ellipse 80% 80% at 50% 50%, transparent 35%, rgba(5,10,14,0.55) 65%, #050a0e 90%)",
         }}
       />
+      <div
+        className="pointer-events-none absolute inset-0 sm:hidden"
+        style={{
+          background:
+            "radial-gradient(circle at 50% 50%, transparent 35%, rgba(5,10,14,0.55) 65%, #050a0e 90%)",
+        }}
+      />
 
       {/* Subtle inner glow behind text for legibility */}
       <div
-        className="pointer-events-none absolute inset-0"
+        className="pointer-events-none absolute inset-0 hidden sm:block"
         style={{
           background:
             "radial-gradient(ellipse 45% 45% at 50% 50%, rgba(5,10,14,0.75) 0%, transparent 100%)",
+        }}
+      />
+      <div
+        className="pointer-events-none absolute inset-0 sm:hidden"
+        style={{
+          background:
+            "radial-gradient(circle at 50% 50%, rgba(5,10,14,0.8) 0%, rgba(5,10,14,0.4) 50%, transparent 100%)",
         }}
       />
 
