@@ -103,7 +103,7 @@ function ServiceCard({ service, item, i, t }) {
           : "transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.38s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.38s cubic-bezier(0.16, 1, 0.3, 1)",
       }}
       // ২. কার্ড লিফট-আপ এবং ডিপ শ্যাডো গ্লো (Card Lift & Dynamic Shadow on Hover)
-      className="group relative flex h-full flex-col overflow-hidden rounded-[22px] border-2 border-transparent bg-[#141A28] p-8 transition-all duration-[380ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:border-brand-400 hover:shadow-[0_22px_50px_rgba(57,105,159,0.16)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-600"
+      className="group relative flex aspect-square w-full sm:w-[340px] flex-col items-center justify-center text-center overflow-hidden rounded-full border-2 border-transparent bg-white/[0.04] p-6 sm:p-10 transition-all duration-[380ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:border-brand-400 hover:shadow-[0_22px_50px_rgba(57,105,159,0.16)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-600"
     >
       {/* Dotted grid spotlight layer */}
       <div
@@ -127,7 +127,7 @@ function ServiceCard({ service, item, i, t }) {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 flex flex-col h-full pointer-events-none">
+      <div className="relative z-10 flex flex-col items-center justify-center h-full pointer-events-none">
         {/* ৩. আইকন টুইস্ট, স্কেল এবং কালার্ড গ্লো (Icon Twist & Scale Animation) */}
         <div
           className={`flex h-[62px] w-[62px] items-center justify-center rounded-[18px] bg-gradient-to-br ${theme.gradient} ${theme.glow} ${theme.hoverGlow} text-white transition-all duration-350 ease-out group-hover:scale-110 group-hover:rotate-6`}
@@ -135,13 +135,13 @@ function ServiceCard({ service, item, i, t }) {
           <Icon name={service.icon} className="h-7 w-7 text-white" />
         </div>
 
-        <h3 className="font-display mt-6 text-xl font-bold text-white group-hover:text-[#4ADE80] transition-colors">
+        <h3 className="font-display mt-4 text-lg sm:text-xl font-bold text-white group-hover:text-[#4ADE80] transition-colors">
           {item.title}
         </h3>
-        <p className="mt-3 flex-1 text-slate-300 leading-relaxed">{item.summary}</p>
+        <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-[90%] mx-auto line-clamp-3">{item.summary}</p>
 
         {/* ৪. লিংক অ্যারো এক্সপ্যানশন মাইক্রো-ইন্টারেকশন (Arrow Gap Slide) */}
-        <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-[#4ADE80] transition-all duration-200 ease-out group-hover:gap-2.5 group-hover:text-white">
+        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-[#4ADE80] transition-all duration-200 ease-out group-hover:gap-2.5 group-hover:text-white">
           <span>{t.serviceDetail.viewDetails}</span>
           <Icon name="arrow" className="h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-x-1" />
         </span>
@@ -160,18 +160,35 @@ export function Services() {
         <SectionHeading eyebrow={s.eyebrow} title={s.title} subtitle={s.subtitle} />
 
         <Reveal className="mt-12 sm:mt-16">
-          <MobileCarousel
-            gridClass="lg:grid-cols-3"
-          >
-            {services.map((service, i) => {
-              const item = service[lang];
-              return (
-                <div key={service.slug} className="flex w-full h-full">
-                  <ServiceCard service={service} item={item} i={i} t={t} />
-                </div>
-              );
-            })}
-          </MobileCarousel>
+          {/* Mobile view: Standard Carousel */}
+          <div className="block lg:hidden">
+            <MobileCarousel gridClass="grid-cols-1">
+              {services.map((service, i) => {
+                const item = service[lang];
+                return (
+                  <div key={service.slug} className="flex w-full h-full p-4">
+                    <ServiceCard service={service} item={item} i={i} t={t} />
+                  </div>
+                );
+              })}
+            </MobileCarousel>
+          </div>
+
+          {/* Desktop view: Honeycomb / W Shape (3 on top, 3 on bottom) */}
+          <div className="hidden lg:flex flex-col w-full items-center">
+            <div className="flex justify-center gap-12 w-full max-w-6xl -translate-x-[97px]">
+              {services.slice(0, 3).map((service, i) => {
+                const item = service[lang];
+                return <ServiceCard key={service.slug} service={service} item={item} i={i} t={t} />;
+              })}
+            </div>
+            <div className="flex justify-center gap-12 w-full max-w-6xl -mt-12 translate-x-[97px]">
+              {services.slice(3, 6).map((service, i) => {
+                const item = service[lang];
+                return <ServiceCard key={service.slug} service={service} item={item} i={i + 3} t={t} />;
+              })}
+            </div>
+          </div>
         </Reveal>
       </div>
     </section>

@@ -13,7 +13,7 @@ import { MobileCarousel } from "../MobileCarousel";
    Option 2: Background dots + Smooth glow on cards (No inner dots)
    Option 3: Background dots + Aligned 28px dot grid on cards
    ========================================================================== */
-const SPOTLIGHT_OPTION = 3; // <-- Option 3 ACTIVE
+const SPOTLIGHT_OPTION = 1; // <-- Option 1 ACTIVE
 
 export function Pricing() {
   const { t } = useLanguage();
@@ -81,10 +81,13 @@ function PricingCard({ plan, p, t }) {
       */}
       {(SPOTLIGHT_OPTION === 1 || SPOTLIGHT_OPTION === 3) && (
         <div
-          className="pointer-events-none absolute inset-0"
+          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out"
           style={{
+            opacity,
             backgroundImage: `radial-gradient(rgb(34 197 94 / 0.15) 1px, transparent 1px)`,
             backgroundSize: "28px 28px",
+            maskImage: `radial-gradient(250px circle at ${position.x}px ${position.y}px, black 20%, transparent 100%)`,
+            WebkitMaskImage: `radial-gradient(250px circle at ${position.x}px ${position.y}px, black 20%, transparent 100%)`,
           }}
           aria-hidden="true"
         />

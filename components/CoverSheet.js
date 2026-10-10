@@ -51,7 +51,7 @@ export function CoverSheet({ children }) {
   }, []);
 
   return (
-    <div ref={ref} className="relative z-10 bg-canvas bg-grid">
+    <div ref={ref} className="relative z-10 bg-canvas">
       <div 
         ref={fadeRef}
         aria-hidden="true"
