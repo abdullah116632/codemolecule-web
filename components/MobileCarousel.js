@@ -30,7 +30,7 @@ export function MobileCarousel({
     let minDistance = Infinity;
 
     childNodes.forEach((node, idx) => {
-      const distance = Math.abs(node.offsetLeft - scrollLeft - 16);
+      const distance = Math.abs(node.getBoundingClientRect().left - el.getBoundingClientRect().left - parseFloat(getComputedStyle(el).paddingLeft));
       if (distance < minDistance) {
         minDistance = distance;
         closestIdx = idx;
@@ -52,22 +52,21 @@ export function MobileCarousel({
     if (!el) return;
     const childNodes = el.querySelectorAll(":scope > div[data-slide]");
     if (childNodes[idx]) {
-      childNodes[idx].scrollIntoView({
-        behavior: "smooth",
-        inline: "center",
-        block: "nearest",
+      el.scrollTo({
+        left: el.scrollLeft + childNodes[idx].getBoundingClientRect().left - el.getBoundingClientRect().left - parseFloat(getComputedStyle(el).paddingLeft),
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
       });
     }
   };
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative min-w-0 ${className}`}>
       {/* ── Mobile & Tablet (< lg): horizontal touch carousel ── */}
       <div className="lg:hidden">
         <div
           ref={scrollRef}
           onScroll={handleScroll}
-          className="-mx-4 sm:-mx-6 flex overflow-x-auto snap-x snap-mandatory gap-4 sm:gap-6 px-4 sm:px-6 pb-4 scroll-pl-4 sm:scroll-pl-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+          className="-mx-4 sm:-mx-6 flex min-w-0 overflow-x-auto overscroll-x-contain snap-x snap-mandatory gap-4 sm:gap-6 px-4 sm:px-6 pb-4 scroll-pl-4 sm:scroll-pl-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
         >
           {items.map((child, i) => (
             <div

@@ -14,15 +14,13 @@ import { MobileCarousel } from "../MobileCarousel";
    Option 3: Background dots + Aligned 28px dot grid on cards
    ========================================================================== */
 const SPOTLIGHT_OPTION = 1; // <-- Option 1 ACTIVE
-// const SPOTLIGHT_OPTION = 2; // <-- Option 2 ACTIVE
-// const SPOTLIGHT_OPTION = 3; // <-- Option 3 ACTIVE
 
 export function Pricing() {
   const { t } = useLanguage();
   const p = t.pricing;
 
   return (
-    <section id="pricing" className="relative overflow-hidden bg-gradient-to-b from-[#08111D] via-[#0D1C30] to-[#0A1422] py-16 sm:py-24 lg:py-28">
+    <section id="pricing" className="relative overflow-hidden bg-transparent py-16 sm:py-24 lg:py-28">
       {/* Background Dots: Only visible in Option 2 & Option 3 */}
       {(SPOTLIGHT_OPTION === 2 || SPOTLIGHT_OPTION === 3) && (
         <div aria-hidden className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] bg-size-[28px_28px] opacity-[0.06]" />
@@ -86,8 +84,8 @@ function PricingCard({ plan, p, t }) {
           className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out"
           style={{
             opacity,
-            backgroundImage: `radial-gradient(rgb(34 197 94 / 0.4) 1px, transparent 1px)`,
-            backgroundSize: SPOTLIGHT_OPTION === 3 ? "28px 28px" : "24px 24px",
+            backgroundImage: `radial-gradient(rgb(34 197 94 / 0.15) 1px, transparent 1px)`,
+            backgroundSize: "28px 28px",
             maskImage: `radial-gradient(250px circle at ${position.x}px ${position.y}px, black 20%, transparent 100%)`,
             WebkitMaskImage: `radial-gradient(250px circle at ${position.x}px ${position.y}px, black 20%, transparent 100%)`,
           }}

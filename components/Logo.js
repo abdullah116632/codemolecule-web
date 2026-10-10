@@ -278,11 +278,9 @@ export function Logo({ className = "", onDark = false }) {
       <span
         lang="en"
         translate="no"
-        className={`logo-text text-[14px] leading-none sm:text-[24px] font-bold tracking-tight select-none ${
-          onDark ? "text-slate-100" : "text-ink"
-        }`}
+        className={`logo-text text-[14px] leading-none sm:text-[24px] font-bold tracking-tight select-none text-white`}
       >
-        Code Molecule
+        Code <span className="bg-gradient-to-r from-[#22C55E] via-[#4ADE80] to-[#2DD4BF] bg-clip-text text-transparent">Molecule</span>
       </span>
     </span>
   );

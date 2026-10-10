@@ -1,118 +1,55 @@
 "use client";
 
+import Image from "next/image";
 import { useLanguage } from "../LanguageProvider";
-import { Reveal, SectionHeading } from "../Reveal";
-import { SpotlightCard } from "../SpotlightCard";
+import { Reveal } from "../Reveal";
+import cplPreview from "@/public/projects/cpl27.png";
+import expensePreview from "@/public/projects/expense-tracker.png";
+import portfolioPreview from "@/public/projects/arman-portfolio.png";
 
-// Each concept is drawn with CSS only, so there are no placeholder images to replace.
-// Swap these for real screenshots once you have client work.
-const themes = {
-  amber: { bg: "from-amber-400 to-orange-500", soft: "bg-amber-50", dot: "bg-orange-500", layout: "food" },
-  violet: { bg: "from-violet-500 to-fuchsia-500", soft: "bg-violet-50", dot: "bg-violet-500", layout: "gallery" },
-  emerald: { bg: "from-brand-500 to-teal-600", soft: "bg-brand-50", dot: "bg-brand-600", layout: "edu" },
-  sky: { bg: "from-sky-500 to-blue-600", soft: "bg-sky-50", dot: "bg-sky-600", layout: "clinic" },
+const projects = [
+  { title: "CPL 27", type: "Cricket Tournament Web App", url: "https://cpl27.codemolecule.com/", image: cplPreview },
+  { title: "Expense Tracker", type: "Web Application", url: "https://expensetracker.olivosoft.com/", image: expensePreview },
+  { title: "Arman Hossain", type: "Personal Portfolio", url: "https://myportfolio-three-lyart-69.vercel.app/", image: portfolioPreview },
+];
+
+const copy = {
+  en: { eyebrow: "Our Work", title: "Projects we are proud of", subtitle: "A selection of our recent live projects showing the style and quality you can expect." },
+  bn: {"eyebrow":"আমাদের কাজ","title":"যে প্রজেক্টগুলো নিয়ে আমরা গর্বিত","subtitle":"আমাদের সাম্প্রতিক লাইভ প্রজেক্টের কয়েকটি — কাজের ধরন ও মান দেখে নিন।"},
 };
 
-function Preview({ theme, title }) {
-  const th = themes[theme];
-  return (
-    <div className={`aspect-[16/10] overflow-hidden ${th.soft} p-5 sm:p-6 transition-colors duration-300`}>
-      <div className="flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-lg shadow-slate-900/10 transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:scale-[1.025] group-hover:shadow-2xl group-hover:shadow-slate-900/20">
-        <div className="flex items-center justify-between border-b border-slate-100 px-4 py-2.5">
-          <span className="text-[11px] font-bold tracking-tight text-ink">{title}</span>
-          <div className="flex gap-1.5">
-            <span className="h-1.5 w-6 rounded-full bg-slate-200" />
-            <span className="h-1.5 w-6 rounded-full bg-slate-200" />
-            <span className={`h-1.5 w-8 rounded-full ${th.dot}`} />
-          </div>
-        </div>
-
-        {th.layout === "gallery" ? (
-          <div className="grid flex-1 grid-cols-3 gap-1.5 p-3">
-            <div className={`col-span-2 row-span-2 rounded-lg bg-linear-to-br ${th.bg}`} />
-            <div className="rounded-lg bg-slate-800" />
-            <div className="rounded-lg bg-violet-200" />
-            <div className="rounded-lg bg-fuchsia-200" />
-            <div className="rounded-lg bg-slate-300" />
-            <div className="rounded-lg bg-violet-300" />
-          </div>
-        ) : (
-          <div className={`relative flex flex-1 items-center bg-linear-to-br ${th.bg} px-5`}>
-            <div className="w-3/5 space-y-2">
-              <div className="h-3 w-full rounded-full bg-white/90" />
-              <div className="h-3 w-3/4 rounded-full bg-white/90" />
-              <div className="h-1.5 w-full rounded-full bg-white/50" />
-              <div className="h-1.5 w-2/3 rounded-full bg-white/50" />
-              <div className="mt-3 h-5 w-16 rounded-full bg-white" />
-            </div>
-            {th.layout === "food" && (
-              <div className="absolute right-5 h-20 w-20 rounded-full border-8 border-white/30 bg-white/20 sm:h-24 sm:w-24" />
-            )}
-            {th.layout === "edu" && (
-              <div className="absolute right-5 grid grid-cols-2 gap-1.5">
-                {[0, 1, 2, 3].map((n) => (
-                  <div key={n} className="h-9 w-9 rounded-lg bg-white/25 sm:h-10 sm:w-10" />
-                ))}
-              </div>
-            )}
-            {th.layout === "clinic" && (
-              <div className="absolute right-5 w-24 space-y-1.5 rounded-lg bg-white p-2 sm:w-28">
-                <div className="h-1.5 w-2/3 rounded-full bg-slate-300" />
-                <div className="h-4 w-full rounded bg-slate-100" />
-                <div className="h-4 w-full rounded bg-slate-100" />
-                <div className="h-4 w-full rounded bg-sky-500" />
-              </div>
-            )}
-          </div>
-        )}
-
-        <div className="grid grid-cols-3 gap-2 p-3">
-          {[0, 1, 2].map((n) => (
-            <div key={n} className="space-y-1">
-              <div className="h-1.5 w-full rounded-full bg-slate-200" />
-              <div className="h-1.5 w-2/3 rounded-full bg-slate-100" />
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export function Work() {
-  const { t } = useLanguage();
-  const w = t.work;
-
+  const { lang } = useLanguage();
+  const heading = copy[lang] || copy.en;
   return (
-    <section id="work" className="py-16 sm:py-24 lg:py-28">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <SectionHeading eyebrow={w.eyebrow} title={w.title} subtitle={w.subtitle} />
-
-        <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {w.items.map((item, i) => (
-            <Reveal key={item.title} delay={(i % 3) * 120}>
-              <SpotlightCard as="a" href={item.backupUrl ? `/api/redirect?primary=${encodeURIComponent(item.url)}&backup=${encodeURIComponent(item.backupUrl)}` : item.url} target="_blank" rel="noopener noreferrer" tilt={true} className="cursor-pointer block">
-                {item.image ? (
-                  <div className="aspect-[16/10] overflow-hidden bg-slate-100 p-5 sm:p-6">
-                    <img src={item.image} alt={item.title} className="h-full w-full object-cover object-top rounded-xl shadow-lg transition-transform duration-500 group-hover:-translate-y-2 group-hover:scale-[1.025]" />
+    <section id="work" className="relative bg-transparent pb-16 pt-8 sm:pb-20 sm:pt-8">
+      <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
+        <Reveal className="mx-auto max-w-3xl text-center">
+          <p className="text-sm font-medium uppercase tracking-[0.2em] text-emerald-400">{heading.eyebrow}</p>
+          <h2 className="font-display mt-3 text-3xl font-normal tracking-tight text-white sm:text-4xl">{heading.title}</h2>
+          <p className="mt-5 text-base leading-relaxed text-slate-300 sm:text-lg">{heading.subtitle}</p>
+        </Reveal>
+        <div className="mt-12 grid items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3 sm:mt-16">
+          {projects.map((project, index) => (
+            <Reveal key={project.url} delay={index * 100} className="h-full">
+              <a href={project.url} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${project.title} (opens in a new tab)`}
+                className="group relative flex h-full flex-col overflow-hidden rounded-[24px] border border-emerald-400/20 bg-[#141a28] transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-2.5 hover:border-emerald-400 hover:shadow-[0_24px_35px_-12px_rgba(0,0,0,0.25)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-600 motion-reduce:transform-none motion-reduce:transition-none">
+                <div className="relative aspect-video w-full overflow-hidden bg-[#081412]">
+                    <Image src={project.image} alt={`${project.title} live website homepage`} fill sizes="(min-width: 1440px) 442px, (min-width: 1280px) 32vw, (min-width: 768px) 48vw, 95vw" className="object-cover object-top" placeholder="blur" />
+                </div>
+                <div className="relative flex min-h-[110px] flex-1 items-center justify-between gap-3 px-4 py-5 sm:px-6">
+                  <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent to-emerald-500/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-60" style={{ backgroundImage: "radial-gradient(rgb(16 185 129 / 0.45) 1px, transparent 1px)", backgroundSize: "22px 22px", maskImage: "linear-gradient(to right, transparent, black)" }} />
+                  <div className="relative min-w-0">
+                    <h3 className="font-display text-lg font-bold text-white transition-colors duration-200 group-hover:text-emerald-300">{project.title}</h3>
+                    <p className="mt-1 text-sm leading-snug text-slate-300">{project.type}</p>
                   </div>
-                ) : (
-                  <Preview theme={item.theme} title={item.title} />
-                )}
-                <div className="flex items-center justify-between gap-4 p-6">
-                  <div>
-                    <h3 className="font-display text-lg font-bold text-ink transition-colors duration-200 group-hover:text-brand-800">{item.title}</h3>
-                    <p className="text-[15px] text-slate-600">{item.type}</p>
-                  </div>
-                  <span className="shrink-0 rounded-full border border-slate-200 px-3 py-1 text-xs font-medium text-slate-500 transition-colors duration-200 group-hover:border-brand-300 group-hover:bg-brand-50/60 group-hover:text-brand-700 flex items-center gap-1.5">
-                    <span className="relative flex h-1.5 w-1.5">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                    </span>
-                    {w.label}
+                  <span className="relative inline-flex shrink-0 items-center gap-1.5 rounded-full border border-emerald-400/20 px-3 py-1 text-xs font-medium text-emerald-300 transition-colors duration-200 group-hover:border-emerald-400/40 group-hover:bg-emerald-500/10 group-hover:text-emerald-400">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_0_2px_rgba(16,185,129,0.12)]" />
+                    Live
                   </span>
                 </div>
-              </SpotlightCard>
+              </a>
             </Reveal>
           ))}
         </div>

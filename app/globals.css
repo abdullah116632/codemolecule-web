@@ -5,10 +5,10 @@
   --font-sans: var(--font-lato), var(--font-noto), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-lato), var(--font-noto), ui-sans-serif, system-ui, sans-serif;
 
-  --color-ink: #0A1118;
-  /* Soft sage off-white instead of pure white; -alt is for alternating sections. */
-  --color-canvas: #F6F6F1;
-  --color-canvas-alt: #EBEBE4;
+  --color-ink: #F8FAFC;
+  /* Dark mode background for the rest of the web pages (Deep Dark Green theme) */
+  --color-canvas: #060D0A;
+  --color-canvas-alt: #08120E;
     --color-brand-50: #F0FDF4;
   --color-brand-100: #DCFCE7;
   --color-brand-200: #BBF7D0;
@@ -81,10 +81,11 @@ html[data-lang="en"] .logo-text {
 }
 
 .bg-grid {
-  background-image:
-    linear-gradient(to right, rgb(15 23 42 / 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(15 23 42 / 0.05) 1px, transparent 1px);
-  background-size: 44px 44px;
+  background-image: 
+    radial-gradient(circle at 0 0, rgba(34, 197, 94, 0.5) 1.5px, transparent 2px),
+    linear-gradient(to right, rgba(34, 197, 94, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(34, 197, 94, 0.08) 1px, transparent 1px);
+  background-size: 80px 80px;
 }
 
 .reveal {
@@ -488,3 +489,58 @@ html[data-font-theme="nunito"] .font-light {
   .live-logo * { animation: none !important; }
   .live-logo .fill-line, .live-logo .burst, .live-logo .glow, .live-logo .tint { opacity: 0; }
 }
+
+/* Process timeline: a drawn route, staggered arrivals, and quiet hover motion. */
+.process-timeline { --process-progress: 1; }
+.process-track { position: absolute; top: 24px; bottom: 24px; left: 23px; width: 1px; background: rgb(255 255 255 / .08); }
+.process-track-fill { display: block; height: 100%; width: 100%; transform: scaleY(var(--process-progress)); transform-origin: top; background: linear-gradient(to bottom, rgb(34 197 94 / .2), #4ade80, rgb(34 197 94 / .3)); box-shadow: 0 0 12px rgb(34 197 94 / .15); }
+.process-step { --step-entry: 1; }
+.process-node { transition: border-color .4s ease, color .4s ease, box-shadow .4s ease, background-color .4s ease; }
+.process-step.is-active .process-node { color: #86efac; border-color: rgb(74 222 128 / .35); box-shadow: 0 0 24px rgb(34 197 94 / .08); }
+.process-node-halo { opacity: 0; transform: scale(.85); transition: opacity .5s ease, transform .5s ease; }
+.process-step.is-active .process-node-halo { opacity: 1; transform: scale(1); }
+.process-step.is-active .process-node path { stroke-dasharray: 160; animation: process-icon-draw 1.1s ease both; }
+.process-card { opacity: calc(.15 + var(--step-entry) * .85); transform: translateY(calc((1 - var(--step-entry)) * 22px)); transition: border-color .35s ease, background-color .35s ease, box-shadow .35s ease; }
+.process-card-glow { opacity: 0; transition: opacity .4s ease; }
+.process-card-accent { transform: scaleX(var(--step-entry)); transform-origin: left; opacity: .5; }
+.process-step:hover .process-card { border-color: rgb(74 222 128 / .28); background-color: rgb(255 255 255 / .045); box-shadow: 0 12px 35px rgb(0 0 0 / .15); }
+.process-step:hover .process-card-glow { opacity: 1; }
+.process-step:hover .process-node { background-color: rgb(34 197 94 / .1); box-shadow: 0 0 30px rgb(34 197 94 / .14); }
+.process-launch.is-active .process-card { border-color: rgb(34 197 94 / .2); }
+@keyframes process-icon-draw { from { stroke-dashoffset: 160; } to { stroke-dashoffset: 0; } }
+@media (min-width: 1024px) {
+  .process-track { top: 24px; bottom: auto; left: 10%; right: 10%; width: auto; height: 1px; }
+  .process-track-fill { transform: scaleX(var(--process-progress)); transform-origin: left; background: linear-gradient(to right, rgb(34 197 94 / .2), #4ade80, rgb(34 197 94 / .3)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .process-node, .process-node-halo, .process-card, .process-card-glow { transition: none; }
+  .process-step.is-active .process-node path { animation: none; }
+  .process-card { transform: none; opacity: 1; }
+  .process-card-accent, .process-track-fill { transform: none; }
+}
+
+/* Flexible layout keeps the original honeycomb inside its container. */
+html { overflow-x: clip; }
+body { min-width: 0; }
+main, section, footer { min-width: 0; }
+img, video { max-width: 100%; }
+input, select, textarea { min-width: 0; max-width: 100%; }
+.service-honeycomb { --service-size: clamp(210px, 17vw, 280px); --service-gap: clamp(28px, 4vw, 80px); }
+.service-row { gap: var(--service-gap); width: max-content; max-width: 100%; }
+.service-row-top { margin-left: auto; margin-right: calc((var(--service-size) + var(--service-gap)) / 2); }
+.service-row-bottom { margin-left: auto; }
+@media (max-width: 639px) {
+  .logo-text { font-size: clamp(12px, 4vw, 14px); white-space: nowrap; }
+  #why-code-molecule [data-framework-row] .group { gap: 12px; padding: 14px 12px; }
+  #work h3 { overflow-wrap: anywhere; }
+  #contact-form-container input, #contact-form-container select, #contact-form-container textarea { font-size: 16px; }
+}
+@media (hover: none), (pointer: coarse) {
+  [data-molecule-card] { transform: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+header { padding-inline: env(safe-area-inset-left) env(safe-area-inset-right); }
+h1, h2, h3 { overflow-wrap: break-word; }
