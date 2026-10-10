@@ -164,20 +164,10 @@ export default function HeroOrb() {
       const hr = hero.getBoundingClientRect();
       const sr = services.getBoundingClientRect();
       const ar = anchor.getBoundingClientRect();
-      const why = document.getElementById("why-code-molecule");
-      const framework = document.querySelector("[data-framework-destination]");
-      const whyRect = why?.getBoundingClientRect();
-      const frameworkRect = framework?.getBoundingClientRect();
-      const frameworkNodes = framework ? Array.from(framework.querySelectorAll("[data-framework-row]"), (row) => row.getBoundingClientRect()) : [];
-      const frameworkOpen = Math.max(0, Math.min(1, Number(framework?.dataset.frameworkOpen || 0)));
-      const transferRaw = whyRect && frameworkRect && !reducedMotion.matches
-        ? Math.max(0, Math.min(1, (H * 0.85 - whyRect.top) / (H * 0.65))) : 0;
-      const transfer = transferRaw * transferRaw * (3 - 2 * transferRaw);
-      const frameworkVisible = Boolean(whyRect && whyRect.bottom > 0 && whyRect.top < H);
-      const target = Math.max(0, Math.min(1, (H * 0.92 - sr.top) / (H * 0.8)));
       const reduced = reducedMotion.matches;
+      const target = (sr.top < H * 0.35) ? 1 : 0;
       if (morph === null || reduced) morph = target;
-      else morph += (target - morph) * (1 - Math.exp(-12 * dt));
+      else morph += (target - morph) * (1 - Math.exp(-2.5 * dt));
       const blend = morph ** 3 * (morph * (morph * 6 - 15) + 10);
       const halfH = 3.8 * Math.tan(52 * Math.PI / 360);
       const worldPerPixel = halfH * 2 / H;
@@ -186,11 +176,11 @@ export default function HeroOrb() {
       let centerX = ((desktop ? ar.left + span * 0.55 + 24 : W / 2) - W / 2) * worldPerPixel;
       let centerY = (H / 2 - ar.top - (desktop ? 164 : 48)) * worldPerPixel;
       const heroY = (H / 2 - hr.top - hr.height / 2) * worldPerPixel * (1 - blend);
-      mountRef.current.style.visibility = hr.bottom > 0 || sr.bottom > 0 || (transfer > 0 && frameworkVisible) ? "visible" : "hidden";
+      mountRef.current.style.visibility = hr.bottom > 0 || sr.bottom > 0 ? "visible" : "hidden";
       raf = requestAnimationFrame(animate);
       const t = reduced ? 0 : (Date.now() - startTime) / 1000;
 
-      if ((sr.bottom <= 0 && !(transfer > 0 && frameworkVisible)) || document.hidden) return;
+      if (sr.bottom <= 0 || document.hidden) return;
 
       // Stable particle ribbons, from circle perimeter to circle perimeter.
       // These particles belong to the hero ring too: no second cloud is spawned.
@@ -318,38 +308,6 @@ export default function HeroOrb() {
           R_TUBE * effectiveTube * Math.sin(v) * unifiedScale * (1 - particleBlend) + iz * particleBlend
         );
         let brightness = 1 + (destinationBrightness - 1) * particleBlend;
-        if (transfer > 0 && frameworkRect) {
-          // The existing cloud resolves into a restrained four-node framework.
-          const q = u / (Math.PI * 2);
-          const node = frameworkNodes[Math.floor(i / 4) % 4];
-          const first = frameworkNodes[0];
-          const last = frameworkNodes[frameworkNodes.length - 1];
-          if (node && first && last) {
-            const axisX = frameworkRect.left + 8;
-            const nodeY = node.top + node.height / 2;
-            const group = i % 4;
-            let pixelX = axisX;
-            let pixelY = nodeY;
-            if (group === 0) {
-              pixelY = first.top + first.height / 2 + q * (last.top + last.height / 2 - first.top - first.height / 2);
-              pixelX += Math.cos(v) * 1.8;
-            } else if (group === 1) {
-              pixelX += q * (node.left - axisX);
-              pixelY += Math.cos(v) * 1.5;
-            } else {
-              pixelX += Math.cos(u) * (5 + tubeT * 2);
-              pixelY += Math.sin(u) * (5 + tubeT * 2);
-            }
-            const frameworkX = (pixelX - W / 2) * worldPerPixel;
-            const frameworkY = (H / 2 - pixelY) * worldPerPixel;
-            pos.setXYZ(i,
-              pos.getX(i) + (frameworkX - pos.getX(i)) * transfer,
-              pos.getY(i) + (frameworkY - pos.getY(i)) * transfer,
-              pos.getZ(i) * (1 - transfer));
-          }
-          const weaveBrightness = i % 11 === 0 ? 0.28 * (1 - frameworkOpen * 0.65) : 0;
-          brightness += (weaveBrightness - brightness) * transfer;
-        }
         color.setXYZ(i, baseColors[i * 3] * brightness, baseColors[i * 3 + 1] * brightness, baseColors[i * 3 + 2] * brightness);
       }
       pos.needsUpdate = true;
