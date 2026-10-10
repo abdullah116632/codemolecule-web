@@ -9,6 +9,7 @@ import { Reveal, SectionHeading } from "../Reveal";
 import { services } from "@/lib/services";
 import { site } from "@/lib/site.config";
 import { MobileCarousel } from "../MobileCarousel";
+import NetworkMesh from "../NetworkMesh";
 
 
 
@@ -114,64 +115,55 @@ export function Services() {
 
         <Reveal className="mt-12 sm:mt-16">
           <div data-molecule-destination aria-hidden="true" className="pointer-events-none h-28 lg:h-0" />
-          {/* Mobile: Vertical zigzag */}
-          <div data-molecule-cards className="block lg:hidden relative pt-12 pb-8">
-            <div className="flex flex-col w-full items-center -space-y-16 sm:-space-y-20">
-              {services.map((service, i) => {
-                const item = service[lang];
-                // Offset right for even, left for odd
-                const offsetClass = i % 2 === 0 ? "ml-auto mr-8 sm:mr-16" : "mr-auto ml-8 sm:ml-16";
-                return (
-                  <div key={service.slug} className={`flex w-[38%] sm:w-[30%] justify-center ${offsetClass}`}>
-                    <ServiceCard service={service} item={item} i={i} t={t} />
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+          
+          {site.showInfinity ? (
+            <>
+              {/* Mobile: Vertical zigzag */}
+              <div data-molecule-cards className="block lg:hidden relative pt-12 pb-8">
+                <div className="flex flex-col w-full items-center -space-y-16 sm:-space-y-20">
+                  {services.map((service, i) => {
+                    const item = service[lang];
+                    const offsetClass = i % 2 === 0 ? "ml-auto mr-8 sm:mr-16" : "mr-auto ml-8 sm:ml-16";
+                    return (
+                      <div key={service.slug} className={`flex w-[38%] sm:w-[30%] justify-center ${offsetClass}`}>
+                        <ServiceCard service={service} item={item} i={i} t={t} />
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
 
-          {/* Desktop: W-shape honeycomb with molecule canvas overlay */}
-          <div data-molecule-cards className="service-honeycomb hidden lg:block relative py-6">
-            <div className="flex flex-col w-full items-center">
-              {/* Top row */}
-              <div 
-                className={`service-row service-row-top flex`}
-                style={!site.showInfinity ? { marginLeft: 0, marginRight: 0, transform: "translateX(calc((var(--service-size) + var(--service-gap)) / -4))" } : undefined}
-              >
-                {services.slice(0, 3).map((service, i) => {
-                  const item = service[lang];
-                  return (
-                    <ServiceCard
-                      key={service.slug}
-                      service={service}
-                      item={item}
-                      i={i}
-                      t={t}
-                     
-                    />
-                  );
-                })}
+              {/* Desktop: W-shape honeycomb with molecule canvas overlay */}
+              <div data-molecule-cards className="service-honeycomb hidden lg:block relative py-6">
+                <div className="flex flex-col w-full items-center">
+                  {/* Top row */}
+                  <div className="service-row service-row-top flex">
+                    {services.slice(0, 3).map((service, i) => (
+                      <ServiceCard key={service.slug} service={service} item={service[lang]} i={i} t={t} />
+                    ))}
+                  </div>
+                  {/* Bottom row */}
+                  <div className="service-row service-row-bottom flex mt-8">
+                    {services.slice(3, 6).map((service, i) => (
+                      <ServiceCard key={service.slug} service={service} item={service[lang]} i={i + 3} t={t} />
+                    ))}
+                  </div>
+                </div>
               </div>
-              {/* Bottom row: cards 3, 4, 5 — offset right by half-stride (+175px) to form W */}
-              <div 
-                className="service-row service-row-bottom flex mt-8"
-                style={!site.showInfinity ? { marginLeft: 0, marginRight: 0, transform: "translateX(calc((var(--service-size) + var(--service-gap)) / 4))" } : undefined}
-              >
-                {services.slice(3, 6).map((service, i) => {
-                  const item = service[lang];
-                  return (
-                    <ServiceCard
-                      key={service.slug}
-                      service={service}
-                      item={item}
-                      i={i + 3}
-                      t={t}
-                    />
-                  );
-                })}
+            </>
+          ) : (
+            /* Modern 3x2 Grid / Stack with NetworkMesh background */
+            <div className="relative py-12 lg:py-16 w-full">
+              <NetworkMesh />
+              <div className="relative z-10 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-12 place-items-center">
+                {services.map((service, i) => (
+                  <div key={service.slug} className="w-[85%] sm:w-[70%] md:w-full max-w-[320px] lg:max-w-none flex justify-center">
+                    <ServiceCard service={service} item={service[lang]} i={i} t={t} />
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
+          )}
         </Reveal>
       </div>
     </section>
