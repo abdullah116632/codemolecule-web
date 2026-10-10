@@ -61,7 +61,7 @@ function ServiceCard({ service, item, i, t }) {
           ? "transform 0.12s ease-out, box-shadow 0.38s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.38s cubic-bezier(0.16, 1, 0.3, 1)"
           : "transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.38s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.38s cubic-bezier(0.16, 1, 0.3, 1)",
       }}
-      className="group relative flex aspect-square w-[280px] flex-col items-center justify-center text-center overflow-hidden rounded-full border-2 border-transparent bg-white/[0.04] p-7 transition-all duration-[380ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:border-brand-400 hover:shadow-[0_22px_50px_rgba(57,105,159,0.20)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-600"
+      className="group relative flex aspect-square w-[min(280px,100%)] shrink-0 lg:w-[var(--service-size)] flex-col items-center justify-center text-center overflow-hidden rounded-full border-2 border-transparent bg-white/[0.04] p-5 xl:p-7 transition-all duration-[380ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:border-brand-400 hover:shadow-[0_22px_50px_rgba(57,105,159,0.20)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-600"
     >
       {/* Dotted spotlight */}
       <div
@@ -86,7 +86,7 @@ function ServiceCard({ service, item, i, t }) {
       />
 
       <div className="relative z-10 flex flex-col items-center justify-center h-full pointer-events-none">
-        <div className={`flex h-[56px] w-[56px] items-center justify-center rounded-[18px] bg-gradient-to-br ${theme.gradient} ${theme.glow} ${theme.hoverGlow} text-white transition-all duration-350 ease-out group-hover:scale-110 group-hover:rotate-6`}>
+        <div className={`flex shrink-0 h-[48px] w-[48px] xl:h-[56px] xl:w-[56px] items-center justify-center rounded-[18px] bg-gradient-to-br ${theme.gradient} ${theme.glow} ${theme.hoverGlow} text-white transition-all duration-350 ease-out group-hover:scale-110 group-hover:rotate-6`}>
           <Icon name={service.icon} className="h-6 w-6 text-white" />
         </div>
         <h3 className="font-display mt-3.5 text-base sm:text-lg font-bold text-white group-hover:text-[#4ADE80] transition-colors leading-tight">{item.title}</h3>
@@ -119,7 +119,7 @@ export function Services() {
               {services.map((service, i) => {
                 const item = service[lang];
                 return (
-                  <div key={service.slug} className="flex w-full h-full p-4">
+                  <div key={service.slug} className="flex w-full h-full justify-center p-2">
                     <ServiceCard service={service} item={item} i={i} t={t} />
                   </div>
                 );
@@ -128,13 +128,13 @@ export function Services() {
           </div>
 
           {/* Desktop: W-shape honeycomb with molecule canvas overlay */}
-          <div data-molecule-cards className="hidden lg:block relative py-6">
+          <div data-molecule-cards className="service-honeycomb hidden lg:block relative py-6">
             {/* Molecule infinity + connector lines */}
 
 
             <div className="flex flex-col w-full items-center">
               {/* Top row: cards 0, 1, 2 — with 80px spacing, shifted right */}
-              <div className="flex justify-center gap-20 w-full translate-x-[200px]">
+              <div className="service-row service-row-top flex">
                 {services.slice(0, 3).map((service, i) => {
                   const item = service[lang];
                   return (
@@ -150,7 +150,7 @@ export function Services() {
                 })}
               </div>
               {/* Bottom row: cards 3, 4, 5 — offset right by half-stride (+175px) to form W */}
-              <div className="flex justify-center gap-20 w-full mt-8 translate-x-[375px]">
+              <div className="service-row service-row-bottom flex mt-8">
                 {services.slice(3, 6).map((service, i) => {
                   const item = service[lang];
                   return (

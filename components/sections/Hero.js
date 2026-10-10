@@ -16,18 +16,18 @@ const HERO_VARIATIONS = {
       titleB: "Digital Products",
       titleC: "that people love",
       subtitle:
-        "From custom apps and web platforms to landing pages and portfolios — Code Molecule crafts fast, modern digital experiences for startups and businesses in Bangladesh.",
+        "From custom apps and web platforms to landing pages and portfolios Code Molecule crafts fast, modern digital experiences for startups and businesses in Bangladesh.",
     },
     {
       titleA: "Beautiful websites",
       titleB: "for your business",
       titleC: "delivered in days",
       subtitle:
-        "Code Molecule designs and builds fast, modern landing pages, portfolios and business websites. Everything is agreed upfront — scope, price and timeline — so there are no surprises.",
+        "Code Molecule designs and builds fast, modern landing pages, portfolios and business websites. Everything is agreed upfront scope, price and timeline so there are no surprises.",
     },
     {
-      titleA: "Stunning apps",
-      titleB: "built for iOS",
+      titleA: "Stunning apps built",
+      titleB: "for iOS",
       titleC: "& Android",
       subtitle:
         "We design and develop beautiful, fast native mobile applications that your users will love. Launch your app on both platforms simultaneously.",
@@ -39,14 +39,14 @@ const HERO_VARIATIONS = {
       titleB: "ডিজিটাল প্রোডাক্ট",
       titleC: "যা মানুষ ভালোবাসে",
       subtitle:
-        "কাস্টম অ্যাপ, ওয়েব প্ল্যাটফর্ম, ল্যান্ডিং পেজ থেকে পোর্টফোলিও — Code Molecule বাংলাদেশের স্টার্টআপ ও ব্যবসার জন্য দ্রুত ও আধুনিক ডিজিটাল এক্সপেরিয়েন্স তৈরি করে।",
+        "কাস্টম অ্যাপ, ওয়েব প্ল্যাটফর্ম, ল্যান্ডিং পেজ থেকে পোর্টফোলিও Code Molecule বাংলাদেশের স্টার্টআপ ও ব্যবসার জন্য দ্রুত ও আধুনিক ডিজিটাল এক্সপেরিয়েন্স তৈরি করে।",
     },
     {
       titleA: "আপনার ব্যবসার জন্য",
       titleB: "সুন্দর ওয়েবসাইট",
       titleC: "মাত্র কয়েক দিনে",
       subtitle:
-        "Code Molecule দ্রুত ও আধুনিক ল্যান্ডিং পেজ, পোর্টফোলিও আর বিজনেস ওয়েবসাইট ডিজাইন করে বানিয়ে দেয়। কাজের পরিধি, দাম আর সময় — সবকিছু শুরুর আগেই ঠিক করে নেওয়া হয়।",
+        "Code Molecule দ্রুত ও আধুনিক ল্যান্ডিং পেজ, পোর্টফোলিও আর বিজনেস ওয়েবসাইট ডিজাইন করে বানিয়ে দেয়। কাজের পরিধি, দাম আর সময় সবকিছু শুরুর আগেই ঠিক করে নেওয়া হয়।",
     },
     {
       titleA: "আপনার বিজনেসের",
@@ -68,6 +68,7 @@ export function Hero() {
 
   // Auto-rotate slides every 4 s
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const langKey = lang === "bn" ? "bn" : "en";
     const count = HERO_VARIATIONS[langKey].length;
     const id = setInterval(() => {
@@ -92,7 +93,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-[#050a0e] pt-20"
+      className="relative flex min-h-[100svh] w-full flex-col items-center justify-center overflow-hidden bg-[#050a0e] pt-24 pb-10"
     >
       {/* 3-D Particle Orb — fills the whole section */}
 
@@ -116,21 +117,21 @@ export function Hero() {
       />
 
       {/* Centered content */}
-      <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center gap-6 px-6 text-center">
+      <div className="relative z-30 mx-auto flex w-full max-w-3xl flex-col items-center gap-6 px-6 text-center">
         {/* Fixed height container so buttons don't jump when text changes */}
         <div className="flex w-full flex-col items-center justify-center min-h-[320px] sm:min-h-[280px] md:min-h-[320px] xl:min-h-[380px]">
           {/* Animated heading */}
           <div className={animClass}>
-            <h1 className="font-display text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl xl:text-7xl leading-[1.1]">
+            <h1 className="font-display text-[clamp(1.875rem,8vw,2.25rem)] font-bold tracking-tight text-white sm:text-5xl md:text-6xl xl:text-7xl leading-[1.1]">
               {hero.titleA}{" "}
               <span className="bg-gradient-to-r from-[#22C55E] via-[#4ADE80] to-[#2DD4BF] bg-clip-text text-transparent">
                 {hero.titleB}
               </span>
               <br />
-              <span className="text-white/90">{hero.titleC}</span>
+              <span className={langKey === "en" && slide === 2 ? "bg-gradient-to-r from-[#22C55E] via-[#4ADE80] to-[#2DD4BF] bg-clip-text text-transparent" : "text-white/90"}>{hero.titleC}</span>
             </h1>
 
-            <p className="mt-5 text-base leading-relaxed text-white/55 sm:text-lg xl:text-xl max-w-2xl mx-auto">
+            <p className="mt-5 text-base leading-relaxed text-white/75 sm:text-lg xl:text-xl max-w-2xl mx-auto">
               {hero.subtitle}
             </p>
           </div>
@@ -142,14 +143,14 @@ export function Hero() {
             href={whatsappLink(t.contact.form.intro)}
             target="_blank"
             rel="noopener noreferrer"
-            className="group btn-fancy btn-shimmer inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#22C55E] to-[#16A34A] px-7 py-4 text-sm font-semibold text-white shadow-[0_0_28px_rgba(34,197,94,0.5)] transition hover:-translate-y-0.5 hover:shadow-[0_0_45px_rgba(34,197,94,0.7)] sm:text-base"
+            className="group btn-fancy btn-shimmer inline-flex items-center justify-center gap-2 rounded-full bg-[#20BD5A] px-7 py-4 text-sm font-semibold text-white shadow-[0_0_28px_rgba(32,189,90,0.25)] transition hover:-translate-y-0.5 hover:shadow-[0_0_45px_rgba(32,189,90,0.4)] sm:text-base"
           >
             <WhatsAppIcon className="h-5 w-5 transition-transform duration-200 group-hover:scale-110" />
             <span>{h.primary}</span>
           </a>
           <a
             href="#pricing"
-            className="group btn-fancy inline-flex items-center justify-center gap-1.5 rounded-full border border-white/20 bg-white/5 px-7 py-4 text-sm font-semibold text-white backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-[#22C55E]/60 hover:bg-white/10 sm:text-base"
+            className="group btn-fancy inline-flex items-center justify-center gap-1.5 rounded-full border border-white/20 bg-[#101619] px-7 py-4 text-sm font-semibold text-white backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-[#22C55E]/60 hover:bg-[#182125] sm:text-base"
           >
             <span>{h.secondary}</span>
             <Icon name="arrow" className="h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-x-1" />

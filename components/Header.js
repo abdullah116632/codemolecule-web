@@ -23,7 +23,7 @@ function LanguageToggle({ className = "" }) {
     >
       <span
         aria-hidden
-        className={`absolute top-[3px] bottom-[3px] sm:top-1 sm:bottom-1 w-[calc(50%-3px)] sm:w-[calc(50%-4px)] rounded-full bg-ink transition-transform duration-300 ${
+        className={`absolute top-[3px] bottom-[3px] sm:top-1 sm:bottom-1 w-[calc(50%-3px)] sm:w-[calc(50%-4px)] rounded-full bg-[#050a0e] border border-[#050a0e] shadow-xs transition-transform duration-300 ${
           lang === "bn" ? "translate-x-full" : "translate-x-0"
         }`}
       />
@@ -34,7 +34,7 @@ function LanguageToggle({ className = "" }) {
           onClick={() => setLang(o.code)}
           aria-pressed={lang === o.code}
           className={`relative z-10 min-w-[40px] sm:min-w-[56px] rounded-full px-2 py-[2px] sm:px-3 sm:py-1 transition-colors ${
-            lang === o.code ? "text-white" : "text-slate-600 hover:text-ink"
+            lang === o.code ? "font-bold text-white" : "font-medium text-black hover:text-black"
           }`}
         >
           {o.label}
@@ -58,6 +58,18 @@ export function Header() {
   }, []);
 
   useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 1280px)");
+    const closeOnDesktop = () => { if (desktop.matches) setOpen(false); };
+    const closeOnEscape = (event) => { if (event.key === "Escape") setOpen(false); };
+    desktop.addEventListener("change", closeOnDesktop);
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      desktop.removeEventListener("change", closeOnDesktop);
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, []);
+
+  useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
@@ -72,7 +84,7 @@ export function Header() {
           : "border-white/5 bg-transparent"
       }`}
     >
-      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-2 px-3 sm:gap-4 sm:px-4 sm:px-6 lg:px-8">
         <Link 
           href="/" 
           aria-label="Code Molecule home" 
@@ -89,7 +101,7 @@ export function Header() {
         </Link>
 
         <nav 
-          className="relative hidden items-center lg:flex" 
+          className="relative hidden items-center xl:flex" 
           aria-label="Main"
           onMouseLeave={() => setHoverState(prev => ({ ...prev, id: null }))}
         >
@@ -146,7 +158,7 @@ export function Header() {
           </Link>
           <button
             type="button"
-            className="btn-fancy shrink-0 inline-flex h-8 w-8 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition hover:border-[#22C55E] hover:text-[#22C55E] lg:hidden"
+            className="btn-fancy shrink-0 inline-flex h-8 w-8 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition hover:border-[#22C55E] hover:text-[#22C55E] xl:hidden"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-controls="mobile-menu"
@@ -159,7 +171,7 @@ export function Header() {
 
       <div 
         id="mobile-menu" 
-        className={`absolute top-[4.5rem] left-0 w-full h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-white/10 bg-[#050a0e] lg:hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${open ? "opacity-100 translate-y-0 visible" : "opacity-0 -translate-y-4 invisible pointer-events-none"}`}
+        className={`absolute top-[4.5rem] left-0 w-full h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-white/10 bg-[#050a0e] xl:hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${open ? "opacity-100 translate-y-0 visible" : "opacity-0 -translate-y-4 invisible pointer-events-none"}`}
       >
         <nav className="mx-auto flex max-w-7xl flex-col px-4 py-6 sm:px-6" aria-label="Mobile">
           {sections.map((id, index) => (

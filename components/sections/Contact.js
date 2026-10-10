@@ -133,7 +133,7 @@ export function Contact() {
 
           {/* Right Column: High-End Frosted Glass Form */}
           <Reveal delay={120}>
-            <div id="contact-form-container" className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950/60 p-7 sm:p-9 shadow-[0_25px_60px_rgba(0,0,0,0.6)] backdrop-blur-2xl ring-1 ring-white/5 before:absolute before:inset-x-0 before:top-0 before:h-[2px] before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent">
+            <div id="contact-form-container" className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950/60 p-4 sm:p-9 shadow-[0_25px_60px_rgba(0,0,0,0.6)] backdrop-blur-2xl ring-1 ring-white/5 before:absolute before:inset-x-0 before:top-0 before:h-[2px] before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent">
               {/* Inner Ambient Glow */}
               <div aria-hidden className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
 

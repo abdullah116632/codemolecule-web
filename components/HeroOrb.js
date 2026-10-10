@@ -45,13 +45,13 @@ export default function HeroOrb() {
 
       renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
       renderer.setSize(W, H);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, W < 768 ? 1.5 : 2));
       renderer.setClearColor(0x000000, 0);
       mountRef.current?.appendChild(renderer.domElement);
 
       // ── Particle counts & torus params ──────────────────
-      const RING_PARTICLES = 8000;  // particles on the main ring
-      const SPRAY_PARTICLES = 2000;  // extra "spray" off the ring edge
+      const RING_PARTICLES = W < 768 ? 4000 : 8000;  // particles on the main ring
+      const SPRAY_PARTICLES = W < 768 ? 1000 : 2000;  // extra "spray" off the ring edge
       const TOTAL = RING_PARTICLES + SPRAY_PARTICLES;
 
       const R_MAJOR = 1.75;   // torus major radius (increased to make circle bigger)
@@ -165,14 +165,15 @@ export default function HeroOrb() {
       const sr = services.getBoundingClientRect();
       const ar = anchor.getBoundingClientRect();
       const why = document.getElementById("why-code-molecule");
-      const curtain = document.querySelector("[data-shutter-destination]");
+      const framework = document.querySelector("[data-framework-destination]");
       const whyRect = why?.getBoundingClientRect();
-      const curtainRect = curtain?.getBoundingClientRect();
-      const curtainOpen = Math.max(0, Math.min(1, Number(curtain?.dataset.curtainOpen || 0)));
-      const transferRaw = whyRect && curtainRect && !reducedMotion.matches
+      const frameworkRect = framework?.getBoundingClientRect();
+      const frameworkNodes = framework ? Array.from(framework.querySelectorAll("[data-framework-row]"), (row) => row.getBoundingClientRect()) : [];
+      const frameworkOpen = Math.max(0, Math.min(1, Number(framework?.dataset.frameworkOpen || 0)));
+      const transferRaw = whyRect && frameworkRect && !reducedMotion.matches
         ? Math.max(0, Math.min(1, (H * 0.85 - whyRect.top) / (H * 0.65))) : 0;
       const transfer = transferRaw * transferRaw * (3 - 2 * transferRaw);
-      const curtainVisible = Boolean(whyRect && whyRect.bottom > 0 && whyRect.top < H);
+      const frameworkVisible = Boolean(whyRect && whyRect.bottom > 0 && whyRect.top < H);
       const target = Math.max(0, Math.min(1, (H * 0.92 - sr.top) / (H * 0.8)));
       const reduced = reducedMotion.matches;
       if (morph === null || reduced) morph = target;
@@ -181,15 +182,15 @@ export default function HeroOrb() {
       const halfH = 3.8 * Math.tan(52 * Math.PI / 360);
       const worldPerPixel = halfH * 2 / H;
       const desktop = W >= 1024;
-      const span = desktop ? Math.min(320, ar.width * 0.24) : Math.min(230, W * 0.65);
+      let span = desktop ? Math.min(320, ar.width * 0.20) : Math.min(230, W * 0.65);
       let centerX = ((desktop ? ar.left + span * 0.55 + 24 : W / 2) - W / 2) * worldPerPixel;
       let centerY = (H / 2 - ar.top - (desktop ? 164 : 48)) * worldPerPixel;
       const heroY = (H / 2 - hr.top - hr.height / 2) * worldPerPixel * (1 - blend);
-      mountRef.current.style.visibility = hr.bottom > 0 || sr.bottom > 0 || (transfer > 0 && curtainVisible) ? "visible" : "hidden";
+      mountRef.current.style.visibility = hr.bottom > 0 || sr.bottom > 0 || (transfer > 0 && frameworkVisible) ? "visible" : "hidden";
       raf = requestAnimationFrame(animate);
       const t = reduced ? 0 : (Date.now() - startTime) / 1000;
 
-      if ((sr.bottom <= 0 && !(transfer > 0 && curtainVisible)) || document.hidden) return;
+      if ((sr.bottom <= 0 && !(transfer > 0 && frameworkVisible)) || document.hidden) return;
 
       // Stable particle ribbons, from circle perimeter to circle perimeter.
       // These particles belong to the hero ring too: no second cloud is spawned.
@@ -202,6 +203,8 @@ export default function HeroOrb() {
       });
       const segments = [];
       if (cards.length === 6) {
+        const available = (cards[0].x - cards[0].radius) / worldPerPixel + W / 2 - ar.left - 24;
+        span = Math.min(span, Math.max(64, available * 0.85));
         centerY = cards[0].y;
         // Keep the infinity and its first bridge clear of the first card.
         centerX = Math.min(centerX, cards[0].x - cards[0].radius - span * 0.58 * worldPerPixel - 18 * worldPerPixel);
@@ -292,39 +295,46 @@ export default function HeroOrb() {
           ? Math.max(0, Math.min(1, (morph - 0.08) / 0.92)) : morph;
         const particleBlend = ribbonParticle && segments.length
           ? local ** 3 * (local * (local * 6 - 15) + 10) : blend;
-        const hx = r * Math.cos(u), hy = heroY + r * Math.sin(u);
+        const heroScale = Math.min(1, W * worldPerPixel / 4.8, hr.height * worldPerPixel / 4.8);
+        const heroScaleY = W < 768 ? Math.min(1, hr.height * worldPerPixel / 5.5) : heroScale;
+        const hx = r * Math.cos(u) * heroScale, hy = heroY + r * Math.sin(u) * heroScaleY;
         const arc = Math.sin(particleBlend * Math.PI) * Math.sin(u) * 0.15;
         pos.setXYZ(i,
           hx + (ix - hx) * particleBlend,
           hy + (iy - hy) * particleBlend + arc,
-          R_TUBE * effectiveTube * Math.sin(v) * (1 - particleBlend) + iz * particleBlend
+          R_TUBE * effectiveTube * Math.sin(v) * heroScale * (1 - particleBlend) + iz * particleBlend
         );
         let brightness = 1 + (destinationBrightness - 1) * particleBlend;
-        if (transfer > 0 && curtainRect) {
-          // The same molecules settle into woven rows, then part like a curtain.
-          const columns = 88;
-          const rows = Math.ceil(N / columns);
-          const gridX = (i % columns) / (columns - 1);
-          const gridY = Math.floor(i / columns) / (rows - 1);
-          const halfWidth = curtainRect.width / 2 + 60;
-          const side = gridX < 0.5 ? -1 : 1;
-          const across = gridX < 0.5 ? gridX * 2 : (1 - gridX) * 2;
-          const gatheredWidth = halfWidth * (1 - curtainOpen) + 70 * curtainOpen;
-          const fold = Math.sin(across * Math.PI * 10 + gridY * 4 - t * 0.45);
-          const flutter = Math.sin(gridY * 10 + across * 7 + t * 0.7) * gridY * 9;
-          const pixelX = curtainRect.left + curtainRect.width / 2
-            + side * (halfWidth - across * gatheredWidth)
-            + fold * (3 + gridY * 9) + flutter;
-          const pixelY = curtainRect.top + 8 + gridY * (curtainRect.height - 8)
-            + Math.sin(across * Math.PI * 8) * gridY * 4;
-          const curtainX = (pixelX - W / 2) * worldPerPixel;
-          const curtainY = (H / 2 - pixelY) * worldPerPixel;
-          const curtainZ = fold * (3 + gridY * 6) * worldPerPixel;
-          pos.setXYZ(i,
-            pos.getX(i) + (curtainX - pos.getX(i)) * transfer,
-            pos.getY(i) + (curtainY - pos.getY(i)) * transfer,
-            pos.getZ(i) + (curtainZ - pos.getZ(i)) * transfer);
-          const weaveBrightness = (0.24 + (fold + 1) * 0.06) * (1 - curtainOpen * 0.4);
+        if (transfer > 0 && frameworkRect) {
+          // The existing cloud resolves into a restrained four-node framework.
+          const q = u / (Math.PI * 2);
+          const node = frameworkNodes[Math.floor(i / 4) % 4];
+          const first = frameworkNodes[0];
+          const last = frameworkNodes[frameworkNodes.length - 1];
+          if (node && first && last) {
+            const axisX = frameworkRect.left + 8;
+            const nodeY = node.top + node.height / 2;
+            const group = i % 4;
+            let pixelX = axisX;
+            let pixelY = nodeY;
+            if (group === 0) {
+              pixelY = first.top + first.height / 2 + q * (last.top + last.height / 2 - first.top - first.height / 2);
+              pixelX += Math.cos(v) * 1.8;
+            } else if (group === 1) {
+              pixelX += q * (node.left - axisX);
+              pixelY += Math.cos(v) * 1.5;
+            } else {
+              pixelX += Math.cos(u) * (5 + tubeT * 2);
+              pixelY += Math.sin(u) * (5 + tubeT * 2);
+            }
+            const frameworkX = (pixelX - W / 2) * worldPerPixel;
+            const frameworkY = (H / 2 - pixelY) * worldPerPixel;
+            pos.setXYZ(i,
+              pos.getX(i) + (frameworkX - pos.getX(i)) * transfer,
+              pos.getY(i) + (frameworkY - pos.getY(i)) * transfer,
+              pos.getZ(i) * (1 - transfer));
+          }
+          const weaveBrightness = i % 11 === 0 ? 0.28 * (1 - frameworkOpen * 0.65) : 0;
           brightness += (weaveBrightness - brightness) * transfer;
         }
         color.setXYZ(i, baseColors[i * 3] * brightness, baseColors[i * 3 + 1] * brightness, baseColors[i * 3 + 2] * brightness);
@@ -348,12 +358,18 @@ export default function HeroOrb() {
       H = window.innerHeight;
       camera.aspect = W / H;
       camera.updateProjectionMatrix();
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, W < 768 ? 1.5 : 2));
       renderer.setSize(W, H);
     };
 
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("resize", onResize);
-    init();
+    init().catch(() => {
+      // Keep all page content usable when WebGL is unavailable.
+      disposed = true;
+      cancelAnimationFrame(raf);
+      mount.style.visibility = "hidden";
+    });
 
     return () => {
       disposed = true;
