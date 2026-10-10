@@ -329,10 +329,10 @@ export default function HeroOrb() {
           if (cards.length === 6) {
             const card = cards[i % 6];
             
-            const w = card.width * 0.485; // slightly inside
-            const h = card.height * 0.485;
-            // The cards have rounded-2xl which is 1rem (16px), or on mobile maybe scaled, let's use 16 as base
-            const radius = 24 * worldPerPixel; // 24px visually matches rounded-2xl well
+            const w = card.width * 0.5; // exactly on the border
+            const h = card.height * 0.5;
+            // The cards use rounded-2xl (16px in Tailwind). Let's use 16px to perfectly match the CSS corner.
+            const radius = 16 * worldPerPixel; 
             const r = Math.min(radius, w, h);
             
             const cw = w - r;
@@ -389,15 +389,18 @@ export default function HeroOrb() {
               by = ch + Math.cos(angle) * r;
             }
             
-            // Add a little swirl to soften the line and make it volumetric
-            const swirlX = Math.sin(t * 2 + v) * 4 * worldPerPixel;
-            const swirlY = Math.cos(t * 2 + u) * 4 * worldPerPixel;
+            // Clean volumetric glow (no wavy sine swirl)
+            // effectiveTube creates varying thickness. v provides a random angle per particle.
+            const thickness = 6 * worldPerPixel * (0.6 + effectiveTube * 0.6); 
+            const offsetX = Math.cos(v * 7 + t * 2) * thickness;
+            const offsetY = Math.sin(v * 7 + t * 2) * thickness;
             
-            ix = card.x + bx + swirlX;
-            iy = card.y + by + swirlY;
-            iz = Math.sin(u * 13) * 6 * worldPerPixel; // flatter depth for border
+            ix = card.x + bx + offsetX;
+            iy = card.y + by + offsetY;
+            iz = Math.sin(u * 13 + t) * 4 * worldPerPixel; // subtle depth, gently drifting
             
-            destinationBrightness = 0.25 + 0.25 * (Math.sin(i * 2 + t) * 0.5 + 0.5); // Lively glow
+            // Much brighter glow for the thin border to make it pop
+            destinationBrightness = 0.6 + 0.3 * (Math.sin(i * 2 + t * 1.5) * 0.5 + 0.5); 
             targetAlpha = 1;
           } else {
             targetAlpha = 0;
