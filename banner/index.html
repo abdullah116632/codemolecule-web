@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeMolecule — Official Standee Banner (4ft × 2ft)</title>
+  
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800;900&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* =========================================================
+       CSS RESET & BASE CONFIGURATION
+       Banner Size: 2ft Width × 4ft Height (24in × 48in)
+       Target Aspect Ratio: 1:2
+       Pixel Base Scale: 1200px × 2400px (Print-ready 1:2)
+       ========================================================= */
+    :root {
+      --color-ink: #0A1118;
+      --color-canvas: #F6F6F1;
+      --color-canvas-alt: #EBEBE4;
+      --color-brand-50: #F0FDF4;
+      --color-brand-100: #DCFCE7;
+      --color-brand-200: #BBF7D0;
+      --color-brand-300: #86EFAC;
+      --color-brand-400: #4ADE80;
+      --color-brand-500: #22C55E;
+      --color-brand-600: #16A34A;
+      --color-brand-700: #15803D;
+      --color-brand-800: #166534;
+      --color-brand-900: #14532D;
+      --color-dark-bg: #070D14;
+      --color-dark-card: #0D1622;
+      --color-dark-border: rgba(255, 255, 255, 0.08);
+      --font-display: 'Plus Jakarta Sans', 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-bangla: 'Hind Siliguri', 'Inter', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #0b0f15;
+      color: #F8FAFC;
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Floating Interactive UI Bar (Hidden when printing or exporting) */
+    .toolbar {
+      position: sticky;
+      top: 16px;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      background: rgba(13, 22, 34, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 10px 22px;
+      border-radius: 999px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+      margin: 16px 16px 24px 16px;
+      max-width: 1000px;
+      width: calc(100% - 32px);
+    }
+
+    .toolbar-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #E2E8F0;
+    }
+
+    .toolbar-info span.badge {
+      background: rgba(34, 197, 94, 0.15);
+      color: #4ADE80;
+      border: 1px solid rgba(34, 197, 94, 0.35);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .toolbar-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .tool-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #F1F5F9;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .tool-btn:hover {
+      background: rgba(255, 255, 255, 0.18);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .tool-btn.primary {
+      background: #16A34A;
+      border-color: #22C55E;
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(22, 163, 74, 0.4);
+    }
+
+    .tool-btn.primary:hover {
+      background: #15803D;
+      box-shadow: 0 6px 18px rgba(22, 163, 74, 0.55);
+    }
+
+    .zoom-select {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #F1F5F9;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 999px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .zoom-select option {
+      background: #0D1622;
+      color: #F1F5F9;
+    }
+
+    /* Viewer Container */
+    .viewer-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 0 20px 60px 20px;
+      overflow-x: auto;
+    }
+
+    .canvas-scaler {
+      transform-origin: top center;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* =========================================================
+       THE BANNER ITSELF: EXACT 1200px × 2400px (1:2 ratio)
+       Roll-up / Standee Banner (4ft Height × 2ft Width)
+       ========================================================= */
+    #banner-canvas {
+      width: 1200px;
+      height: 2400px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 72px 76px 84px 76px;
+      box-shadow: 0 25px 70px -15px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      transition: background-color 0.3s ease, color 0.3s ease;
+      background-color: var(--color-dark-bg);
+      color: #F8FAFC;
+    }
+
+    /* =========================================================
+       THEME STYLING: DARK TECH MODE (Default)
+       ========================================================= */
+    #banner-canvas.theme-dark {
+      background-color: #070D14;
+      color: #F8FAFC;
+    }
+
+    #banner-canvas.theme-dark .bg-grid-overlay {
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    #banner-canvas.theme-dark .ambient-glow-1 {
+      position: absolute;
+      top: -150px;
+      right: -100px;
+      width: 750px;
+      height: 750px;
+      background: radial-gradient(circle, rgba(34, 197, 94, 0.18) 0%, rgba(34, 197, 94, 0) 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #banner-canvas.theme-dark .ambient-glow-2 {
+      position: absolute;
+      top: 900px;
+      left: -200px;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.12) 0%, rgba(14, 165, 233, 0) 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #banner-canvas.theme-dark .ambient-glow-3 {
+      position: absolute;
+      bottom: -100px;
+      right: -100px;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(34, 197, 94, 0.16) 0%, rgba(34, 197, 94, 0) 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Card styling in dark mode */
+    #banner-canvas.theme-dark .service-card {
+      background: rgba(13, 22, 34, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    #banner-canvas.theme-dark .service-card:hover {
+      border-color: rgba(34, 197, 94, 0.4);
+    }
+
+    #banner-canvas.theme-dark .bottom-cta-container {
+      background: linear-gradient(135deg, rgba(13, 24, 38, 0.95) 0%, rgba(8, 17, 27, 0.98) 100%);
+      border: 2px solid rgba(34, 197, 94, 0.35);
+      box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.7), 0 0 30px rgba(34, 197, 94, 0.15);
+    }
+
+    /* =========================================================
+       THEME STYLING: LIGHT CANVAS MODE (Optional toggle)
+       ========================================================= */
+    #banner-canvas.theme-light {
+      background-color: #F6F6F1;
+      color: #0A1118;
+    }
+
+    #banner-canvas.theme-light .bg-grid-overlay {
+      background-image:
+        linear-gradient(to right, rgba(15, 23, 42, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    #banner-canvas.theme-light .ambient-glow-1 {
+      position: absolute;
+      top: -150px;
+      right: -100px;
+      width: 750px;
+      height: 750px;
+      background: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0) 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #banner-canvas.theme-light .ambient-glow-2 {
+      display: none;
+    }
+
+    #banner-canvas.theme-light .ambient-glow-3 {
+      position: absolute;
+      bottom: -100px;
+      right: -100px;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(34, 197, 94, 0.12) 0%, rgba(34, 197, 94, 0) 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #banner-canvas.theme-light .hero-headline {
+      color: #0A1118;
+    }
+
+    #banner-canvas.theme-light .hero-subtitle {
+      color: #475569;
+    }
+
+    #banner-canvas.theme-light .service-card {
+      background: #FFFFFF;
+      border: 1px solid rgba(22, 163, 74, 0.2);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.06);
+    }
+
+    #banner-canvas.theme-light .section-title {
+      color: #0A1118;
+    }
+
+    #banner-canvas.theme-light .trust-item {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      color: #0F172A;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+    }
+
+    #banner-canvas.theme-light .trust-icon-wrap {
+      background: rgba(34, 197, 94, 0.12);
+      color: #16A34A;
+    }
+
+    #banner-canvas.theme-light .guarantee-box {
+      background: #FFFFFF;
+      border: 1px dashed #CBD5E1;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+
+    #banner-canvas.theme-light .guarantee-title {
+      color: #0A1118;
+    }
+
+    #banner-canvas.theme-light .guarantee-sub {
+      color: #475569;
+    }
+
+    #banner-canvas.theme-light .card-title {
+      color: #0A1118;
+    }
+
+    #banner-canvas.theme-light .card-desc {
+      color: #475569;
+    }
+
+    #banner-canvas.theme-light .card-list li {
+      color: #334155;
+    }
+
+    #banner-canvas.theme-light .tech-badge {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      color: #1E293B;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    #banner-canvas.theme-light .bottom-cta-container {
+      background: #0A1118;
+      border: 2px solid #16A34A;
+      color: #FFFFFF;
+    }
+
+    /* Common Layers */
+    .bg-grid-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      mask-image: radial-gradient(ellipse at center, black 60%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse at center, black 60%, transparent 100%);
+    }
+
+    .content-z {
+      position: relative;
+      z-index: 10;
+    }
+
+    /* =========================================================
+       SECTION 1: HEADER & BRAND IDENTITY
+       ========================================================= */
+    .banner-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .brand-logo-mark {
+      width: 76px;
+      height: 76px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #0A1118 0%, #162434 100%);
+      border: 1.5px solid rgba(34, 197, 94, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px -4px rgba(34, 197, 94, 0.35);
+      flex-shrink: 0;
+    }
+
+    .brand-text-block {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: baseline;
+      line-height: 1;
+    }
+
+    .brand-title .brand-accent {
+      color: var(--color-brand-500);
+      margin-left: 2px;
+    }
+
+    .brand-domain {
+      font-family: var(--font-sans);
+      font-size: 17px;
+      font-weight: 600;
+      color: #94A3B8;
+      letter-spacing: 0.3px;
+    }
+
+    /* Live booking status pill */
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(34, 197, 94, 0.12);
+      border: 1.5px solid rgba(34, 197, 94, 0.4);
+      padding: 10px 22px;
+      border-radius: 999px;
+      font-family: var(--font-sans);
+      font-size: 15px;
+      font-weight: 700;
+      color: #4ADE80;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      box-shadow: 0 4px 16px rgba(34, 197, 94, 0.15);
+    }
+
+    .status-dot-ping {
+      position: relative;
+      width: 10px;
+      height: 10px;
+    }
+
+    .status-dot-ping::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: #22C55E;
+      opacity: 0.75;
+      animation: ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+
+    .status-dot-ping::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: #22C55E;
+    }
+
+    @keyframes ping {
+      75%, 100% {
+        transform: scale(2.2);
+        opacity: 0;
+      }
+    }
+
+    /* =========================================================
+       SECTION 2: HERO HOOK & VALUE PILLARS
+       ========================================================= */
+    .hero-section {
+      margin-top: 36px;
+      text-align: left;
+    }
+
+    .eyebrow-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 14px;
+      font-weight: 700;
+      color: #CBD5E1;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 20px;
+    }
+
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: 60px;
+      line-height: 1.14;
+      font-weight: 900;
+      letter-spacing: -1.2px;
+      color: #FFFFFF;
+      max-width: 1060px;
+    }
+
+    .highlight-span {
+      position: relative;
+      display: inline-block;
+      background: linear-gradient(135deg, #22C55E 0%, #4ADE80 50%, #38BDF8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      white-space: nowrap;
+    }
+
+    .highlight-line {
+      display: block;
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #22C55E 0%, #F59E0B 70%, transparent 100%);
+      margin-top: 4px;
+    }
+
+    .hero-subtitle {
+      font-size: 21px;
+      line-height: 1.55;
+      color: #94A3B8;
+      max-width: 980px;
+      margin-top: 20px;
+      font-weight: 400;
+    }
+
+    /* Trust highlights bar */
+    .trust-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 30px;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      padding: 14px 18px;
+      border-radius: 16px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #E2E8F0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .trust-icon-wrap {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: rgba(34, 197, 94, 0.15);
+      color: #4ADE80;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* =========================================================
+       SECTION 3: CORE SERVICES (2x2 Grid)
+       ========================================================= */
+    .services-section {
+      margin-top: 38px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .section-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .section-tag {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #22C55E;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .service-card {
+      border-radius: 26px;
+      padding: 34px 32px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .card-icon-box {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    }
+
+    .card-icon-box.green {
+      background: rgba(34, 197, 94, 0.15);
+      border: 1.5px solid rgba(34, 197, 94, 0.35);
+      color: #4ADE80;
+    }
+
+    .card-icon-box.sky {
+      background: rgba(14, 165, 233, 0.15);
+      border: 1.5px solid rgba(14, 165, 233, 0.35);
+      color: #38BDF8;
+    }
+
+    .card-icon-box.violet {
+      background: rgba(139, 92, 246, 0.15);
+      border: 1.5px solid rgba(139, 92, 246, 0.35);
+      color: #A78BFA;
+    }
+
+    .card-icon-box.amber {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1.5px solid rgba(245, 158, 11, 0.35);
+      color: #FBBF24;
+    }
+
+    .card-badge {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .card-badge.green {
+      background: rgba(34, 197, 94, 0.12);
+      color: #4ADE80;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+
+    .card-badge.sky {
+      background: rgba(14, 165, 233, 0.12);
+      color: #38BDF8;
+      border: 1px solid rgba(14, 165, 233, 0.3);
+    }
+
+    .card-badge.violet {
+      background: rgba(139, 92, 246, 0.12);
+      color: #C4B5FD;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+
+    .card-badge.amber {
+      background: rgba(245, 158, 11, 0.12);
+      color: #FCD34D;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      margin-bottom: 8px;
+    }
+
+    .card-desc {
+      font-size: 15.5px;
+      line-height: 1.5;
+      color: #94A3B8;
+      margin-bottom: 18px;
+    }
+
+    .card-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin-top: auto;
+    }
+
+    .card-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: #CBD5E1;
+    }
+
+    .check-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(34, 197, 94, 0.2);
+      color: #22C55E;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* =========================================================
+       SECTION 4: TECH STACK SHOWCASE
+       ========================================================= */
+    .tech-section {
+      margin-top: 36px;
+    }
+
+    .tech-header-label {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #94A3B8;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+
+    .tech-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .tech-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 10px 18px;
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #E2E8F0;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .tech-badge svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    /* =========================================================
+       SECTION 5: WHY CODEMOLECULE STRIP
+       ========================================================= */
+    .guarantee-bar {
+      margin-top: 32px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .guarantee-box {
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px dashed rgba(255, 255, 255, 0.14);
+      padding: 16px 20px;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .guarantee-num {
+      font-size: 12px;
+      font-weight: 800;
+      color: #22C55E;
+      letter-spacing: 1px;
+    }
+
+    .guarantee-title {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 700;
+      color: #F1F5F9;
+    }
+
+    .guarantee-sub {
+      font-size: 13.5px;
+      color: #94A3B8;
+    }
+
+    /* =========================================================
+       SECTION 6: STANDOUT CTA & SCANNABLE QR CODE
+       ========================================================= */
+    .bottom-cta-container {
+      margin-top: 36px;
+      border-radius: 32px;
+      padding: 44px 48px;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 44px;
+      align-items: center;
+      position: relative;
+    }
+
+    .cta-left {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .cta-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #4ADE80;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 999px;
+      align-self: flex-start;
+    }
+
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: 38px;
+      font-weight: 900;
+      line-height: 1.18;
+      letter-spacing: -0.6px;
+    }
+
+    .cta-subtitle {
+      font-size: 17px;
+      line-height: 1.5;
+      color: #CBD5E1;
+      max-width: 580px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 24px;
+      margin-top: 10px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #F8FAFC;
+    }
+
+    .contact-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #22C55E;
+      flex-shrink: 0;
+    }
+
+    /* Right QR Focus Container */
+    .cta-qr-box {
+      background: #FFFFFF;
+      border-radius: 28px;
+      padding: 24px 22px 20px 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+      position: relative;
+    }
+
+    /* Scanner Corner Guide Accents */
+    .qr-frame {
+      position: relative;
+      padding: 10px;
+      background: #FFFFFF;
+      border-radius: 16px;
+      width: 250px;
+      height: 250px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .corner-bracket {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border: 3.5px solid #16A34A;
+      pointer-events: none;
+    }
+
+    .corner-tl { top: 0; left: 0; border-right: none; border-bottom: none; border-top-left-radius: 8px; }
+    .corner-tr { top: 0; right: 0; border-left: none; border-bottom: none; border-top-right-radius: 8px; }
+    .corner-bl { bottom: 0; left: 0; border-right: none; border-top: none; border-bottom-left-radius: 8px; }
+    .corner-br { bottom: 0; right: 0; border-left: none; border-top: none; border-bottom-right-radius: 8px; }
+
+    .qr-svg-render {
+      width: 230px;
+      height: 230px;
+      display: block;
+    }
+
+    .qr-badge-top {
+      font-size: 13px;
+      font-weight: 800;
+      color: #0A1118;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .qr-domain-link {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 800;
+      color: #16A34A;
+      margin-top: 2px;
+      letter-spacing: -0.3px;
+    }
+
+    .qr-subtext {
+      font-size: 12px;
+      font-weight: 600;
+      color: #64748B;
+      margin-top: 3px;
+    }
+
+    /* Export Mode (For Headless Screenshot & Pure Canvas Export) */
+    body.export-mode {
+      background: transparent !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      overflow: hidden !important;
+    }
+
+    body.export-mode .toolbar {
+      display: none !important;
+    }
+
+    body.export-mode .viewer-wrapper {
+      padding: 0 !important;
+      margin: 0 !important;
+      overflow: hidden !important;
+      width: 1200px !important;
+      height: 2400px !important;
+    }
+
+    body.export-mode .canvas-scaler {
+      transform: none !important;
+    }
+
+    body.export-mode #banner-canvas {
+      box-shadow: none !important;
+      border: none !important;
+    }
+
+    /* Print Styles */
+    @page {
+      size: 24in 48in;
+      margin: 0;
+    }
+
+    @media print {
+      body {
+        background: transparent !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+
+      .toolbar, .viewer-wrapper {
+        display: none !important;
+      }
+
+      #banner-canvas {
+        display: flex !important;
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 24in !important;
+        height: 48in !important;
+        box-shadow: none !important;
+        border: none !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Navigation & Export Toolbar (Excluded from print) -->
+  <header class="toolbar" id="toolbar-ui">
+    <div class="toolbar-info">
+      <span>📐 <strong>CodeMolecule Banner</strong></span>
+      <span class="badge">4ft × 2ft (24″ × 48″)</span>
+    </div>
+
+    <div class="toolbar-controls">
+      <!-- Theme Switcher -->
+      <button class="tool-btn" id="theme-toggle-btn" title="Toggle between Dark and Light mode">
+        <span id="theme-icon">🌙</span> <span id="theme-label">Dark Theme</span>
+      </button>
+
+      <!-- Zoom Selector -->
+      <select class="zoom-select" id="zoom-select" title="Change viewing scale">
+        <option value="auto">Zoom: Fit Screen</option>
+        <option value="0.35">Zoom: 35%</option>
+        <option value="0.5">Zoom: 50%</option>
+        <option value="0.75">Zoom: 75%</option>
+        <option value="1.0">Zoom: 100% (Actual Size)</option>
+      </select>
+
+      <!-- Print Button -->
+      <button class="tool-btn primary" id="print-btn" title="Open print dialog or export to PDF">
+        🖨️ Print / Save PDF
+      </button>
+
+      <!-- Save PNG Button -->
+      <a href="codemolecule-banner.png" download="codemolecule-banner.png" class="tool-btn" title="Direct download of rendered PNG">
+        ⬇️ Download PNG
+      </a>
+    </div>
+  </header>
+
+  <!-- Interactive Viewer Shell -->
+  <main class="viewer-wrapper">
+    <div class="canvas-scaler" id="canvas-scaler">
+      
+      <!-- ========================================================
+           BANNER CANVAS: EXACT 1200px × 2400px (1:2 Ratio)
+           ======================================================== -->
+      <article id="banner-canvas" class="theme-dark">
+        
+        <!-- Ambient Decorative Lighting Effects -->
+        <div class="bg-grid-overlay" aria-hidden="true"></div>
+        <div class="ambient-glow-1" aria-hidden="true"></div>
+        <div class="ambient-glow-2" aria-hidden="true"></div>
+        <div class="ambient-glow-3" aria-hidden="true"></div>
+
+        <!-- ====================================================
+             1. TOP HEADER & BRAND BAR
+             ==================================================== -->
+        <header class="banner-header content-z">
+          <div class="brand-group">
+            <!-- Modern CodeMolecule Terminal Logo Mark -->
+            <div class="brand-logo-mark">
+              <svg viewBox="0 0 40 40" width="46" height="46" fill="none" aria-hidden="true">
+                <rect width="40" height="40" rx="10" fill="#0A1118" />
+                <!-- House / Structure Outline -->
+                <path d="M 7 19 L 20 7 L 33 19 M 11 15 V 31 H 29 V 15" stroke="#F8FAFC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <!-- Terminal Prompt > -->
+                <path d="M 15 18 L 19 22 L 15 26" stroke="#22C55E" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+                <!-- Terminal Prompt _ -->
+                <path d="M 22 26 H 26" stroke="#22C55E" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+
+            <div class="brand-text-block">
+              <div class="brand-title">
+                Code<span class="brand-accent">Molecule</span>
+              </div>
+              <div class="brand-domain">codemolecule.com</div>
+            </div>
+          </div>
+
+          <!-- Pulsing Live Project Booking Badge -->
+          <div class="status-pill">
+            <span class="status-dot-ping" aria-hidden="true"></span>
+            <span>Now Booking New Projects</span>
+          </div>
+        </header>
+
+        <!-- ====================================================
+             2. HERO STATEMENT & VALUE PILLARS
+             ==================================================== -->
+        <section class="hero-section content-z">
+          <div class="eyebrow-pill">
+            <span>⚡ Next-Generation Web Engineering</span>
+          </div>
+
+          <h1 class="hero-headline">
+            Building High-Impact Websites &<br>
+            <span class="highlight-span">
+              Modern Digital Products
+              <span class="highlight-line" aria-hidden="true"></span>
+            </span><br>
+            Delivered In Days.
+          </h1>
+
+          <p class="hero-subtitle">
+            From high-converting landing pages to custom enterprise web applications and mobile apps. 
+            We design, develop, and deploy blazing-fast solutions tailored to turn visitors into loyal customers.
+          </p>
+
+          <!-- 4 Trust Badges -->
+          <div class="trust-strip">
+            <div class="trust-item">
+              <div class="trust-icon-wrap">⚡</div>
+              <span>Delivery From 3 Days</span>
+            </div>
+            <div class="trust-item">
+              <div class="trust-icon-wrap">💎</div>
+              <span>100% Code Ownership</span>
+            </div>
+            <div class="trust-item">
+              <div class="trust-icon-wrap">📱</div>
+              <span>Mobile-First & Ultra Fast</span>
+            </div>
+            <div class="trust-item">
+              <div class="trust-icon-wrap">🛡️</div>
+              <span>30 Days Free Support</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================
+             3. CORE SERVICES GRID (2x2)
+             ==================================================== -->
+        <section class="services-section content-z">
+          <div class="section-head">
+            <div class="section-title-wrap">
+              <span class="section-tag">What We Build</span>
+              <h2 class="section-title">End-to-End Digital Services</h2>
+            </div>
+          </div>
+
+          <div class="services-grid">
+            <!-- Card 1: Landing Pages -->
+            <div class="service-card">
+              <div class="card-top">
+                <div class="card-icon-box green">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
+                    <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
+                    <path d="M9 12H4s.55-3.03 2-4.5c1.62-1.63 5-2.5 5-2.5"/>
+                    <path d="M12 15v5s3.03-.55 4.5-2c1.63-1.62 2.5-5 2.5-5"/>
+                  </svg>
+                </div>
+                <span class="card-badge green">Sales & Ad Campaigns</span>
+              </div>
+              <h3 class="card-title">High-Converting Landing Pages</h3>
+              <p class="card-desc">
+                Laser-focused pages engineered to convert ad traffic into paying buyers. Optimized for lightning speed and lead capture.
+              </p>
+              <ul class="card-list">
+                <li><span class="check-dot">✓</span> Meta Pixel & Google Analytics Ready</li>
+                <li><span class="check-dot">✓</span> WhatsApp 1-Tap Chat & Call Integration</li>
+                <li><span class="check-dot">✓</span> 3 to 5 Days Fast Guaranteed Delivery</li>
+              </ul>
+            </div>
+
+            <!-- Card 2: Business Websites -->
+            <div class="service-card">
+              <div class="card-top">
+                <div class="card-icon-box sky">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="2" y1="12" x2="22" y2="12"/>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                  </svg>
+                </div>
+                <span class="card-badge sky">Brand Authority</span>
+              </div>
+              <h3 class="card-title">Business & Corporate Websites</h3>
+              <p class="card-desc">
+                Comprehensive multi-page websites for clinics, shops, companies and portfolios that establish trust and rank on Google.
+              </p>
+              <ul class="card-list">
+                <li><span class="check-dot">✓</span> Custom Multi-Page Architecture & Clean UI</li>
+                <li><span class="check-dot">✓</span> On-Page SEO Structure for High Google Ranking</li>
+                <li><span class="check-dot">✓</span> Simple Content Panel — Easy to Edit Anytime</li>
+              </ul>
+            </div>
+
+            <!-- Card 3: Web Applications -->
+            <div class="service-card">
+              <div class="card-top">
+                <div class="card-icon-box violet">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                    <line x1="8" y1="21" x2="16" y2="21"/>
+                    <line x1="12" y1="17" x2="12" y2="21"/>
+                  </svg>
+                </div>
+                <span class="card-badge violet">SaaS & Custom Tools</span>
+              </div>
+              <h3 class="card-title">Custom Web Applications & SaaS</h3>
+              <p class="card-desc">
+                Robust platforms tailored to business workflows — admin dashboards, booking engines, inventory and client portals.
+              </p>
+              <ul class="card-list">
+                <li><span class="check-dot">✓</span> Next.js & React Full-Stack Scalable Codebase</li>
+                <li><span class="check-dot">✓</span> bKash, Nagad, Card & SSLCommerz Integration</li>
+                <li><span class="check-dot">✓</span> Secure Role-Based Accounts & Realtime Sync</li>
+              </ul>
+            </div>
+
+            <!-- Card 4: Mobile Apps -->
+            <div class="service-card">
+              <div class="card-top">
+                <div class="card-icon-box amber">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                    <line x1="12" y1="18" x2="12.01" y2="18"/>
+                  </svg>
+                </div>
+                <span class="card-badge amber">Cross-Platform</span>
+              </div>
+              <h3 class="card-title">Mobile App Development</h3>
+              <p class="card-desc">
+                High-performance iOS and Android mobile apps crafted with Flutter and React Native. Smooth 60fps animations and offline ready.
+              </p>
+              <ul class="card-list">
+                <li><span class="check-dot">✓</span> Single Codebase for Both Google Play & Apple App Store</li>
+                <li><span class="check-dot">✓</span> Push Notifications & Instant Cloud Syncing</li>
+                <li><span class="check-dot">✓</span> Published Under Your Own Developer Accounts</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================
+             4. TECH STACK SHOWCASE RIBBON
+             ==================================================== -->
+        <section class="tech-section content-z">
+          <div class="tech-header-label">Powered By Modern Enterprise Technologies</div>
+          <div class="tech-grid">
+            <div class="tech-badge">
+              <svg viewBox="0 0 24 24" fill="#000000" style="filter: drop-shadow(0 0 1px #fff);"><path d="M18.665 21.978C16.758 23.255 14.465 24 12 24 5.377 24 0 18.623 0 12S5.377 0 12 0s12 5.377 12 12c0 3.583-1.574 6.801-4.067 9.001L9.219 7.2H7.2v9.596h1.615V9.251l9.85 12.727Zm-3.332-8.533 1.6 2.061V7.2h-1.6v6.245Z"/></svg>
+              <span>Next.js</span>
+            </div>
+            <div class="tech-badge">
+              <svg viewBox="0 0 24 24" fill="#61DAFB"><path d="M14.23 12.004a2.236 2.236 0 0 1-2.235 2.236 2.236 2.236 0 0 1-2.236-2.236 2.236 2.236 0 0 1 2.235-2.236 2.236 2.236 0 0 1 2.236 2.236zm2.648-10.69c-1.346 0-3.107.96-4.888 2.622-1.78-1.653-3.542-2.602-4.887-2.602-.41 0-.783.093-1.106.278-1.375.793-1.683 3.264-.973 6.365C1.98 8.917 0 10.42 0 12.004c0 1.59 1.99 3.097 5.043 4.03-.704 3.113-.39 5.588.988 6.38.32.187.69.275 1.102.275 1.345 0 3.107-.96 4.888-2.624 1.78 1.654 3.542 2.603 4.887 2.603.41 0 .783-.09 1.106-.275 1.374-.792 1.683-3.263.973-6.365C22.02 15.096 24 13.59 24 12.004c0-1.59-1.99-3.097-5.043-4.032.704-3.11.39-5.587-.988-6.38-.318-.184-.688-.277-1.092-.278z"/></svg>
+              <span>React</span>
+            </div>
+            <div class="tech-badge">
+              <svg viewBox="0 0 24 24" fill="#3178C6"><path d="M1.125 0C.502 0 0 .502 0 1.125v21.75C0 23.498.502 24 1.125 24h21.75c.623 0 1.125-.502 1.125-1.125V1.125C24 .502 23.498 0 22.875 0zm17.363 9.75c.612 0 1.154.037 1.627.111a6.38 6.38 0 0 1 1.306.34v2.458a3.95 3.95 0 0 0-.643-.361 5.093 5.093 0 0 0-.717-.26 5.453 5.453 0 0 0-1.426-.2c-.3 0-.573.028-.819.086a2.1 2.1 0 0 0-.623.242c-.17.104-.3.229-.393.374a.888.888 0 0 0-.14.49c0 .196.053.373.156.529.104.156.252.304.443.444s.423.276.696.41c.273.135.582.274.926.416.47.197.892.407 1.266.628.374.222.695.473.963.753.268.279.472.598.614.957.142.359.214.776.214 1.253 0 .657-.125 1.21-.373 1.656a3.033 3.033 0 0 1-1.012 1.085 4.38 4.38 0 0 1-1.487.596c-.566.12-1.163.18-1.79.18a9.916 9.916 0 0 1-1.84-.164 5.544 5.544 0 0 1-1.512-.493v-2.63a5.033 5.033 0 0 0 3.237 1.2c.333 0 .624-.03.872-.09.249-.06.456-.144.623-.25.166-.108.29-.234.373-.38a1.023 1.023 0 0 0-.074-1.089 2.12 2.12 0 0 0-.537-.5 5.597 5.597 0 0 0-.807-.444 27.72 27.72 0 0 0-1.007-.436c-.918-.383-1.602-.852-2.053-1.405-.45-.553-.676-1.222-.676-2.005 0-.614.123-1.141.369-1.582.246-.441.58-.804 1.004-1.089a4.494 4.494 0 0 1 1.47-.629 7.536 7.536 0 0 1 1.77-.201zm-15.113.188h9.563v2.166H9.506v9.646H6.789v-9.646H3.375z"/></svg>
+              <span>TypeScript</span>
+            </div>
+            <div class="tech-badge">
+              <svg viewBox="0 0 24 24" fill="#06B6D4"><path d="M12.001,4.8c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 C13.666,10.618,15.027,12,18.001,12c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C16.337,6.182,14.976,4.8,12.001,4.8z M6.001,12c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 c1.177,1.194,2.538,2.576,5.512,2.576c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C10.337,13.382,8.976,12,6.001,12z"/></svg>
+              <span>Tailwind CSS</span>
+            </div>
+            <div class="tech-badge">
+              <svg viewBox="0 0 24 24" fill="#5FA04E"><path d="M11.998,24c-0.321,0-0.641-0.084-0.922-0.247l-2.936-1.737c-0.438-0.245-0.224-0.332-0.08-0.383 c0.585-0.203,0.703-0.25,1.328-0.604c0.065-0.037,0.151-0.023,0.218,0.017l2.256,1.339c0.082,0.045,0.197,0.045,0.272,0l8.795-5.076 c0.082-0.047,0.134-0.141,0.134-0.238V6.921c0-0.099-0.053-0.192-0.137-0.242l-8.791-5.072c-0.081-0.047-0.189-0.047-0.271,0 L3.075,6.68C2.99,6.729,2.936,6.825,2.936,6.921v10.15c0,0.097,0.054,0.189,0.139,0.235l2.409,1.392 c1.307,0.654,2.108-0.116,2.108-0.89V7.787c0-0.142,0.114-0.253,0.256-0.253h1.115c0.139,0,0.255,0.112,0.255,0.253v10.021 c0,1.745-0.95,2.745-2.604,2.745c-0.508,0-0.909,0-2.026-0.551L2.28,18.675c-0.57-0.329-0.922-0.945-0.922-1.604V6.921 c0-0.659,0.353-1.275,0.922-1.603l8.795-5.082c0.557-0.315,1.296-0.315,1.848,0l8.794,5.082c0.57,0.329,0.924,0.944,0.924,1.603 v10.15c0,0.659-0.354,1.273-0.924,1.604l-8.794,5.078C12.643,23.916,12.324,24,11.998,24z"/></svg>
+              <span>Node.js</span>
+            </div>
+            <div class="tech-badge">
+              <svg viewBox="0 0 24 24" fill="#02569B"><path d="M14.314 0L2.3 12 6 15.7 21.684.013h-7.357zm.014 11.072L7.857 17.53l6.47 6.47H21.7l-6.46-6.468 6.46-6.46h-7.37z"/></svg>
+              <span>Flutter</span>
+            </div>
+            <div class="tech-badge">
+              <svg viewBox="0 0 24 24" fill="#3776AB"><path d="M14.25.18l.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05z"/></svg>
+              <span>Python</span>
+            </div>
+            <div class="tech-badge">
+              <svg viewBox="0 0 24 24" fill="#4169E1"><path d="M23.5594 14.7228a.5269.5269 0 0 0-.0563-.1191c-.139-.2632-.4768-.3418-1.0074-.2321-1.6533.3411-2.2935.1312-2.5256-.0191 1.342-2.0482 2.445-4.522 3.0411-6.8297.2714-1.0507.7982-3.5237.1222-4.7316a1.5641 1.5641 0 0 0-.1509-.235C21.6931.9086 19.8007.0248 17.5099.0005c-1.4947-.0158-2.7705.3461-3.1161.4794a9.449 9.449 0 0 0-.5159-.0816 8.044 8.044 0 0 0-1.3114-.1278c-1.1822-.0184-2.2038.2642-3.0498.8406-.8573-.3211-4.7888-1.645-7.2219.0788C.9359 2.1526.3086 3.8733.4302 6.3043c.0409.818.5069 3.334 1.2423 5.7436.4598 1.5065.9387 2.7019 1.4334 3.582.553.9942 1.1259 1.5933 1.7143 1.7895.4474.1491 1.1327.1441 1.8581-.7279.8012-.9635 1.5903-1.8258 1.9446-2.2069.4351.2355.9064.3625 1.39.3772"/></svg>
+              <span>PostgreSQL</span>
+            </div>
+            <div class="tech-badge">
+              <svg viewBox="0 0 24 24" fill="#2496ED"><path d="M13.983 11.078h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.888c0 .102.083.185.185.185m-2.954-5.43h2.118a.186.186 0 00.186-.186V3.574a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185"/></svg>
+              <span>Docker</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================
+             5. OUR WORK ETHIC & GUARANTEES
+             ==================================================== -->
+        <section class="guarantee-bar content-z">
+          <div class="guarantee-box">
+            <span class="guarantee-num">01 / TRANSPARENCY</span>
+            <div class="guarantee-title">Upfront Fixed Scope</div>
+            <div class="guarantee-sub">Agreed cost & clear delivery date before we write code. Zero hidden fees.</div>
+          </div>
+          <div class="guarantee-box">
+            <span class="guarantee-num">02 / LIVE PREVIEWS</span>
+            <div class="guarantee-title">Continuous Feedback</div>
+            <div class="guarantee-sub">Track progress in realtime on a live staging link. No surprises.</div>
+          </div>
+          <div class="guarantee-box">
+            <span class="guarantee-num">03 / FULL FREEDOM</span>
+            <div class="guarantee-title">100% Asset Handover</div>
+            <div class="guarantee-sub">Domain, hosting, git code & design files are registered directly to you.</div>
+          </div>
+        </section>
+
+        <!-- ====================================================
+             6. CALL TO ACTION & SCANNABLE QR CODE SECTION
+             ==================================================== -->
+        <footer class="bottom-cta-container content-z">
+          <!-- Left Callout & Contact Details -->
+          <div class="cta-left">
+            <div class="cta-badge">🚀 Let's Build Your Project</div>
+            <h2 class="cta-title">
+              Ready to take your business<br>
+              to the next level?
+            </h2>
+            <p class="cta-subtitle">
+              Speak directly with our engineering team. Get a free proposal, fixed price estimate, and development timeline for your project.
+            </p>
+
+            <div class="contact-grid">
+              <div class="contact-item">
+                <div class="contact-icon">🌐</div>
+                <div>
+                  <div style="font-size: 12px; color: #94A3B8; text-transform: uppercase;">Official Website</div>
+                  <div style="font-size: 16px; font-weight: 700; color: #4ADE80;">codemolecule.com</div>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon">✉️</div>
+                <div>
+                  <div style="font-size: 12px; color: #94A3B8; text-transform: uppercase;">Email Inquiries</div>
+                  <div style="font-size: 16px; font-weight: 700;">hello@codemolecule.com</div>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon">💬</div>
+                <div>
+                  <div style="font-size: 12px; color: #94A3B8; text-transform: uppercase;">WhatsApp / Hotline</div>
+                  <div style="font-size: 16px; font-weight: 700;">+880 1700-000000</div>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon">📍</div>
+                <div>
+                  <div style="font-size: 12px; color: #94A3B8; text-transform: uppercase;">Headquarters</div>
+                  <div style="font-size: 16px; font-weight: 700;">Dhaka, Bangladesh</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Scannable Vector QR Code Container -->
+          <div class="cta-qr-box">
+            <!-- Bracketed QR Scanning Area -->
+            <div class="qr-frame">
+              <span class="corner-bracket corner-tl"></span>
+              <span class="corner-bracket corner-tr"></span>
+              <span class="corner-bracket corner-bl"></span>
+              <span class="corner-bracket corner-br"></span>
+
+              <!-- Vector SVG QR Code for https://codemolecule.com -->
+              <svg class="qr-svg-render" viewBox="0 0 33 33" shape-rendering="crispEdges">
+                <path fill="#ffffff" d="M0 0h33v33H0z"/>
+                <path stroke="#0A1118" d="M2 2.5h7m2 0h1m1 0h2m2 0h1m1 0h2m3 0h7M2 3.5h1m5 0h1m2 0h2m1 0h2m1 0h1m3 0h1m2 0h1m5 0h1M2 4.5h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h2m2 0h1m1 0h1m1 0h1m1 0h3m1 0h1M2 5.5h1m1 0h3m1 0h1m1 0h1m6 0h1m1 0h1m1 0h2m1 0h1m1 0h3m1 0h1M2 6.5h1m1 0h3m1 0h1m4 0h6m1 0h2m2 0h1m1 0h3m1 0h1M2 7.5h1m5 0h1m2 0h1m1 0h1m4 0h2m2 0h1m1 0h1m5 0h1M2 8.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M11 9.5h2M5 10.5h2m1 0h2m3 0h6m1 0h1m6 0h2M2 11.5h1m2 0h2m3 0h6m1 0h1m2 0h2m3 0h3m1 0h1M2 12.5h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m3 0h1m1 0h1m4 0h2m1 0h2M2 13.5h1m1 0h4m2 0h1m1 0h5m1 0h2m1 0h1m4 0h2m2 0h1M2 14.5h2m1 0h2m1 0h2m4 0h2m2 0h1m1 0h5m2 0h1m1 0h1M2 15.5h1m2 0h3m4 0h3m1 0h3m1 0h1m3 0h1m1 0h1m1 0h1m1 0h1M3 16.5h1m1 0h1m2 0h1m1 0h2m3 0h4m1 0h3m2 0h1m1 0h1m2 0h1M2 17.5h4m5 0h3m1 0h2m2 0h4m1 0h1m1 0h5M3 18.5h2m2 0h9m1 0h2m1 0h1m1 0h1m4 0h1m2 0h1M2 19.5h2m1 0h2m6 0h4m3 0h3m3 0h3M2 20.5h3m1 0h1m1 0h1m4 0h1m1 0h1m1 0h2m2 0h2m4 0h2m1 0h1M2 21.5h6m2 0h2m1 0h7m3 0h2m1 0h1m1 0h1M2 22.5h3m1 0h3m2 0h1m2 0h1m2 0h2m3 0h8M10 23.5h2m2 0h7m1 0h1m3 0h3M2 24.5h7m1 0h1m1 0h1m3 0h2m1 0h1m1 0h2m1 0h1m1 0h1m1 0h1M2 25.5h1m5 0h1m2 0h2m2 0h3m3 0h2m3 0h2m1 0h2M2 26.5h1m1 0h3m1 0h1m1 0h1m1 0h2m2 0h1m3 0h7m3 0h1M2 27.5h1m1 0h3m1 0h1m1 0h2m1 0h3m1 0h3m5 0h1m2 0h2M2 28.5h1m1 0h3m1 0h1m4 0h1m1 0h4m3 0h2m1 0h2m2 0h2M2 29.5h1m5 0h1m3 0h3m2 0h1m1 0h2m2 0h2m1 0h3m1 0h1M2 30.5h7m2 0h1m4 0h1m1 0h2m2 0h1m2 0h2"/>
+              </svg>
+            </div>
+
+            <div class="qr-badge-top">
+              <span>📷 Point Camera To Scan</span>
+            </div>
+            <div class="qr-domain-link">codemolecule.com</div>
+            <div class="qr-subtext">Instant Portfolio & Free Quote</div>
+          </div>
+        </footer>
+
+      </article>
+    </div>
+  </main>
+
+  <!-- Interactive Viewer Scripts -->
+  <script>
+    (function() {
+      const banner = document.getElementById('banner-canvas');
+      const scaler = document.getElementById('canvas-scaler');
+      const themeToggleBtn = document.getElementById('theme-toggle-btn');
+      const themeIcon = document.getElementById('theme-icon');
+      const themeLabel = document.getElementById('theme-label');
+      const zoomSelect = document.getElementById('zoom-select');
+      const printBtn = document.getElementById('print-btn');
+
+      // Check URL params for export mode or theme preset
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('export')) {
+        document.body.classList.add('export-mode');
+      }
+      if (params.get('theme') === 'light') {
+        banner.classList.remove('theme-dark');
+        banner.classList.add('theme-light');
+        themeIcon.textContent = '☀️';
+        themeLabel.textContent = 'Light Theme';
+      }
+
+      // 1. Zoom auto-scaling logic so the 1200x2400 canvas fits naturally on normal screens
+      function updateScale() {
+        const val = zoomSelect.value;
+        if (val === 'auto') {
+          const availableHeight = window.innerHeight - 130;
+          const availableWidth = window.innerWidth - 60;
+          const scaleH = availableHeight / 2400;
+          const scaleW = availableWidth / 1200;
+          const fitScale = Math.min(scaleH, scaleW, 0.65);
+          scaler.style.transform = `scale(${fitScale})`;
+        } else {
+          const num = parseFloat(val);
+          scaler.style.transform = `scale(${num})`;
+        }
+      }
+
+      window.addEventListener('resize', () => {
+        if (zoomSelect.value === 'auto') updateScale();
+      });
+
+      zoomSelect.addEventListener('change', updateScale);
+      updateScale();
+
+      // 2. Theme Toggle (Dark Mode <-> Light Mode)
+      themeToggleBtn.addEventListener('click', () => {
+        if (banner.classList.contains('theme-dark')) {
+          banner.classList.remove('theme-dark');
+          banner.classList.add('theme-light');
+          themeIcon.textContent = '☀️';
+          themeLabel.textContent = 'Light Theme';
+        } else {
+          banner.classList.remove('theme-light');
+          banner.classList.add('theme-dark');
+          themeIcon.textContent = '🌙';
+          themeLabel.textContent = 'Dark Theme';
+        }
+      });
+
+      // 3. Print / PDF Export
+      printBtn.addEventListener('click', () => {
+        window.print();
+      });
+    })();
+  </script>
+</body>
+</html>
