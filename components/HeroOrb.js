@@ -207,6 +207,7 @@ export default function HeroOrb() {
           radius: Math.max(rect.width, rect.height) * 0.5 * worldPerPixel };
       });
       const segments = [];
+      let waveSpline = null;
       if (cards.length === 6) {
         let chain;
         if (desktop) {
@@ -237,16 +238,28 @@ export default function HeroOrb() {
             chain = [startPoint, cards[0], cards[1], cards[2], cards[3], cards[4], cards[5], endPoint];
           }
         }
-        for (let n = 0; n < chain.length - 1; n++) {
-          const from = chain[n], to = chain[n + 1];
-          const dx = to.x - from.x, dy = to.y - from.y;
-          const length = Math.hypot(dx, dy) || 1;
-          // Let the last molecules rest just inside each card edge.
-          const gap = -18 * worldPerPixel;
-          const startInset = from.radius ? gap : 0;
-          const start = { x: from.x + dx / length * (from.radius + startInset), y: from.y + dy / length * (from.radius + startInset) };
-          const end = { x: to.x - dx / length * (to.radius + gap), y: to.y - dy / length * (to.radius + gap) };
-          segments.push({ start, end });
+        if (!showInfinity) {
+          // Adjust start/end points for smoother entry/exit
+          if (desktop) {
+            chain[0] = { x: chain[1].x - 600 * worldPerPixel, y: chain[1].y, radius: 0 };
+            chain[chain.length - 1] = { x: chain[chain.length - 2].x + 600 * worldPerPixel, y: chain[chain.length - 2].y, radius: 0 };
+          } else {
+            chain[0] = { x: chain[1].x, y: chain[1].y + 600 * worldPerPixel, radius: 0 };
+            chain[chain.length - 1] = { x: chain[chain.length - 2].x, y: chain[chain.length - 2].y - 600 * worldPerPixel, radius: 0 };
+          }
+          waveSpline = new THREE.SplineCurve(chain.map(p => new THREE.Vector2(p.x, p.y)));
+        } else {
+          for (let n = 0; n < chain.length - 1; n++) {
+            const from = chain[n], to = chain[n + 1];
+            const dx = to.x - from.x, dy = to.y - from.y;
+            const length = Math.hypot(dx, dy) || 1;
+            // Let the last molecules rest just inside each card edge.
+            const gap = -18 * worldPerPixel;
+            const startInset = from.radius ? gap : 0;
+            const start = { x: from.x + dx / length * (from.radius + startInset), y: from.y + dy / length * (from.radius + startInset) };
+            const end = { x: to.x - dx / length * (to.radius + gap), y: to.y - dy / length * (to.radius + gap) };
+            segments.push({ start, end });
+          }
         }
       }
       const color = geo.attributes.color;
@@ -300,7 +313,24 @@ export default function HeroOrb() {
         const ribbonMod = showInfinity ? 6 : 2;
         const ribbonParticle = i % ribbonMod === 0;
 
-        if (ribbonParticle && segments.length) {
+        if (ribbonParticle && waveSpline) {
+          const q = u / (Math.PI * 2);
+          const pt = waveSpline.getPoint(q);
+          const tangent = waveSpline.getTangent(q);
+          const nx = -tangent.y;
+          const ny = tangent.x;
+          
+          const envelope = 0.72 + 0.28 * Math.sin(q * Math.PI);
+          const bend = (Math.sin(q * 8 + t * 0.4) * 4 + Math.sin(q * 21 - t * 0.3) * 2) * worldPerPixel;
+          const streamTube = (6.5 + 10.0 * Math.max(0, effectiveTube)) * worldPerPixel * envelope;
+          const spread = Math.cos(v) * streamTube;
+          const along = Math.sin(v) * 3 * worldPerPixel;
+          
+          ix = pt.x + tangent.x * along + nx * (bend + spread);
+          iy = pt.y + tangent.y * along + ny * (bend + spread);
+          iz = Math.sin(v) * streamTube * 0.28;
+          destinationBrightness = 0.3 + 0.2 * (Math.sin(i * 3.71 + t * 0.65) * 0.5 + 0.5);
+        } else if (ribbonParticle && segments.length) {
           const ribbonIndex = Math.floor(i / ribbonMod);
           const segment = segments[ribbonIndex % segments.length];
           const q = u / (Math.PI * 2);
@@ -321,16 +351,17 @@ export default function HeroOrb() {
         }
         
         let targetAlpha = 1;
-        if (!ribbonParticle || (!segments.length && ribbonParticle)) {
+        const hasPath = segments.length > 0 || waveSpline !== null;
+        if (!ribbonParticle || (!hasPath && ribbonParticle)) {
            // Hide extra particles, or hide off-screen bridges on mobile
-           if (!showInfinity || (!segments.length && ribbonParticle)) {
+           if (!showInfinity || (!hasPath && ribbonParticle)) {
              targetAlpha = 0;
            }
         }
         // The bridges emerge just after the infinity begins to form.
-        const local = ribbonParticle && segments.length
+        const local = ribbonParticle && hasPath
           ? Math.max(0, Math.min(1, (morph - 0.08) / 0.92)) : morph;
-        const particleBlend = ribbonParticle && segments.length
+        const particleBlend = ribbonParticle && hasPath
           ? local ** 3 * (local * (local * 6 - 15) + 10) : blend;
         const unifiedScale = W < 768 
           ? Math.min(1, hr.height * worldPerPixel / 5.5) 
