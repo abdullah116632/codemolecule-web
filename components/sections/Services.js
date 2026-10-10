@@ -7,6 +7,7 @@ import { useLanguage } from "../LanguageProvider";
 import { Icon } from "../Icons";
 import { Reveal, SectionHeading } from "../Reveal";
 import { services } from "@/lib/services";
+import { site } from "@/lib/site.config";
 import { MobileCarousel } from "../MobileCarousel";
 
 
@@ -115,13 +116,13 @@ export function Services() {
           <div data-molecule-destination aria-hidden="true" className="pointer-events-none h-28 lg:h-0" />
           {/* Mobile: Vertical zigzag */}
           <div data-molecule-cards className="block lg:hidden relative pt-12 pb-8">
-            <div className="flex flex-col w-full items-center -space-y-12">
+            <div className="flex flex-col w-full items-center -space-y-16 sm:-space-y-20">
               {services.map((service, i) => {
                 const item = service[lang];
                 // Offset right for even, left for odd
-                const offsetClass = i % 2 === 0 ? "ml-auto mr-4 sm:mr-10" : "mr-auto ml-4 sm:ml-10";
+                const offsetClass = i % 2 === 0 ? "ml-auto mr-8 sm:mr-16" : "mr-auto ml-8 sm:ml-16";
                 return (
-                  <div key={service.slug} className={`flex w-[42%] sm:w-[35%] justify-center ${offsetClass}`}>
+                  <div key={service.slug} className={`flex w-[38%] sm:w-[30%] justify-center ${offsetClass}`}>
                     <ServiceCard service={service} item={item} i={i} t={t} />
                   </div>
                 );
@@ -131,12 +132,12 @@ export function Services() {
 
           {/* Desktop: W-shape honeycomb with molecule canvas overlay */}
           <div data-molecule-cards className="service-honeycomb hidden lg:block relative py-6">
-            {/* Molecule infinity + connector lines */}
-
-
             <div className="flex flex-col w-full items-center">
-              {/* Top row: cards 0, 1, 2 — with 80px spacing, shifted right */}
-              <div className="service-row service-row-top flex">
+              {/* Top row */}
+              <div 
+                className={`service-row service-row-top flex`}
+                style={!site.showInfinity ? { marginLeft: 0, marginRight: 0, transform: "translateX(calc((var(--service-size) + var(--service-gap)) / -4))" } : undefined}
+              >
                 {services.slice(0, 3).map((service, i) => {
                   const item = service[lang];
                   return (
@@ -152,7 +153,10 @@ export function Services() {
                 })}
               </div>
               {/* Bottom row: cards 3, 4, 5 — offset right by half-stride (+175px) to form W */}
-              <div className="service-row service-row-bottom flex mt-8">
+              <div 
+                className="service-row service-row-bottom flex mt-8"
+                style={!site.showInfinity ? { marginLeft: 0, marginRight: 0, transform: "translateX(calc((var(--service-size) + var(--service-gap)) / 4))" } : undefined}
+              >
                 {services.slice(3, 6).map((service, i) => {
                   const item = service[lang];
                   return (

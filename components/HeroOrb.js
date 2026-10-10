@@ -1,12 +1,15 @@
 "use client";
 import { useEffect, useRef } from "react";
 
+import { site } from "@/lib/site.config";
+
 /**
  * HeroOrb — A large torus ring made of thousands of particles.
  * The ring edge is turbulent / wavy like the getlayers.ai "new-era" template.
  * Brand colors: deep green → lime → teal.
  */
 export default function HeroOrb() {
+  const showInfinity = site.showInfinity;
   const mountRef = useRef(null);
 
   useEffect(() => {
@@ -58,7 +61,7 @@ export default function HeroOrb() {
       const R_TUBE = 0.38;   // torus tube radius
 
       const positions = new Float32Array(TOTAL * 3);
-      const colors = new Float32Array(TOTAL * 3);
+      const colors = new Float32Array(TOTAL * 4);
       const metadata = new Float32Array(TOTAL * 4); // u, v, tubeT, isSpray
 
       // Pure brand palette (Dark Green → Green → Lime)
@@ -102,14 +105,15 @@ export default function HeroOrb() {
         // Spray particles are brighter
         if (isSpray) c.multiplyScalar(1.4);
 
-        colors[i * 3] = c.r;
-        colors[i * 3 + 1] = c.g;
-        colors[i * 3 + 2] = c.b;
+        colors[i * 4] = c.r;
+        colors[i * 4 + 1] = c.g;
+        colors[i * 4 + 2] = c.b;
+        colors[i * 4 + 3] = 1;
       }
 
       geo = new THREE.BufferGeometry();
       geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-      geo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+      geo.setAttribute("color", new THREE.BufferAttribute(colors, 4));
       geo.userData.metadata = metadata;
       geo.userData.baseColors = colors.slice();
       geo.attributes.position.setUsage(THREE.DynamicDrawUsage);
@@ -204,23 +208,34 @@ export default function HeroOrb() {
       });
       const segments = [];
       if (cards.length === 6) {
-        let tip, chain;
+        let chain;
         if (desktop) {
           const available = (cards[0].x - cards[0].radius) / worldPerPixel + W / 2 - ar.left - 24;
           span = Math.min(span, Math.max(64, available * 0.85));
           centerY = cards[0].y;
           // Keep the infinity and its first bridge clear of the first card.
           centerX = Math.min(centerX, cards[0].x - cards[0].radius - span * 0.58 * worldPerPixel - 18 * worldPerPixel);
-          tip = { x: centerX + span * 0.5 * worldPerPixel, y: centerY, radius: 0 };
-          chain = [tip, cards[0], cards[3], cards[1], cards[4], cards[2], cards[5]];
+          if (showInfinity) {
+            const tip = { x: centerX + span * 0.5 * worldPerPixel, y: centerY, radius: 0 };
+            chain = [tip, cards[0], cards[3], cards[1], cards[4], cards[2], cards[5]];
+          } else {
+            const startPoint = { x: -W * 0.6 * worldPerPixel, y: cards[0].y, radius: 0 }; // Off-screen left
+            const endPoint = { x: W * 0.6 * worldPerPixel, y: cards[5].y, radius: 0 }; // Off-screen right
+            chain = [startPoint, cards[0], cards[3], cards[1], cards[4], cards[2], cards[5], endPoint];
+          }
         } else {
-          span = Math.min(160, W * 0.45);
-          centerX = -W * 0.18 * worldPerPixel; // Shift left
+          span = Math.min(130, W * 0.38);
+          centerX = -W * 0.22 * worldPerPixel; // Shift left more
           // Place infinity above the first card, closer to it
           centerY = cards[0].y + cards[0].radius + span * 0.35 * worldPerPixel + 2 * worldPerPixel;
-          // Tip at the bottom of the right lobe
-          tip = { x: centerX + span * 0.5 * 0.707 * worldPerPixel, y: centerY - span * 0.23 * worldPerPixel, radius: 0 };
-          chain = [tip, cards[0], cards[1], cards[2], cards[3], cards[4], cards[5]];
+          if (showInfinity) {
+            const tip = { x: centerX + span * 0.5 * 0.707 * worldPerPixel, y: centerY - span * 0.23 * worldPerPixel, radius: 0 };
+            chain = [tip, cards[0], cards[1], cards[2], cards[3], cards[4], cards[5]];
+          } else {
+            const startPoint = { x: -W * 0.6 * worldPerPixel, y: cards[0].y + 40 * worldPerPixel, radius: 0 }; // Off-screen top-left
+            const endPoint = { x: W * 0.6 * worldPerPixel, y: cards[5].y - 40 * worldPerPixel, radius: 0 }; // Off-screen bottom-right
+            chain = [startPoint, cards[0], cards[1], cards[2], cards[3], cards[4], cards[5], endPoint];
+          }
         }
         for (let n = 0; n < chain.length - 1; n++) {
           const from = chain[n], to = chain[n + 1];
@@ -280,10 +295,13 @@ export default function HeroOrb() {
         // On mobile, particles are denser, so we reduce the brightness.
         const baseBrightness = desktop ? 0.35 : 0.1;
         let destinationBrightness = i % 7 === 0 ? 0.05 : baseBrightness;
-        // A sparse slice of the hero ring becomes the diffuse W bridges.
-        const ribbonParticle = i % 6 === 0;
+
+        // If infinity is hidden, use more particles for the stream and hide the rest
+        const ribbonMod = showInfinity ? 6 : 2;
+        const ribbonParticle = i % ribbonMod === 0;
+
         if (ribbonParticle && segments.length) {
-          const ribbonIndex = Math.floor(i / 6);
+          const ribbonIndex = Math.floor(i / ribbonMod);
           const segment = segments[ribbonIndex % segments.length];
           const q = u / (Math.PI * 2);
           const { start, end } = segment;
@@ -300,9 +318,14 @@ export default function HeroOrb() {
           iy = start.y + dy * q + dy / length * along + dx / length * (bend + spread);
           iz = Math.sin(v) * streamTube * 0.28;
           destinationBrightness = 0.3 + 0.2 * (Math.sin(i * 3.71 + t * 0.65) * 0.5 + 0.5);
-        } else if (ribbonParticle) {
-          // Keep mobile infinity equally airy without drawing off-screen bridges.
-          destinationBrightness = 0;
+        }
+        
+        let targetAlpha = 1;
+        if (!ribbonParticle || (!segments.length && ribbonParticle)) {
+           // Hide extra particles, or hide off-screen bridges on mobile
+           if (!showInfinity || (!segments.length && ribbonParticle)) {
+             targetAlpha = 0;
+           }
         }
         // The bridges emerge just after the infinity begins to form.
         const local = ribbonParticle && segments.length
@@ -352,7 +375,8 @@ export default function HeroOrb() {
           const weaveBrightness = i % 11 === 0 ? 0.28 * (1 - frameworkOpen * 0.65) : 0;
           brightness += (weaveBrightness - brightness) * transfer;
         }
-        color.setXYZ(i, baseColors[i * 3] * brightness, baseColors[i * 3 + 1] * brightness, baseColors[i * 3 + 2] * brightness);
+        color.setW(i, 1 + (targetAlpha - 1) * particleBlend);
+        color.setXYZ(i, baseColors[i * 4] * brightness, baseColors[i * 4 + 1] * brightness, baseColors[i * 4 + 2] * brightness);
       }
       pos.needsUpdate = true;
       color.needsUpdate = true;
