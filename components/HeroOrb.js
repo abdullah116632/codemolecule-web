@@ -198,7 +198,15 @@ export default function HeroOrb() {
 
       // Stable particle ribbons, from circle perimeter to circle perimeter.
       // These particles belong to the hero ring too: no second cloud is spawned.
-      const cardsContainer = desktop ? services.querySelector(".hidden.lg\\:block[data-molecule-cards]") : services.querySelector(".block.lg\\:hidden[data-molecule-cards]");
+      const allContainers = services.querySelectorAll("[data-molecule-cards]");
+      let cardsContainer = null;
+      for (const el of allContainers) {
+        if (window.getComputedStyle(el).display !== "none") {
+          cardsContainer = el;
+          break;
+        }
+      }
+      if (!cardsContainer) cardsContainer = allContainers[0];
       const cardNodes = cardsContainer ? cardsContainer.querySelectorAll("[data-molecule-card]") : [];
       const cards = Array.from(cardNodes, (node) => {
         const rect = node.getBoundingClientRect();
@@ -207,53 +215,50 @@ export default function HeroOrb() {
           radius: Math.max(rect.width, rect.height) * 0.5 * worldPerPixel };
       });
       const segments = [];
-      let waveSpline = null;
       if (cards.length === 6) {
-        let chain;
-        if (desktop) {
-          const available = (cards[0].x - cards[0].radius) / worldPerPixel + W / 2 - ar.left - 24;
-          span = Math.min(span, Math.max(64, available * 0.85));
-          centerY = cards[0].y;
-          // Keep the infinity and its first bridge clear of the first card.
-          centerX = Math.min(centerX, cards[0].x - cards[0].radius - span * 0.58 * worldPerPixel - 18 * worldPerPixel);
-          if (showInfinity) {
+        if (!showInfinity) {
+          // Solar Ecosystem: stream from central hub to all cards
+          const hubNode = document.querySelector("[data-molecule-hub]");
+          let hub = { x: 0, y: 0, radius: 0 };
+          if (hubNode) {
+            const hr = hubNode.getBoundingClientRect();
+            hub = {
+              x: (hr.left + hr.width / 2 - W / 2) * worldPerPixel,
+              y: (H / 2 - hr.top - hr.height / 2) * worldPerPixel,
+              radius: Math.max(hr.width, hr.height) * 0.5 * worldPerPixel
+            };
+          }
+          
+          for (let n = 0; n < 6; n++) {
+            const from = hub, to = cards[n];
+            const dx = to.x - from.x, dy = to.y - from.y;
+            const length = Math.hypot(dx, dy) || 1;
+            const gap = -18 * worldPerPixel;
+            const startInset = from.radius ? gap : 0;
+            const start = { x: from.x + dx / length * (from.radius + startInset), y: from.y + dy / length * (from.radius + startInset) };
+            const end = { x: to.x - dx / length * (to.radius + gap), y: to.y - dy / length * (to.radius + gap) };
+            segments.push({ start, end });
+          }
+        } else {
+          let chain;
+          if (desktop) {
+            const available = (cards[0].x - cards[0].radius) / worldPerPixel + W / 2 - ar.left - 24;
+            span = Math.min(span, Math.max(64, available * 0.85));
+            centerY = cards[0].y;
+            centerX = Math.min(centerX, cards[0].x - cards[0].radius - span * 0.58 * worldPerPixel - 18 * worldPerPixel);
             const tip = { x: centerX + span * 0.5 * worldPerPixel, y: centerY, radius: 0 };
             chain = [tip, cards[0], cards[3], cards[1], cards[4], cards[2], cards[5]];
           } else {
-            const startPoint = { x: -W * 0.6 * worldPerPixel, y: cards[0].y, radius: 0 }; // Off-screen left
-            const endPoint = { x: W * 0.6 * worldPerPixel, y: cards[5].y, radius: 0 }; // Off-screen right
-            chain = [startPoint, cards[0], cards[3], cards[1], cards[4], cards[2], cards[5], endPoint];
-          }
-        } else {
-          span = Math.min(130, W * 0.38);
-          centerX = -W * 0.22 * worldPerPixel; // Shift left more
-          // Place infinity above the first card, closer to it
-          centerY = cards[0].y + cards[0].radius + span * 0.35 * worldPerPixel + 2 * worldPerPixel;
-          if (showInfinity) {
+            span = Math.min(130, W * 0.38);
+            centerX = -W * 0.22 * worldPerPixel; 
+            centerY = cards[0].y + cards[0].radius + span * 0.35 * worldPerPixel + 2 * worldPerPixel;
             const tip = { x: centerX + span * 0.5 * 0.707 * worldPerPixel, y: centerY - span * 0.23 * worldPerPixel, radius: 0 };
             chain = [tip, cards[0], cards[1], cards[2], cards[3], cards[4], cards[5]];
-          } else {
-            const startPoint = { x: -W * 0.6 * worldPerPixel, y: cards[0].y + 40 * worldPerPixel, radius: 0 }; // Off-screen top-left
-            const endPoint = { x: W * 0.6 * worldPerPixel, y: cards[5].y - 40 * worldPerPixel, radius: 0 }; // Off-screen bottom-right
-            chain = [startPoint, cards[0], cards[1], cards[2], cards[3], cards[4], cards[5], endPoint];
           }
-        }
-        if (!showInfinity) {
-          // Adjust start/end points for smoother entry/exit
-          if (desktop) {
-            chain[0] = { x: chain[1].x - 600 * worldPerPixel, y: chain[1].y, radius: 0 };
-            chain[chain.length - 1] = { x: chain[chain.length - 2].x + 600 * worldPerPixel, y: chain[chain.length - 2].y, radius: 0 };
-          } else {
-            chain[0] = { x: chain[1].x, y: chain[1].y + 600 * worldPerPixel, radius: 0 };
-            chain[chain.length - 1] = { x: chain[chain.length - 2].x, y: chain[chain.length - 2].y - 600 * worldPerPixel, radius: 0 };
-          }
-          waveSpline = new THREE.SplineCurve(chain.map(p => new THREE.Vector2(p.x, p.y)));
-        } else {
           for (let n = 0; n < chain.length - 1; n++) {
             const from = chain[n], to = chain[n + 1];
             const dx = to.x - from.x, dy = to.y - from.y;
             const length = Math.hypot(dx, dy) || 1;
-            // Let the last molecules rest just inside each card edge.
             const gap = -18 * worldPerPixel;
             const startInset = from.radius ? gap : 0;
             const start = { x: from.x + dx / length * (from.radius + startInset), y: from.y + dy / length * (from.radius + startInset) };
@@ -313,24 +318,7 @@ export default function HeroOrb() {
         const ribbonMod = showInfinity ? 6 : 2;
         const ribbonParticle = i % ribbonMod === 0;
 
-        if (ribbonParticle && waveSpline) {
-          const q = u / (Math.PI * 2);
-          const pt = waveSpline.getPoint(q);
-          const tangent = waveSpline.getTangent(q);
-          const nx = -tangent.y;
-          const ny = tangent.x;
-          
-          const envelope = 0.72 + 0.28 * Math.sin(q * Math.PI);
-          const bend = (Math.sin(q * 8 + t * 0.4) * 4 + Math.sin(q * 21 - t * 0.3) * 2) * worldPerPixel;
-          const streamTube = (6.5 + 10.0 * Math.max(0, effectiveTube)) * worldPerPixel * envelope;
-          const spread = Math.cos(v) * streamTube;
-          const along = Math.sin(v) * 3 * worldPerPixel;
-          
-          ix = pt.x + tangent.x * along + nx * (bend + spread);
-          iy = pt.y + tangent.y * along + ny * (bend + spread);
-          iz = Math.sin(v) * streamTube * 0.28;
-          destinationBrightness = 0.3 + 0.2 * (Math.sin(i * 3.71 + t * 0.65) * 0.5 + 0.5);
-        } else if (ribbonParticle && segments.length) {
+        if (ribbonParticle && segments.length) {
           const ribbonIndex = Math.floor(i / ribbonMod);
           const segment = segments[ribbonIndex % segments.length];
           const q = u / (Math.PI * 2);
@@ -351,17 +339,16 @@ export default function HeroOrb() {
         }
         
         let targetAlpha = 1;
-        const hasPath = segments.length > 0 || waveSpline !== null;
-        if (!ribbonParticle || (!hasPath && ribbonParticle)) {
+        if (!ribbonParticle || (!segments.length && ribbonParticle)) {
            // Hide extra particles, or hide off-screen bridges on mobile
-           if (!showInfinity || (!hasPath && ribbonParticle)) {
+           if (!showInfinity || (!segments.length && ribbonParticle)) {
              targetAlpha = 0;
            }
         }
         // The bridges emerge just after the infinity begins to form.
-        const local = ribbonParticle && hasPath
+        const local = ribbonParticle && segments.length
           ? Math.max(0, Math.min(1, (morph - 0.08) / 0.92)) : morph;
-        const particleBlend = ribbonParticle && hasPath
+        const particleBlend = ribbonParticle && segments.length
           ? local ** 3 * (local * (local * 6 - 15) + 10) : blend;
         const unifiedScale = W < 768 
           ? Math.min(1, hr.height * worldPerPixel / 5.5) 

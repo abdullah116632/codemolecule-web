@@ -9,7 +9,6 @@ import { Reveal, SectionHeading } from "../Reveal";
 import { services } from "@/lib/services";
 import { site } from "@/lib/site.config";
 import { MobileCarousel } from "../MobileCarousel";
-import NetworkMesh from "../NetworkMesh";
 
 
 
@@ -115,7 +114,6 @@ export function Services() {
 
         <Reveal className="mt-12 sm:mt-16">
           <div data-molecule-destination aria-hidden="true" className="pointer-events-none h-28 lg:h-0" />
-          
           {site.showInfinity ? (
             <>
               {/* Mobile: Vertical zigzag */}
@@ -133,16 +131,14 @@ export function Services() {
                 </div>
               </div>
 
-              {/* Desktop: W-shape honeycomb with molecule canvas overlay */}
+              {/* Desktop: W-shape honeycomb */}
               <div data-molecule-cards className="service-honeycomb hidden lg:block relative py-6">
                 <div className="flex flex-col w-full items-center">
-                  {/* Top row */}
-                  <div className="service-row service-row-top flex">
+                  <div className={`service-row service-row-top flex`}>
                     {services.slice(0, 3).map((service, i) => (
                       <ServiceCard key={service.slug} service={service} item={service[lang]} i={i} t={t} />
                     ))}
                   </div>
-                  {/* Bottom row */}
                   <div className="service-row service-row-bottom flex mt-8">
                     {services.slice(3, 6).map((service, i) => (
                       <ServiceCard key={service.slug} service={service} item={service[lang]} i={i + 3} t={t} />
@@ -152,17 +148,49 @@ export function Services() {
               </div>
             </>
           ) : (
-            /* Modern 3x2 Grid / Stack with NetworkMesh background */
-            <div className="relative py-12 lg:py-16 w-full">
-              <NetworkMesh />
-              <div className="relative z-10 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-12 place-items-center">
-                {services.map((service, i) => (
-                  <div key={service.slug} className="w-[85%] sm:w-[70%] md:w-full max-w-[320px] lg:max-w-none flex justify-center">
-                    <ServiceCard service={service} item={service[lang]} i={i} t={t} />
-                  </div>
-                ))}
+            <>
+              {/* Orbital Flow Ecosystem (Mobile & Desktop) */}
+              <div data-molecule-cards className="relative w-full flex items-center justify-center min-h-[700px] lg:min-h-[850px] py-12 lg:py-24 overflow-visible">
+                {/* Central Core Hub */}
+                <div data-molecule-hub className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center justify-center w-28 h-28 lg:w-40 lg:h-40 rounded-full border border-brand-500/40 bg-[#0f172a]/80 backdrop-blur-md shadow-[0_0_50px_rgba(34,197,94,0.25)]">
+                  <Icon name="molecule" className="w-10 h-10 lg:w-14 lg:h-14 text-brand-400" />
+                  <span className="mt-2 text-[10px] lg:text-xs font-bold text-white tracking-widest uppercase">Core</span>
+                </div>
+                
+                {/* Orbiting Cards */}
+                <style>{`
+                  ${services.map((_, i) => {
+                    const angle = (i * 360) / 6 - 90;
+                    const rad = angle * (Math.PI / 180);
+                    // Mobile Ellipse: rx = 130, ry = 270
+                    const mx = Math.cos(rad) * 140;
+                    const my = Math.sin(rad) * 280;
+                    // Desktop Circle: r = 320
+                    const dx = Math.cos(rad) * 340;
+                    const dy = Math.sin(rad) * 320;
+                    return `
+                      .orbit-card-${i} { transform: translate(${mx}px, ${my}px); }
+                      @media (min-width: 1024px) {
+                        .orbit-card-${i} { transform: translate(${dx}px, ${dy}px); }
+                      }
+                    `;
+                  }).join("\n")}
+                `}</style>
+
+                {services.map((service, i) => {
+                  const item = service[lang];
+                  return (
+                    <div key={service.slug} className="absolute top-1/2 left-1/2 w-0 h-0 z-20">
+                      <div className={`orbit-card-${i} transition-transform duration-500`}>
+                        <div className="absolute -translate-x-1/2 -translate-y-1/2">
+                          <ServiceCard service={service} item={item} i={i} t={t} />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-            </div>
+            </>
           )}
         </Reveal>
       </div>
