@@ -117,20 +117,23 @@ export function Hero() {
 
       {/* Centered content */}
       <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center gap-6 px-6 text-center">
-        {/* Animated heading */}
-        <div className={animClass}>
-          <h1 className="font-display text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl xl:text-7xl leading-[1.1]">
-            {hero.titleA}{" "}
-            <span className="bg-gradient-to-r from-[#22C55E] via-[#4ADE80] to-[#2DD4BF] bg-clip-text text-transparent">
-              {hero.titleB}
-            </span>
-            <br />
-            <span className="text-white/90">{hero.titleC}</span>
-          </h1>
+        {/* Fixed height container so buttons don't jump when text changes */}
+        <div className="flex w-full flex-col items-center justify-center min-h-[320px] sm:min-h-[280px] md:min-h-[320px] xl:min-h-[380px]">
+          {/* Animated heading */}
+          <div className={animClass}>
+            <h1 className="font-display text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl xl:text-7xl leading-[1.1]">
+              {hero.titleA}{" "}
+              <span className="bg-gradient-to-r from-[#22C55E] via-[#4ADE80] to-[#2DD4BF] bg-clip-text text-transparent">
+                {hero.titleB}
+              </span>
+              <br />
+              <span className="text-white/90">{hero.titleC}</span>
+            </h1>
 
-          <p className="mt-5 text-base leading-relaxed text-white/55 sm:text-lg xl:text-xl max-w-2xl mx-auto">
-            {hero.subtitle}
-          </p>
+            <p className="mt-5 text-base leading-relaxed text-white/55 sm:text-lg xl:text-xl max-w-2xl mx-auto">
+              {hero.subtitle}
+            </p>
+          </div>
         </div>
 
         {/* CTA buttons */}
@@ -153,17 +156,7 @@ export function Hero() {
           </a>
         </div>
 
-        {/* Trust points */}
-        <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs font-medium text-white/40 sm:text-sm mt-1">
-          {h.points.map((p) => (
-            <li key={p} className="flex items-center gap-1.5">
-              <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#22C55E]/20 text-[#4ADE80]">
-                <Icon name="check" className="h-2.5 w-2.5" />
-              </span>
-              {p}
-            </li>
-          ))}
-        </ul>
+
       </div>
     </section>
   );

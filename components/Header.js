@@ -68,8 +68,8 @@ export function Header() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 border-b ${
         scrolled || open 
-          ? "border-[#0A1118]/8 bg-canvas/95 backdrop-blur-md shadow-sm shadow-black/5" 
-          : "border-white/10 bg-transparent"
+          ? "border-white/5 bg-[#050a0e]/80 backdrop-blur-md shadow-sm shadow-black/20" 
+          : "border-white/5 bg-transparent"
       }`}
     >
       <div className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
@@ -95,7 +95,7 @@ export function Header() {
         >
           {/* Magic Sliding Pill Background */}
           <div 
-            className={`absolute left-0 h-[36px] rounded-full bg-white shadow-md shadow-brand-500/10 ring-1 ring-brand-200/50 transition-all duration-300 ease-out ${hoverState.id ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
+            className={`absolute left-0 h-[36px] rounded-full bg-[#22C55E]/10 shadow-md ring-1 ring-[#22C55E]/30 transition-all duration-300 ease-out ${hoverState.id ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
             style={{
               width: hoverState.width || 0,
               transform: `translateX(${hoverState.left || 0}px)`,
@@ -107,7 +107,7 @@ export function Header() {
               key={id}
               href={`/#${id}`}
               onMouseEnter={(e) => setHoverState({ id, left: e.currentTarget.offsetLeft, width: e.currentTarget.offsetWidth })}
-              className={`relative z-10 px-4 py-2 text-[15px] font-medium transition-colors duration-300 ${hoverState.id === id ? 'text-brand-600' : 'text-slate-600'}`}
+              className={`relative z-10 px-4 py-2 text-[15px] font-medium transition-colors duration-300 ${hoverState.id === id ? 'text-white' : 'text-white hover:text-white'}`}
             >
               {t.nav[id]}
             </Link>
@@ -146,7 +146,7 @@ export function Header() {
           </Link>
           <button
             type="button"
-            className="btn-fancy shrink-0 inline-flex h-8 w-8 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-brand-200/90 bg-white text-ink transition hover:border-brand-400 lg:hidden"
+            className="btn-fancy shrink-0 inline-flex h-8 w-8 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition hover:border-[#22C55E] hover:text-[#22C55E] lg:hidden"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-controls="mobile-menu"
@@ -159,7 +159,7 @@ export function Header() {
 
       <div 
         id="mobile-menu" 
-        className={`absolute top-[4.5rem] left-0 w-full h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-slate-200/70 bg-canvas lg:hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${open ? "opacity-100 translate-y-0 visible" : "opacity-0 -translate-y-4 invisible pointer-events-none"}`}
+        className={`absolute top-[4.5rem] left-0 w-full h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-white/10 bg-[#050a0e] lg:hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${open ? "opacity-100 translate-y-0 visible" : "opacity-0 -translate-y-4 invisible pointer-events-none"}`}
       >
         <nav className="mx-auto flex max-w-7xl flex-col px-4 py-6 sm:px-6" aria-label="Mobile">
           {sections.map((id, index) => (
@@ -167,7 +167,7 @@ export function Header() {
               key={id}
               href={`/#${id}`}
               onClick={() => setOpen(false)}
-              className={`font-display border-b border-slate-100 py-4 text-2xl font-bold text-ink transition-all duration-500 transform ${open ? "translate-x-0 opacity-100" : "-translate-x-8 opacity-0"}`}
+              className={`font-display border-b border-white/10 py-4 text-2xl font-bold transition-all duration-500 transform ${open ? "translate-x-0 opacity-100" : "-translate-x-8 opacity-0"} text-white hover:text-white`}
               style={{ transitionDelay: open ? `${100 + index * 50}ms` : "0ms" }}
             >
               {t.nav[id]}
