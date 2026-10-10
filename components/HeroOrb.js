@@ -277,7 +277,9 @@ export default function HeroOrb() {
         let iy = centerY + b * Math.sin(2 * u) + tx / len * tube * Math.cos(v);
         let iz = tube * Math.sin(v);
         // Keep the finished infinity airy, like the reference image.
-        let destinationBrightness = i % 7 === 0 ? 0.08 : 0.65;
+        // On mobile, particles are denser, so we reduce the brightness.
+        const baseBrightness = desktop ? 0.35 : 0.1;
+        let destinationBrightness = i % 7 === 0 ? 0.05 : baseBrightness;
         // A sparse slice of the hero ring becomes the diffuse W bridges.
         const ribbonParticle = i % 6 === 0;
         if (ribbonParticle && segments.length) {
