@@ -328,22 +328,76 @@ export default function HeroOrb() {
           // Distributed inside the 6 boxes
           if (cards.length === 6) {
             const card = cards[i % 6];
-            // Map u,v to [-1, 1] range to fill the box
-            const nx = (u / Math.PI) - 1;
-            const ny = (v / Math.PI) - 1;
             
-            // Distribute particles across the card's rectangular bounds, keeping them slightly inside
-            const spreadX = nx * (card.width * 0.45); 
-            const spreadY = ny * (card.height * 0.45);
+            const w = card.width * 0.485; // slightly inside
+            const h = card.height * 0.485;
+            // The cards have rounded-2xl which is 1rem (16px), or on mobile maybe scaled, let's use 16 as base
+            const radius = 24 * worldPerPixel; // 24px visually matches rounded-2xl well
+            const r = Math.min(radius, w, h);
             
+            const cw = w - r;
+            const ch = h - r;
+            
+            // Perimeter components
+            const top = cw * 2;
+            const tr = Math.PI * r * 0.5;
+            const right = ch * 2;
+            const br = Math.PI * r * 0.5;
+            const bottom = cw * 2;
+            const bl = Math.PI * r * 0.5;
+            const left = ch * 2;
+            const tl = Math.PI * r * 0.5;
+            
+            const perimeter = top + tr + right + br + bottom + bl + left + tl;
+            let d = (u / (Math.PI * 2)) * perimeter;
+            let bx, by;
+            
+            if (d < top) {
+              bx = -cw + d;
+              by = h;
+            } else if (d < top + tr) {
+              d -= top;
+              const angle = d / r;
+              bx = cw + Math.sin(angle) * r;
+              by = ch + Math.cos(angle) * r;
+            } else if (d < top + tr + right) {
+              d -= top + tr;
+              bx = w;
+              by = ch - d;
+            } else if (d < top + tr + right + br) {
+              d -= top + tr + right;
+              const angle = Math.PI/2 + d / r;
+              bx = cw + Math.sin(angle) * r;
+              by = -ch + Math.cos(angle) * r;
+            } else if (d < top + tr + right + br + bottom) {
+              d -= top + tr + right + br;
+              bx = cw - d;
+              by = -h;
+            } else if (d < top + tr + right + br + bottom + bl) {
+              d -= top + tr + right + br + bottom;
+              const angle = Math.PI + d / r;
+              bx = -cw + Math.sin(angle) * r;
+              by = -ch + Math.cos(angle) * r;
+            } else if (d < top + tr + right + br + bottom + bl + left) {
+              d -= top + tr + right + br + bottom + bl;
+              bx = -w;
+              by = -ch + d;
+            } else {
+              d -= top + tr + right + br + bottom + bl + left;
+              const angle = Math.PI * 1.5 + d / r;
+              bx = -cw + Math.sin(angle) * r;
+              by = ch + Math.cos(angle) * r;
+            }
+            
+            // Add a little swirl to soften the line and make it volumetric
             const swirlX = Math.sin(t * 2 + v) * 4 * worldPerPixel;
             const swirlY = Math.cos(t * 2 + u) * 4 * worldPerPixel;
             
-            ix = card.x + spreadX + swirlX;
-            iy = card.y + spreadY + swirlY;
-            iz = Math.sin(u * 13) * 10 * worldPerPixel; // Add some depth
+            ix = card.x + bx + swirlX;
+            iy = card.y + by + swirlY;
+            iz = Math.sin(u * 13) * 6 * worldPerPixel; // flatter depth for border
             
-            destinationBrightness = 0.2 + 0.3 * (Math.sin(i * 2 + t) * 0.5 + 0.5); // Lively glow
+            destinationBrightness = 0.25 + 0.25 * (Math.sin(i * 2 + t) * 0.5 + 0.5); // Lively glow
             targetAlpha = 1;
           } else {
             targetAlpha = 0;
