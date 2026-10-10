@@ -6,9 +6,9 @@
   --font-display: var(--font-lato), var(--font-noto), ui-sans-serif, system-ui, sans-serif;
 
   --color-ink: #F8FAFC;
-  /* Dark mode background for the rest of the web pages */
-  --color-canvas: #0B1120;
-  --color-canvas-alt: #0D1426;
+  /* Dark mode background for the rest of the web pages (Deep Dark Green theme) */
+  --color-canvas: #060D0A;
+  --color-canvas-alt: #08120E;
     --color-brand-50: #F0FDF4;
   --color-brand-100: #DCFCE7;
   --color-brand-200: #BBF7D0;
@@ -81,10 +81,11 @@ html[data-lang="en"] .logo-text {
 }
 
 .bg-grid {
-  background-image:
-    linear-gradient(to right, rgb(15 23 42 / 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(15 23 42 / 0.05) 1px, transparent 1px);
-  background-size: 44px 44px;
+  background-image: 
+    radial-gradient(circle at 0 0, rgba(34, 197, 94, 0.5) 1.5px, transparent 2px),
+    linear-gradient(to right, rgba(34, 197, 94, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(34, 197, 94, 0.08) 1px, transparent 1px);
+  background-size: 80px 80px;
 }
 
 .reveal {

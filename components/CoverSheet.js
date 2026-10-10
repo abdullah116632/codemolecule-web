@@ -51,12 +51,14 @@ export function CoverSheet({ children }) {
   }, []);
 
   return (
-    <div ref={ref} className="relative z-10 bg-canvas">
+    <div ref={ref} className="relative z-10 bg-canvas bg-grid">
       <div 
         ref={fadeRef}
         aria-hidden="true"
         className="pointer-events-none absolute top-0 left-0 right-0 h-40 -translate-y-full bg-gradient-to-b from-transparent to-canvas opacity-0"
       />
+      {/* Ambient background glow glob matching screenshot 2 */}
+      <div aria-hidden className="pointer-events-none absolute bottom-0 right-0 h-[800px] w-[800px] translate-x-1/3 translate-y-1/3 rounded-full bg-brand-500/10 blur-[120px]" />
       {children}
     </div>
   );
