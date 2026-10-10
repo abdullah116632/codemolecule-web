@@ -325,86 +325,8 @@ export default function HeroOrb() {
              }
           }
         } else {
-          // Distributed inside the 6 boxes
-          if (cards.length === 6) {
-            const card = cards[i % 6];
-            
-            const w = card.width * 0.5; // exactly on the border
-            const h = card.height * 0.5;
-            // The cards use rounded-2xl (16px in Tailwind). Let's use 16px to perfectly match the CSS corner.
-            const radius = 16 * worldPerPixel; 
-            const r = Math.min(radius, w, h);
-            
-            const cw = w - r;
-            const ch = h - r;
-            
-            // Perimeter components
-            const top = cw * 2;
-            const tr = Math.PI * r * 0.5;
-            const right = ch * 2;
-            const br = Math.PI * r * 0.5;
-            const bottom = cw * 2;
-            const bl = Math.PI * r * 0.5;
-            const left = ch * 2;
-            const tl = Math.PI * r * 0.5;
-            
-            const perimeter = top + tr + right + br + bottom + bl + left + tl;
-            let d = (u / (Math.PI * 2)) * perimeter;
-            let bx, by;
-            
-            if (d < top) {
-              bx = -cw + d;
-              by = h;
-            } else if (d < top + tr) {
-              d -= top;
-              const angle = d / r;
-              bx = cw + Math.sin(angle) * r;
-              by = ch + Math.cos(angle) * r;
-            } else if (d < top + tr + right) {
-              d -= top + tr;
-              bx = w;
-              by = ch - d;
-            } else if (d < top + tr + right + br) {
-              d -= top + tr + right;
-              const angle = Math.PI/2 + d / r;
-              bx = cw + Math.sin(angle) * r;
-              by = -ch + Math.cos(angle) * r;
-            } else if (d < top + tr + right + br + bottom) {
-              d -= top + tr + right + br;
-              bx = cw - d;
-              by = -h;
-            } else if (d < top + tr + right + br + bottom + bl) {
-              d -= top + tr + right + br + bottom;
-              const angle = Math.PI + d / r;
-              bx = -cw + Math.sin(angle) * r;
-              by = -ch + Math.cos(angle) * r;
-            } else if (d < top + tr + right + br + bottom + bl + left) {
-              d -= top + tr + right + br + bottom + bl;
-              bx = -w;
-              by = -ch + d;
-            } else {
-              d -= top + tr + right + br + bottom + bl + left;
-              const angle = Math.PI * 1.5 + d / r;
-              bx = -cw + Math.sin(angle) * r;
-              by = ch + Math.cos(angle) * r;
-            }
-            
-            // Clean volumetric glow (no wavy sine swirl)
-            // effectiveTube creates varying thickness. v provides a random angle per particle.
-            const thickness = 6 * worldPerPixel * (0.6 + effectiveTube * 0.6); 
-            const offsetX = Math.cos(v * 7 + t * 2) * thickness;
-            const offsetY = Math.sin(v * 7 + t * 2) * thickness;
-            
-            ix = card.x + bx + offsetX;
-            iy = card.y + by + offsetY;
-            iz = Math.sin(u * 13 + t) * 4 * worldPerPixel; // subtle depth, gently drifting
-            
-            // Much brighter glow for the thin border to make it pop
-            destinationBrightness = 0.6 + 0.3 * (Math.sin(i * 2 + t * 1.5) * 0.5 + 0.5); 
-            targetAlpha = 1;
-          } else {
-            targetAlpha = 0;
-          }
+          // When infinity is disabled, completely hide particles in this section
+          targetAlpha = 0;
         }
         // The bridges emerge just after the infinity begins to form.
         const local = ribbonParticle && segments.length
