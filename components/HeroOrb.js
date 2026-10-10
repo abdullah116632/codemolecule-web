@@ -256,8 +256,9 @@ export default function HeroOrb() {
 
       // Keep the ring stationary (sthir) facing forward. 
       // Only a very tiny tilt on mouse hover to feel 3D, no continuous spinning.
-      particles.rotation.y = smoothMouse.x * 0.15 * (1 - blend);
-      particles.rotation.x = smoothMouse.y * 0.15 * (1 - blend);
+      const parallaxAmount = showInfinity ? (1 - blend * 0.7) : 1;
+      particles.rotation.y = smoothMouse.x * 0.15 * parallaxAmount;
+      particles.rotation.x = smoothMouse.y * 0.15 * parallaxAmount;
       particles.rotation.z = 0;
 
       // Animate positions using turbulence noise so molecules wave
@@ -335,8 +336,9 @@ export default function HeroOrb() {
           const randZ = (((u + v) * 5432.1098) % 1.0) - 0.5;
           
           // Very slow, gentle ambient drifting
-          const driftX = Math.sin(t * 0.15 + u) * 1.5 * worldPerPixel;
-          const driftY = Math.cos(t * 0.15 + v) * 1.5 * worldPerPixel;
+          // Organic floating movement so it's not static
+          const driftX = Math.sin(t * 0.4 + u * 3) * 6 * worldPerPixel;
+          const driftY = Math.cos(t * 0.35 + v * 3) * 6 * worldPerPixel;
           
           ix = randX * spanX + driftX;
           iy = (H / 2 - sr.top - sr.height / 2) * worldPerPixel + randY * spanY + driftY;
