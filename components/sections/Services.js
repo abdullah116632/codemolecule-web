@@ -113,18 +113,20 @@ export function Services() {
 
         <Reveal className="mt-12 sm:mt-16">
           <div data-molecule-destination aria-hidden="true" className="pointer-events-none h-28 lg:h-0" />
-          {/* Mobile: standard carousel */}
-          <div className="block lg:hidden">
-            <MobileCarousel gridClass="grid-cols-1">
+          {/* Mobile: Vertical zigzag */}
+          <div data-molecule-cards className="block lg:hidden relative pt-12 pb-8">
+            <div className="flex flex-col w-full items-center -space-y-12">
               {services.map((service, i) => {
                 const item = service[lang];
+                // Offset right for even, left for odd
+                const offsetClass = i % 2 === 0 ? "ml-auto mr-4 sm:mr-10" : "mr-auto ml-4 sm:ml-10";
                 return (
-                  <div key={service.slug} className="flex w-full h-full justify-center p-2">
+                  <div key={service.slug} className={`flex w-[42%] sm:w-[35%] justify-center ${offsetClass}`}>
                     <ServiceCard service={service} item={item} i={i} t={t} />
                   </div>
                 );
               })}
-            </MobileCarousel>
+            </div>
           </div>
 
           {/* Desktop: W-shape honeycomb with molecule canvas overlay */}

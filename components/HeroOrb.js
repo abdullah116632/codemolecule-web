@@ -194,7 +194,8 @@ export default function HeroOrb() {
 
       // Stable particle ribbons, from circle perimeter to circle perimeter.
       // These particles belong to the hero ring too: no second cloud is spawned.
-      const cardNodes = desktop ? services.querySelectorAll("[data-molecule-cards] [data-molecule-card]") : [];
+      const cardsContainer = desktop ? services.querySelector(".hidden.lg\\:block[data-molecule-cards]") : services.querySelector(".block.lg\\:hidden[data-molecule-cards]");
+      const cardNodes = cardsContainer ? cardsContainer.querySelectorAll("[data-molecule-card]") : [];
       const cards = Array.from(cardNodes, (node) => {
         const rect = node.getBoundingClientRect();
         return { x: (rect.left + rect.width / 2 - W / 2) * worldPerPixel,
@@ -203,13 +204,24 @@ export default function HeroOrb() {
       });
       const segments = [];
       if (cards.length === 6) {
-        const available = (cards[0].x - cards[0].radius) / worldPerPixel + W / 2 - ar.left - 24;
-        span = Math.min(span, Math.max(64, available * 0.85));
-        centerY = cards[0].y;
-        // Keep the infinity and its first bridge clear of the first card.
-        centerX = Math.min(centerX, cards[0].x - cards[0].radius - span * 0.58 * worldPerPixel - 18 * worldPerPixel);
-        const tip = { x: centerX + span * 0.5 * worldPerPixel, y: centerY, radius: 0 };
-        const chain = [tip, cards[0], cards[3], cards[1], cards[4], cards[2], cards[5]];
+        let tip, chain;
+        if (desktop) {
+          const available = (cards[0].x - cards[0].radius) / worldPerPixel + W / 2 - ar.left - 24;
+          span = Math.min(span, Math.max(64, available * 0.85));
+          centerY = cards[0].y;
+          // Keep the infinity and its first bridge clear of the first card.
+          centerX = Math.min(centerX, cards[0].x - cards[0].radius - span * 0.58 * worldPerPixel - 18 * worldPerPixel);
+          tip = { x: centerX + span * 0.5 * worldPerPixel, y: centerY, radius: 0 };
+          chain = [tip, cards[0], cards[3], cards[1], cards[4], cards[2], cards[5]];
+        } else {
+          span = Math.min(160, W * 0.45);
+          centerX = -W * 0.18 * worldPerPixel; // Shift left
+          // Place infinity above the first card, closer to it
+          centerY = cards[0].y + cards[0].radius + span * 0.35 * worldPerPixel + 2 * worldPerPixel;
+          // Tip at the bottom of the right lobe
+          tip = { x: centerX + span * 0.5 * 0.707 * worldPerPixel, y: centerY - span * 0.23 * worldPerPixel, radius: 0 };
+          chain = [tip, cards[0], cards[1], cards[2], cards[3], cards[4], cards[5]];
+        }
         for (let n = 0; n < chain.length - 1; n++) {
           const from = chain[n], to = chain[n + 1];
           const dx = to.x - from.x, dy = to.y - from.y;
