@@ -4,10 +4,10 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useLanguage } from "../LanguageProvider";
 import { Icon, WhatsAppIcon } from "../Icons";
 import { whatsappLink } from "@/lib/site.config";
-import dynamic from "next/dynamic";
+
 
 // Dynamically import the heavy 3D orb (client-only, no SSR)
-const HeroOrb = dynamic(() => import("../HeroOrb"), { ssr: false });
+
 
 const HERO_VARIATIONS = {
   en: [
@@ -95,7 +95,7 @@ export function Hero() {
       className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-[#050a0e] pt-20"
     >
       {/* 3-D Particle Orb — fills the whole section */}
-      <HeroOrb />
+
 
       {/* Soft vignette — center stays clear so ring shows, outer edge fades */}
       <div

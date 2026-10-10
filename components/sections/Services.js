@@ -1,15 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState, useEffect, useCallback } from "react";
-import dynamic from "next/dynamic";
+import { useRef, useState } from "react";
+
 import { useLanguage } from "../LanguageProvider";
 import { Icon } from "../Icons";
 import { Reveal, SectionHeading } from "../Reveal";
 import { services } from "@/lib/services";
 import { MobileCarousel } from "../MobileCarousel";
 
-const ServicesOrb = dynamic(() => import("../ServicesOrb"), { ssr: false });
+
 
 export const serviceAccents = [
   "bg-[#2DD4BF]/10 text-[#2DD4BF] ring-[#2DD4BF]/20",
@@ -28,7 +28,8 @@ export const serviceIconThemes = [
   { gradient: "from-[#06b6d4] to-[#0284c7]", glow: "shadow-[0_8px_22px_rgba(2,132,199,0.35)]",   hoverGlow: "group-hover:shadow-[0_12px_28px_rgba(2,132,199,0.48)]" },
 ];
 
-function ServiceCard({ service, item, i, t, cardRef }) {
+function ServiceCard({ service, item, i, t }) {
+  const cardRef = useRef(null);
   const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0, isHovered: false });
   const [spotlightPos, setSpotlightPos] = useState({ x: 0, y: 0 });
   const [spotlightOpacity, setSpotlightOpacity] = useState(0);
@@ -47,6 +48,7 @@ function ServiceCard({ service, item, i, t, cardRef }) {
   return (
     <Link
       ref={cardRef}
+      data-molecule-card={i}
       href={`/services/${service.slug}`}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setSpotlightOpacity(1)}
@@ -103,35 +105,6 @@ export function Services() {
   const s = t.services;
 
   // One ref per card to measure center positions
-  const cardRefs = useRef(services.map(() => ({ current: null })));
-  const sectionRef = useRef(null);
-  const [cardPositions, setCardPositions] = useState([]);
-
-  const measureCards = useCallback(() => {
-    if (!sectionRef.current) return;
-    const sectionRect = sectionRef.current.getBoundingClientRect();
-    const positions = cardRefs.current.map((ref) => {
-      if (!ref.current) return { x: 0, y: 0 };
-      const r = ref.current.getBoundingClientRect();
-      return {
-        x: r.left - sectionRect.left + r.width / 2,
-        y: r.top  - sectionRect.top  + r.height / 2,
-      };
-    });
-    setCardPositions(positions);
-  }, []);
-
-  useEffect(() => {
-    measureCards();
-    const t1 = setTimeout(measureCards, 100);
-    const t2 = setTimeout(measureCards, 400);
-    window.addEventListener("resize", measureCards);
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      window.removeEventListener("resize", measureCards);
-    };
-  }, [measureCards]);
 
   return (
     <section id="services" className="py-10 sm:py-24 lg:py-28 overflow-hidden">
@@ -139,6 +112,7 @@ export function Services() {
         <SectionHeading eyebrow={s.eyebrow} title={s.title} subtitle={s.subtitle} />
 
         <Reveal className="mt-12 sm:mt-16">
+          <div data-molecule-destination aria-hidden="true" className="pointer-events-none h-28 lg:h-0" />
           {/* Mobile: standard carousel */}
           <div className="block lg:hidden">
             <MobileCarousel gridClass="grid-cols-1">
@@ -146,7 +120,7 @@ export function Services() {
                 const item = service[lang];
                 return (
                   <div key={service.slug} className="flex w-full h-full p-4">
-                    <ServiceCard service={service} item={item} i={i} t={t} cardRef={cardRefs.current[i]} />
+                    <ServiceCard service={service} item={item} i={i} t={t} />
                   </div>
                 );
               })}
@@ -154,9 +128,9 @@ export function Services() {
           </div>
 
           {/* Desktop: W-shape honeycomb with molecule canvas overlay */}
-          <div ref={sectionRef} className="hidden lg:block relative py-6">
+          <div data-molecule-cards className="hidden lg:block relative py-6">
             {/* Molecule infinity + connector lines */}
-            <ServicesOrb cardPositions={cardPositions} />
+
 
             <div className="flex flex-col w-full items-center">
               {/* Top row: cards 0, 1, 2 — with 80px spacing, shifted right */}
@@ -170,7 +144,7 @@ export function Services() {
                       item={item}
                       i={i}
                       t={t}
-                      cardRef={cardRefs.current[i]}
+                     
                     />
                   );
                 })}
@@ -186,7 +160,6 @@ export function Services() {
                       item={item}
                       i={i + 3}
                       t={t}
-                      cardRef={cardRefs.current[i + 3]}
                     />
                   );
                 })}

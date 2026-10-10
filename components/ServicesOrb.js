@@ -79,9 +79,9 @@ export default function ServicesOrb({ cardPositions = [] }) {
 
       // Pure brand palette — EXACT match with HeroOrb
       const cGreen = new THREE.Color("#16A34A"); // brand-600
-      const cLime  = new THREE.Color("#86EFAC"); // brand-300
-      const cTeal  = new THREE.Color("#22C55E"); // brand-500
-      const cDeep  = new THREE.Color("#064E3B"); // brand-900
+      const cLime = new THREE.Color("#86EFAC"); // brand-300
+      const cTeal = new THREE.Color("#22C55E"); // brand-500
+      const cDeep = new THREE.Color("#064E3B"); // brand-900
 
       // Round soft glow dot sprite — EXACT match with HeroOrb
       const dotCanvas = document.createElement("canvas");
@@ -103,12 +103,12 @@ export default function ServicesOrb({ cardPositions = [] }) {
       // ─────────────────────────────────────────────────────────────
       // 1. MORPHING INFINITY PARTICLES (Hero Circle -> Infinity)
       // ─────────────────────────────────────────────────────────────
-      const INF_RING_PARTICLES  = 7200;
+      const INF_RING_PARTICLES = 7200;
       const INF_SPRAY_PARTICLES = 1800;
       const INF_TOTAL = INF_RING_PARTICLES + INF_SPRAY_PARTICLES;
 
-      const iPos  = new Float32Array(INF_TOTAL * 3);
-      const iCol  = new Float32Array(INF_TOTAL * 3);
+      const iPos = new Float32Array(INF_TOTAL * 3);
+      const iCol = new Float32Array(INF_TOTAL * 3);
       const iMeta = new Float32Array(INF_TOTAL * 4); // u, v, tubeT, isSpray
 
       for (let i = 0; i < INF_TOTAL; i++) {
@@ -119,7 +119,7 @@ export default function ServicesOrb({ cardPositions = [] }) {
           ? 0.65 + Math.random() * 0.75
           : Math.random();
 
-        iMeta[i * 4]     = u;
+        iMeta[i * 4] = u;
         iMeta[i * 4 + 1] = v;
         iMeta[i * 4 + 2] = tubeT;
         iMeta[i * 4 + 3] = isSpray;
@@ -139,11 +139,11 @@ export default function ServicesOrb({ cardPositions = [] }) {
 
         if (isSpray) c.multiplyScalar(1.4);
 
-        iCol[i * 3]     = c.r;
+        iCol[i * 3] = c.r;
         iCol[i * 3 + 1] = c.g;
         iCol[i * 3 + 2] = c.b;
 
-        iPos[i * 3]     = 0;
+        iPos[i * 3] = 0;
         iPos[i * 3 + 1] = 0;
         iPos[i * 3 + 2] = 0;
       }
@@ -171,8 +171,8 @@ export default function ServicesOrb({ cardPositions = [] }) {
       // 2. MORPHING W-SHAPE CONNECTOR STREAM
       // ─────────────────────────────────────────────────────────────
       const LINE_TOTAL = 2600;
-      const lPos  = new Float32Array(LINE_TOTAL * 3);
-      const lCol  = new Float32Array(LINE_TOTAL * 3);
+      const lPos = new Float32Array(LINE_TOTAL * 3);
+      const lCol = new Float32Array(LINE_TOTAL * 3);
       const lMeta = new Float32Array(LINE_TOTAL * 4); // segIdx, tRaw, radialDist, angle
 
       for (let i = 0; i < LINE_TOTAL; i++) {
@@ -181,7 +181,7 @@ export default function ServicesOrb({ cardPositions = [] }) {
         const radialDist = Math.random() * 0.12;
         const angle = Math.random() * Math.PI * 2;
 
-        lMeta[i * 4]     = segIdx;
+        lMeta[i * 4] = segIdx;
         lMeta[i * 4 + 1] = tRaw;
         lMeta[i * 4 + 2] = radialDist;
         lMeta[i * 4 + 3] = angle;
@@ -196,11 +196,11 @@ export default function ServicesOrb({ cardPositions = [] }) {
           c = cTeal.clone().lerp(cLime, Math.random());
         }
 
-        lCol[i * 3]     = c.r;
+        lCol[i * 3] = c.r;
         lCol[i * 3 + 1] = c.g;
         lCol[i * 3 + 2] = c.b;
 
-        lPos[i * 3]     = 0;
+        lPos[i * 3] = 0;
         lPos[i * 3 + 1] = 0;
         lPos[i * 3 + 2] = 0;
       }
@@ -252,7 +252,7 @@ export default function ServicesOrb({ cardPositions = [] }) {
         const vh = window.innerHeight;
         // As services enters the viewport (from top at 85% vh to 15% vh):
         const startY = vh * 0.85;
-        const endY   = vh * 0.15;
+        const endY = vh * 0.15;
         const p = (startY - rect.top) / (startY - endY);
         targetMorph = Math.max(0, Math.min(1, p));
       }
@@ -285,7 +285,7 @@ export default function ServicesOrb({ cardPositions = [] }) {
       // ── Target Infinity Parameters ──────────────────────────
       const SCALE_X = 0.82; // half-width of infinity
       const SCALE_Y = 0.52; // lobe height scaling
-      const R_TUBE  = 0.15; // tube thickness with clear open loop centers
+      const R_TUBE = 0.15; // tube thickness with clear open loop centers
 
       // Position: clearly to the left of Landing Pages (Card 0)
       const minCenterX = -halfW + SCALE_X + R_TUBE + 0.18;
@@ -295,18 +295,18 @@ export default function ServicesOrb({ cardPositions = [] }) {
 
       // ── Hero Circle Parameters (EXACT match with HeroOrb) ───
       const HERO_R_MAJOR = 1.75;
-      const HERO_R_TUBE  = 0.38;
+      const HERO_R_TUBE = 0.38;
 
       // ── Animate Morphing Infinity Particles ─────────────────
       if (infinityGeo) {
-        const pos  = infinityGeo.attributes.position;
+        const pos = infinityGeo.attributes.position;
         const meta = infinityGeo.userData.metadata;
-        const N    = pos.count;
+        const N = pos.count;
 
         for (let i = 0; i < N; i++) {
-          const u       = meta[i * 4];
-          const v       = meta[i * 4 + 1];
-          const tubeT   = meta[i * 4 + 2];
+          const u = meta[i * 4];
+          const v = meta[i * 4 + 1];
+          const tubeT = meta[i * 4 + 2];
           const isSpray = meta[i * 4 + 3];
 
           // 1. Position on HERO CIRCLE (at center of screen)
@@ -358,8 +358,8 @@ export default function ServicesOrb({ cardPositions = [] }) {
           // 3D fluid stream arc during flight
           const arc = Math.sin(easeM * Math.PI);
           const arcX = -arc * 0.35 * Math.sin(u);
-          const arcY =  arc * 0.45 * Math.cos(u);
-          const arcZ =  arc * 0.60 * Math.sin(v);
+          const arcY = arc * 0.45 * Math.cos(u);
+          const arcZ = arc * 0.60 * Math.sin(v);
 
           // Interpolated coordinate
           const px = (1 - easeM) * heroX + easeM * infX + arcX;
@@ -373,9 +373,9 @@ export default function ServicesOrb({ cardPositions = [] }) {
 
       // ── Animate Morphing Connector Stream ───────────────────
       if (lineGeo) {
-        const pos  = lineGeo.attributes.position;
+        const pos = lineGeo.attributes.position;
         const meta = lineGeo.userData.metadata;
-        const N    = pos.count;
+        const N = pos.count;
 
         if (!hasCards || currentMorph < 0.05) {
           // Hide connector line until morphing begins and cards are measured
@@ -414,22 +414,22 @@ export default function ServicesOrb({ cardPositions = [] }) {
 
           // Purely Circle-to-Circle segments: ZERO particles enter any circle!
           const s0_start = infRight;
-          const s0_end   = getPerimeterPoint(c0, infRight, cardRadius);
+          const s0_end = getPerimeterPoint(c0, infRight, cardRadius);
 
           const s1_start = getPerimeterPoint(c0, c3, cardRadius);
-          const s1_end   = getPerimeterPoint(c3, c0, cardRadius);
+          const s1_end = getPerimeterPoint(c3, c0, cardRadius);
 
           const s2_start = getPerimeterPoint(c3, c1, cardRadius);
-          const s2_end   = getPerimeterPoint(c1, c3, cardRadius);
+          const s2_end = getPerimeterPoint(c1, c3, cardRadius);
 
           const s3_start = getPerimeterPoint(c1, c4, cardRadius);
-          const s3_end   = getPerimeterPoint(c4, c1, cardRadius);
+          const s3_end = getPerimeterPoint(c4, c1, cardRadius);
 
           const s4_start = getPerimeterPoint(c4, c2, cardRadius);
-          const s4_end   = getPerimeterPoint(c2, c4, cardRadius);
+          const s4_end = getPerimeterPoint(c2, c4, cardRadius);
 
           const s5_start = getPerimeterPoint(c2, c5, cardRadius);
-          const s5_end   = getPerimeterPoint(c5, c2, cardRadius);
+          const s5_end = getPerimeterPoint(c5, c2, cardRadius);
 
           const segmentPairs = [
             [s0_start, s0_end],
@@ -451,10 +451,10 @@ export default function ServicesOrb({ cardPositions = [] }) {
           }
 
           for (let i = 0; i < N; i++) {
-            const segIdx     = Math.floor(meta[i * 4]);
-            const tRaw       = meta[i * 4 + 1];
+            const segIdx = Math.floor(meta[i * 4]);
+            const tRaw = meta[i * 4 + 1];
             const radialDist = meta[i * 4 + 2];
-            const angle      = meta[i * 4 + 3];
+            const angle = meta[i * 4 + 3];
 
             if (segIdx >= segments.length) continue;
 
