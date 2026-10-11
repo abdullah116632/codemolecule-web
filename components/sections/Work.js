@@ -44,7 +44,7 @@ export function Work() {
               >
                 <div className="relative aspect-[16/10] w-full overflow-hidden bg-white/[0.02] p-3 sm:p-4 flex items-center justify-center">
                   <div className="relative h-full w-full overflow-hidden rounded-xl bg-[#0B1120] shadow-lg shadow-black/40 border border-white/10 transition-all duration-700 ease-out group-hover:-translate-y-1 group-hover:scale-[1.025] group-hover:shadow-2xl group-hover:shadow-emerald-900/30">
-                    <Image src={project.image} alt={`${project.title} live website homepage`} fill sizes="(min-width: 1440px) 442px, (min-width: 1280px) 32vw, (min-width: 768px) 48vw, 95vw" className="object-cover object-top" placeholder="blur" />
+                    <Image src={project.image} alt={`${project.title} live website homepage`} fill sizes="(min-width: 1440px) 442px, (min-width: 1280px) 32vw, (min-width: 768px) 48vw, 95vw" quality={100} className="object-cover object-top" placeholder="blur" />
                   </div>
                 </div>
                 <div className="relative flex min-h-[110px] flex-1 items-center justify-between gap-3 px-4 py-5 sm:px-6 pointer-events-none">

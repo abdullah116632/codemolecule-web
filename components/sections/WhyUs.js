@@ -57,8 +57,8 @@ export function WhyUs() {
   }, [w.items]);
 
   return (
-    <section id="why-code-molecule" className="relative overflow-hidden bg-transparent py-16 sm:py-24 lg:py-28">
-      <div aria-hidden="true" className="pointer-events-none absolute -top-32 left-1/2 h-80 w-160 -translate-x-1/2 rounded-full bg-brand-500/20 blur-3xl" />
+    <section id="why-code-molecule" className="relative bg-transparent py-16 sm:py-24 lg:py-28">
+      <div aria-hidden="true" className="pointer-events-none absolute -top-64 left-1/2 h-[40rem] w-[80rem] -translate-x-1/2 bg-[radial-gradient(ellipse_at_center,rgba(34,197,94,0.1)_0%,transparent_60%)] opacity-80" />
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal className="mx-auto max-w-2xl text-center">
           <p className="eyebrow text-sm font-medium uppercase tracking-[0.18em] text-brand-400">{w.eyebrow}</p>
