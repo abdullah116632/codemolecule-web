@@ -76,7 +76,7 @@ export function SpotlightCard({
           className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out"
           style={{
             opacity,
-            backgroundImage: `radial-gradient(${spotlightColor.replace(/[\d.]+\)$/, '1)')} 1px, transparent 1px)`,
+            backgroundImage: `radial-gradient(${spotlightColor} 1px, transparent 1px)`,
             backgroundSize: '28px 28px',
             maskImage: `radial-gradient(250px circle at ${position.x}px ${position.y}px, black 20%, transparent 100%)`,
             WebkitMaskImage: `radial-gradient(250px circle at ${position.x}px ${position.y}px, black 20%, transparent 100%)`,
