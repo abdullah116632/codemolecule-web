@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useLanguage } from "../LanguageProvider";
 import { Icon } from "../Icons";
 import { Reveal, SectionHeading } from "../Reveal";
@@ -58,9 +58,14 @@ function PricingCard({ plan, p, t }) {
   const ref = useRef(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.matchMedia("(hover: none) and (pointer: coarse)").matches);
+  }, []);
 
   const handleMouseMove = (e) => {
-    if (!ref.current) return;
+    if (isMobile || !ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   };
@@ -69,42 +74,26 @@ function PricingCard({ plan, p, t }) {
     <div
       ref={ref}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setOpacity(1)}
-      onMouseLeave={() => setOpacity(0)}
+      onMouseEnter={() => !isMobile && setOpacity(1)}
+      onMouseLeave={() => !isMobile && setOpacity(0)}
       className="group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] p-5 sm:p-8 backdrop-blur transition-colors duration-300 hover:shadow-2xl hover:shadow-brand-950/60 hover:border-brand-400/40 hover:bg-white/[0.07]"
     >
-      {/* 
-        [OPTION 1 & 3] Dotted Grid Spotlight Layer:
-        - In Option 1: 24px grid on clean background
-        - In Option 3: 28px grid to align with background
-        - In Option 2: Hidden (no inner dots)
-      */}
-      {(SPOTLIGHT_OPTION === 1 || SPOTLIGHT_OPTION === 3) && (
+
+
+      {/* Soft Color Glow Spotlight */}
+      {!isMobile && (
         <div
           className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out"
           style={{
             opacity,
-            backgroundImage: `radial-gradient(rgb(34 197 94 / 0.15) 1px, transparent 1px)`,
-            backgroundSize: "28px 28px",
-            maskImage: `radial-gradient(250px circle at ${position.x}px ${position.y}px, black 20%, transparent 100%)`,
-            WebkitMaskImage: `radial-gradient(250px circle at ${position.x}px ${position.y}px, black 20%, transparent 100%)`,
+            background: `radial-gradient(${
+              SPOTLIGHT_OPTION === 2 ? "450px" : "400px"
+            } circle at ${position.x}px ${position.y}px, rgba(34, 197, 94, 0.15), transparent 60%)`,
+            mixBlendMode: "screen",
           }}
           aria-hidden="true"
         />
       )}
-
-      {/* Soft Color Glow Spotlight */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out"
-        style={{
-          opacity,
-          background: `radial-gradient(${
-            SPOTLIGHT_OPTION === 2 ? "450px" : "400px"
-          } circle at ${position.x}px ${position.y}px, rgba(34, 197, 94, 0.15), transparent 60%)`,
-          mixBlendMode: "screen",
-        }}
-        aria-hidden="true"
-      />
 
       <div className="relative z-10 flex flex-col h-full pointer-events-none">
         <h3 className="font-display text-[19px] sm:text-xl font-bold text-white">{plan.name}</h3>

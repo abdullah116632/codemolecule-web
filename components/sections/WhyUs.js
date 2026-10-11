@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { useLanguage } from "../LanguageProvider";
 import { Icon } from "../Icons";
 import { Reveal } from "../Reveal";
+import { SpotlightCard } from "../SpotlightCard";
 
 const icons = ["clipboard", "bolt", "mobile", "key"];
 
@@ -56,8 +57,8 @@ export function WhyUs() {
   }, [w.items]);
 
   return (
-    <section id="why-code-molecule" className="relative overflow-hidden bg-transparent py-16 sm:py-24 lg:py-28">
-      <div aria-hidden="true" className="pointer-events-none absolute -top-32 left-1/2 h-80 w-160 -translate-x-1/2 rounded-full bg-brand-500/20 blur-3xl" />
+    <section id="why-code-molecule" className="relative bg-transparent py-16 sm:py-24 lg:py-28">
+      <div aria-hidden="true" className="pointer-events-none absolute -top-64 left-1/2 h-[40rem] w-[80rem] -translate-x-1/2 bg-[radial-gradient(ellipse_at_center,rgba(34,197,94,0.1)_0%,transparent_60%)] opacity-80" />
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal className="mx-auto max-w-2xl text-center">
           <p className="eyebrow text-sm font-medium uppercase tracking-[0.18em] text-brand-400">{w.eyebrow}</p>
@@ -70,15 +71,17 @@ export function WhyUs() {
               <div key={item.title} data-framework-row className="relative">
                 <span aria-hidden="true" className="pointer-events-none absolute -left-6 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-brand-300/60 bg-[#050a0e] shadow-[0_0_10px_rgba(34,197,94,0.2)] sm:-left-8" />
                 <span aria-hidden="true" className="pointer-events-none absolute -left-6 top-1/2 h-px w-6 bg-brand-400/20 sm:-left-8 sm:w-8" />
-                <div className="group relative flex min-h-[100px] items-center gap-4 overflow-hidden rounded-2xl border border-white/10 bg-[#141A28] p-4 transition-colors duration-300 hover:border-brand-400/40 hover:bg-[#1E2536] sm:px-5">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-500/15 text-brand-300 transition-colors group-hover:bg-brand-500/25">
-                    <Icon name={icons[index]} className="h-5 w-5" />
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <h3 className="font-display text-base font-bold text-white">{item.title}</h3>
-                    <p className="mt-1.5 text-sm leading-relaxed text-slate-300">{item.desc}</p>
+                <SpotlightCard dots={false} className="!rounded-2xl !border-white/10 !bg-white/[0.04] backdrop-blur hover:!border-brand-400/40 hover:!bg-white/[0.07]">
+                  <div className="flex min-h-[100px] items-center gap-4 p-4 sm:px-5">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-500/15 text-brand-300 transition-colors group-hover:bg-brand-500/25">
+                      <Icon name={icons[index]} className="h-5 w-5" />
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-display text-base font-bold text-white">{item.title}</h3>
+                      <p className="mt-1.5 text-sm leading-relaxed text-slate-300">{item.desc}</p>
+                    </div>
                   </div>
-                </div>
+                </SpotlightCard>
               </div>
             ))}
           </div>

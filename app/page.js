@@ -2,6 +2,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { CoverSheet } from "@/components/CoverSheet";
 import HeroOrb from "@/components/HeroOrb";
+import AnimatedBackground from "@/components/AnimatedBackground";
 import { Hero } from "@/components/sections/Hero";
 
 import { Services } from "@/components/sections/Services";
@@ -17,6 +18,7 @@ export default function Home() {
     <>
       <Header />
       <main>
+        <AnimatedBackground />
         <HeroOrb />
         {/* Desktop: hero + strip fill one screen. The hero scrolls away normally while
             the strip stays pinned at the bottom of the screen, and the next section

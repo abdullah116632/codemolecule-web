@@ -164,20 +164,10 @@ export default function HeroOrb() {
       const hr = hero.getBoundingClientRect();
       const sr = services.getBoundingClientRect();
       const ar = anchor.getBoundingClientRect();
-      const why = document.getElementById("why-code-molecule");
-      const framework = document.querySelector("[data-framework-destination]");
-      const whyRect = why?.getBoundingClientRect();
-      const frameworkRect = framework?.getBoundingClientRect();
-      const frameworkNodes = framework ? Array.from(framework.querySelectorAll("[data-framework-row]"), (row) => row.getBoundingClientRect()) : [];
-      const frameworkOpen = Math.max(0, Math.min(1, Number(framework?.dataset.frameworkOpen || 0)));
-      const transferRaw = whyRect && frameworkRect && !reducedMotion.matches
-        ? Math.max(0, Math.min(1, (H * 0.85 - whyRect.top) / (H * 0.65))) : 0;
-      const transfer = transferRaw * transferRaw * (3 - 2 * transferRaw);
-      const frameworkVisible = Boolean(whyRect && whyRect.bottom > 0 && whyRect.top < H);
-      const target = Math.max(0, Math.min(1, (H * 0.92 - sr.top) / (H * 0.8)));
       const reduced = reducedMotion.matches;
+      const target = (sr.top < H * 0.35) ? 1 : 0;
       if (morph === null || reduced) morph = target;
-      else morph += (target - morph) * (1 - Math.exp(-12 * dt));
+      else morph += (target - morph) * (1 - Math.exp(-2.5 * dt));
       const blend = morph ** 3 * (morph * (morph * 6 - 15) + 10);
       const halfH = 3.8 * Math.tan(52 * Math.PI / 360);
       const worldPerPixel = halfH * 2 / H;
@@ -186,15 +176,16 @@ export default function HeroOrb() {
       let centerX = ((desktop ? ar.left + span * 0.55 + 24 : W / 2) - W / 2) * worldPerPixel;
       let centerY = (H / 2 - ar.top - (desktop ? 164 : 48)) * worldPerPixel;
       const heroY = (H / 2 - hr.top - hr.height / 2) * worldPerPixel * (1 - blend);
-      mountRef.current.style.visibility = hr.bottom > 0 || sr.bottom > 0 || (transfer > 0 && frameworkVisible) ? "visible" : "hidden";
+      mountRef.current.style.visibility = hr.bottom > 0 || sr.bottom > 0 ? "visible" : "hidden";
       raf = requestAnimationFrame(animate);
       const t = reduced ? 0 : (Date.now() - startTime) / 1000;
 
-      if ((sr.bottom <= 0 && !(transfer > 0 && frameworkVisible)) || document.hidden) return;
+      if (sr.bottom <= 0 || document.hidden) return;
 
       // Stable particle ribbons, from circle perimeter to circle perimeter.
       // These particles belong to the hero ring too: no second cloud is spawned.
-      const cardNodes = desktop ? services.querySelectorAll("[data-molecule-cards] [data-molecule-card]") : [];
+      const cardsContainer = desktop ? services.querySelector(".hidden.lg\\:block[data-molecule-cards]") : services.querySelector(".block.lg\\:hidden[data-molecule-cards]");
+      const cardNodes = cardsContainer ? cardsContainer.querySelectorAll("[data-molecule-card]") : [];
       const cards = Array.from(cardNodes, (node) => {
         const rect = node.getBoundingClientRect();
         return { x: (rect.left + rect.width / 2 - W / 2) * worldPerPixel,
@@ -203,13 +194,24 @@ export default function HeroOrb() {
       });
       const segments = [];
       if (cards.length === 6) {
-        const available = (cards[0].x - cards[0].radius) / worldPerPixel + W / 2 - ar.left - 24;
-        span = Math.min(span, Math.max(64, available * 0.85));
-        centerY = cards[0].y;
-        // Keep the infinity and its first bridge clear of the first card.
-        centerX = Math.min(centerX, cards[0].x - cards[0].radius - span * 0.58 * worldPerPixel - 18 * worldPerPixel);
-        const tip = { x: centerX + span * 0.5 * worldPerPixel, y: centerY, radius: 0 };
-        const chain = [tip, cards[0], cards[3], cards[1], cards[4], cards[2], cards[5]];
+        let tip, chain;
+        if (desktop) {
+          const available = (cards[0].x - cards[0].radius) / worldPerPixel + W / 2 - ar.left - 24;
+          span = Math.min(span, Math.max(64, available * 0.85));
+          centerY = cards[0].y;
+          // Keep the infinity and its first bridge clear of the first card.
+          centerX = Math.min(centerX, cards[0].x - cards[0].radius - span * 0.58 * worldPerPixel - 18 * worldPerPixel);
+          tip = { x: centerX + span * 0.5 * worldPerPixel, y: centerY, radius: 0 };
+          chain = [tip, cards[0], cards[3], cards[1], cards[4], cards[2], cards[5]];
+        } else {
+          span = Math.min(160, W * 0.45);
+          centerX = -W * 0.18 * worldPerPixel; // Shift left
+          // Place infinity above the first card, closer to it
+          centerY = cards[0].y + cards[0].radius + span * 0.35 * worldPerPixel + 2 * worldPerPixel;
+          // Tip at the bottom of the right lobe
+          tip = { x: centerX + span * 0.5 * 0.707 * worldPerPixel, y: centerY - span * 0.23 * worldPerPixel, radius: 0 };
+          chain = [tip, cards[0], cards[1], cards[2], cards[3], cards[4], cards[5]];
+        }
         for (let n = 0; n < chain.length - 1; n++) {
           const from = chain[n], to = chain[n + 1];
           const dx = to.x - from.x, dy = to.y - from.y;
@@ -295,48 +297,17 @@ export default function HeroOrb() {
           ? Math.max(0, Math.min(1, (morph - 0.08) / 0.92)) : morph;
         const particleBlend = ribbonParticle && segments.length
           ? local ** 3 * (local * (local * 6 - 15) + 10) : blend;
-        const heroScale = Math.min(1, W * worldPerPixel / 4.8, hr.height * worldPerPixel / 4.8);
-        const heroScaleY = W < 768 ? Math.min(1, hr.height * worldPerPixel / 5.5) : heroScale;
-        const hx = r * Math.cos(u) * heroScale, hy = heroY + r * Math.sin(u) * heroScaleY;
+        const unifiedScale = W < 768 
+          ? Math.min(1, hr.height * worldPerPixel / 5.5) 
+          : Math.min(1, W * worldPerPixel / 4.8, hr.height * worldPerPixel / 4.8);
+        const hx = r * Math.cos(u) * unifiedScale, hy = heroY + r * Math.sin(u) * unifiedScale;
         const arc = Math.sin(particleBlend * Math.PI) * Math.sin(u) * 0.15;
         pos.setXYZ(i,
           hx + (ix - hx) * particleBlend,
           hy + (iy - hy) * particleBlend + arc,
-          R_TUBE * effectiveTube * Math.sin(v) * heroScale * (1 - particleBlend) + iz * particleBlend
+          R_TUBE * effectiveTube * Math.sin(v) * unifiedScale * (1 - particleBlend) + iz * particleBlend
         );
         let brightness = 1 + (destinationBrightness - 1) * particleBlend;
-        if (transfer > 0 && frameworkRect) {
-          // The existing cloud resolves into a restrained four-node framework.
-          const q = u / (Math.PI * 2);
-          const node = frameworkNodes[Math.floor(i / 4) % 4];
-          const first = frameworkNodes[0];
-          const last = frameworkNodes[frameworkNodes.length - 1];
-          if (node && first && last) {
-            const axisX = frameworkRect.left + 8;
-            const nodeY = node.top + node.height / 2;
-            const group = i % 4;
-            let pixelX = axisX;
-            let pixelY = nodeY;
-            if (group === 0) {
-              pixelY = first.top + first.height / 2 + q * (last.top + last.height / 2 - first.top - first.height / 2);
-              pixelX += Math.cos(v) * 1.8;
-            } else if (group === 1) {
-              pixelX += q * (node.left - axisX);
-              pixelY += Math.cos(v) * 1.5;
-            } else {
-              pixelX += Math.cos(u) * (5 + tubeT * 2);
-              pixelY += Math.sin(u) * (5 + tubeT * 2);
-            }
-            const frameworkX = (pixelX - W / 2) * worldPerPixel;
-            const frameworkY = (H / 2 - pixelY) * worldPerPixel;
-            pos.setXYZ(i,
-              pos.getX(i) + (frameworkX - pos.getX(i)) * transfer,
-              pos.getY(i) + (frameworkY - pos.getY(i)) * transfer,
-              pos.getZ(i) * (1 - transfer));
-          }
-          const weaveBrightness = i % 11 === 0 ? 0.28 * (1 - frameworkOpen * 0.65) : 0;
-          brightness += (weaveBrightness - brightness) * transfer;
-        }
         color.setXYZ(i, baseColors[i * 3] * brightness, baseColors[i * 3 + 1] * brightness, baseColors[i * 3 + 2] * brightness);
       }
       pos.needsUpdate = true;

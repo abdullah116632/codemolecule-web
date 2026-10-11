@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 import { useLanguage } from "../LanguageProvider";
 import { Icon } from "../Icons";
@@ -33,9 +33,14 @@ function ServiceCard({ service, item, i, t }) {
   const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0, isHovered: false });
   const [spotlightPos, setSpotlightPos] = useState({ x: 0, y: 0 });
   const [spotlightOpacity, setSpotlightOpacity] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.matchMedia("(hover: none) and (pointer: coarse)").matches);
+  }, []);
 
   const handleMouseMove = (e) => {
-    if (!cardRef.current) return;
+    if (isMobile || !cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
@@ -51,8 +56,12 @@ function ServiceCard({ service, item, i, t }) {
       data-molecule-card={i}
       href={`/services/${service.slug}`}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setSpotlightOpacity(1)}
-      onMouseLeave={() => { setTilt({ rotateX: 0, rotateY: 0, isHovered: false }); setSpotlightOpacity(0); }}
+      onMouseEnter={() => !isMobile && setSpotlightOpacity(1)}
+      onMouseLeave={() => {
+        if (isMobile) return;
+        setTilt({ rotateX: 0, rotateY: 0, isHovered: false });
+        setSpotlightOpacity(0);
+      }}
       style={{
         transform: tilt.isHovered
           ? `perspective(1000px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg) translateY(-8px)`
@@ -61,36 +70,40 @@ function ServiceCard({ service, item, i, t }) {
           ? "transform 0.12s ease-out, box-shadow 0.38s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.38s cubic-bezier(0.16, 1, 0.3, 1)"
           : "transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.38s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.38s cubic-bezier(0.16, 1, 0.3, 1)",
       }}
-      className="group relative flex aspect-square w-[min(280px,100%)] shrink-0 lg:w-[var(--service-size)] flex-col items-center justify-center text-center overflow-hidden rounded-full border-2 border-transparent bg-white/[0.04] p-5 xl:p-7 transition-all duration-[380ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:border-brand-400 hover:shadow-[0_22px_50px_rgba(57,105,159,0.20)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-600"
+      className="group relative flex aspect-square w-[min(280px,100%)] shrink-0 lg:w-[var(--service-size)] flex-col items-center justify-center text-center overflow-hidden rounded-full border-2 border-transparent bg-white/[0.04] p-3 sm:p-5 xl:p-7 transition-all duration-[380ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:border-brand-400 hover:shadow-[0_22px_50px_rgba(57,105,159,0.20)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-600"
     >
       {/* Dotted spotlight */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300"
-        style={{
-          opacity: spotlightOpacity,
-          backgroundImage: `radial-gradient(rgb(34 197 94 / 0.35) 1.5px, transparent 1.5px)`,
-          backgroundSize: "22px 22px",
-          maskImage: `radial-gradient(220px circle at ${spotlightPos.x}px ${spotlightPos.y}px, black 30%, transparent 100%)`,
-          WebkitMaskImage: `radial-gradient(220px circle at ${spotlightPos.x}px ${spotlightPos.y}px, black 30%, transparent 100%)`,
-        }}
-        aria-hidden="true"
-      />
+      {!isMobile && (
+        <div
+          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300"
+          style={{
+            opacity: spotlightOpacity,
+            backgroundImage: `radial-gradient(rgb(34 197 94 / 0.15) 1px, transparent 1px)`,
+            backgroundSize: "22px 22px",
+            maskImage: `radial-gradient(220px circle at ${spotlightPos.x}px ${spotlightPos.y}px, black 30%, transparent 100%)`,
+            WebkitMaskImage: `radial-gradient(220px circle at ${spotlightPos.x}px ${spotlightPos.y}px, black 30%, transparent 100%)`,
+          }}
+          aria-hidden="true"
+        />
+      )}
       {/* Glow */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 mix-blend-screen"
-        style={{
-          opacity: spotlightOpacity,
-          background: `radial-gradient(300px circle at ${spotlightPos.x}px ${spotlightPos.y}px, rgba(34,197,94,0.12), transparent 65%)`,
-        }}
-        aria-hidden="true"
-      />
+      {!isMobile && (
+        <div
+          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 mix-blend-screen"
+          style={{
+            opacity: spotlightOpacity,
+            background: `radial-gradient(300px circle at ${spotlightPos.x}px ${spotlightPos.y}px, rgba(34,197,94,0.12), transparent 65%)`,
+          }}
+          aria-hidden="true"
+        />
+      )}
 
       <div className="relative z-10 flex flex-col items-center justify-center h-full pointer-events-none">
         <div className={`flex shrink-0 h-[48px] w-[48px] xl:h-[56px] xl:w-[56px] items-center justify-center rounded-[18px] bg-gradient-to-br ${theme.gradient} ${theme.glow} ${theme.hoverGlow} text-white transition-all duration-350 ease-out group-hover:scale-110 group-hover:rotate-6`}>
-          <Icon name={service.icon} className="h-6 w-6 text-white" />
+          <Icon name={service.icon} className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
         </div>
-        <h3 className="font-display mt-3.5 text-base sm:text-lg font-bold text-white group-hover:text-[#4ADE80] transition-colors leading-tight">{item.title}</h3>
-        <p className="mt-2 text-[11px] sm:text-xs text-slate-300 leading-relaxed max-w-[85%] mx-auto line-clamp-3">{item.summary}</p>
+        <h3 className="font-display mt-2 sm:mt-3.5 text-[15px] sm:text-lg font-bold text-white group-hover:text-[#4ADE80] transition-colors leading-tight">{item.title}</h3>
+        <p className="mt-1.5 sm:mt-2 text-[10px] sm:text-xs text-slate-300 leading-relaxed max-w-[90%] mx-auto line-clamp-2 sm:line-clamp-3">{item.summary}</p>
         <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold text-[#4ADE80] transition-all duration-200 ease-out group-hover:gap-2.5 group-hover:text-white">
           <span>{t.serviceDetail.viewDetails}</span>
           <Icon name="arrow" className="h-3.5 w-3.5 transition-transform duration-200 ease-out group-hover:translate-x-1" />
@@ -113,18 +126,20 @@ export function Services() {
 
         <Reveal className="mt-12 sm:mt-16">
           <div data-molecule-destination aria-hidden="true" className="pointer-events-none h-28 lg:h-0" />
-          {/* Mobile: standard carousel */}
-          <div className="block lg:hidden">
-            <MobileCarousel gridClass="grid-cols-1">
+          {/* Mobile: Vertical zigzag */}
+          <div data-molecule-cards className="block lg:hidden relative pt-12 pb-8">
+            <div className="flex flex-col w-full items-center -space-y-4 sm:-space-y-8">
               {services.map((service, i) => {
                 const item = service[lang];
+                // Offset right for even, left for odd
+                const offsetClass = i % 2 === 0 ? "ml-auto mr-4 sm:mr-10" : "mr-auto ml-4 sm:ml-10";
                 return (
-                  <div key={service.slug} className="flex w-full h-full justify-center p-2">
+                  <div key={service.slug} className={`flex w-[55%] xs:w-[48%] sm:w-[40%] justify-center ${offsetClass}`}>
                     <ServiceCard service={service} item={item} i={i} t={t} />
                   </div>
                 );
               })}
-            </MobileCarousel>
+            </div>
           </div>
 
           {/* Desktop: W-shape honeycomb with molecule canvas overlay */}

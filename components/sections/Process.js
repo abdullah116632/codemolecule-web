@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { useLanguage } from "../LanguageProvider";
 import { SectionHeading } from "../Reveal";
 import { toBanglaDigits } from "@/lib/format";
+import { SpotlightCard } from "../SpotlightCard";
 
 const drawings = [
   "M21 11.5a8.4 8.4 0 0 1-9 8.4 9.2 9.2 0 0 1-4-.9L3 21l1.5-5A8.5 8.5 0 1 1 21 11.5ZM8 11h8M8 14h5",
@@ -80,12 +81,14 @@ export function Process() {
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={drawings[index]} /></svg>
                     <span className="process-node-halo pointer-events-none absolute -inset-1 rounded-[20px] border border-brand-400/20" />
                   </div>
-                  <div className="process-card relative flex flex-1 flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.025] p-5 lg:min-h-[208px]">
-                    <div aria-hidden="true" className="process-card-glow pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(34,197,94,0.09),transparent_70%)]" />
-                    <span className="relative mb-3 font-mono text-[11px] font-medium tracking-[0.2em] text-brand-300/65">{lang === "bn" ? toBanglaDigits(number) : number}</span>
-                    <h3 className="relative font-display text-base font-semibold leading-snug text-white">{step.title}</h3>
-                    <p className="relative mt-2 text-sm leading-relaxed text-slate-400">{step.desc}</p>
-                    <span aria-hidden="true" className="process-card-accent absolute bottom-0 left-5 right-5 h-px bg-gradient-to-r from-brand-400/60 to-transparent" />
+                  <div className="process-card relative flex flex-1 flex-col pb-8 border-b border-white/5 group-last:border-0 group-last:pb-0 lg:border-0 lg:pb-0 lg:!rounded-2xl lg:!border lg:!border-white/10 lg:!bg-white/[0.04] lg:backdrop-blur lg:hover:!border-brand-400/40 lg:hover:!bg-white/[0.07] lg:min-h-[208px] transition-colors duration-300">
+                    <div aria-hidden="true" className="process-card-glow hidden lg:block pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(ellipse_at_top_left,rgba(34,197,94,0.09),transparent_70%)]" />
+                    <span aria-hidden="true" className="process-card-accent hidden lg:block absolute bottom-0 left-5 right-5 h-px bg-gradient-to-r from-brand-400/60 to-transparent" />
+                    <div className="relative flex flex-1 flex-col pt-1 lg:p-5">
+                      <span className="relative mb-1 lg:mb-3 font-mono text-[10px] lg:text-[11px] font-medium tracking-[0.2em] text-brand-300/65">{lang === "bn" ? toBanglaDigits(number) : number}</span>
+                      <h3 className="relative font-display text-[15px] lg:text-base font-semibold leading-snug text-white">{step.title}</h3>
+                      <p className="relative mt-1 lg:mt-2 text-[13px] lg:text-sm leading-relaxed text-slate-400">{step.desc}</p>
+                    </div>
                   </div>
                 </li>
               );

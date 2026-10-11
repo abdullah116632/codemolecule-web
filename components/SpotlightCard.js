@@ -1,21 +1,33 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 export function SpotlightCard({
   children,
   className = "",
   as: Component = "div",
   tilt = false,
+  dots = false,
+  spotlightColor = "rgba(34, 197, 94, 0.15)",
   ...props
 }) {
   const ref = useRef(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
   const [tiltState, setTiltState] = useState({ rotateX: 0, rotateY: 0, isHovered: false });
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.matchMedia("(hover: none) and (pointer: coarse)").matches);
+    };
+    checkMobile();
+    // Optional: add event listener if you expect device capability to change (like rotating a hybrid device), 
+    // but run-once is usually sufficient for touch detection.
+  }, []);
 
   const handleMouseMove = (e) => {
-    if (!ref.current) return;
+    if (isMobile || !ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -31,10 +43,12 @@ export function SpotlightCard({
   };
 
   const handleMouseEnter = () => {
+    if (isMobile) return;
     setOpacity(1);
   };
 
   const handleMouseLeave = () => {
+    if (isMobile) return;
     setOpacity(0);
     if (tilt) {
       setTiltState({ rotateX: 0, rotateY: 0, isHovered: false });
@@ -69,25 +83,30 @@ export function SpotlightCard({
       } ${className}`}
       {...props}
     >
-      <div
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out"
-        style={{
-          opacity,
-          backgroundImage: `radial-gradient(rgb(34 197 94 / 0.15) 1.5px, transparent 1.5px)`,
-          backgroundSize: '22px 22px',
-          maskImage: `radial-gradient(260px circle at ${position.x}px ${position.y}px, black 30%, transparent 100%)`,
-          WebkitMaskImage: `radial-gradient(260px circle at ${position.x}px ${position.y}px, black 30%, transparent 100%)`,
-        }}
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out mix-blend-multiply"
-        style={{
-          opacity,
-          background: `radial-gradient(380px circle at ${position.x}px ${position.y}px, rgba(34, 197, 94, 0.15), transparent 65%)`,
-        }}
-        aria-hidden="true"
-      />
+      {!isMobile && dots && (
+        <div
+          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out"
+          style={{
+            opacity,
+            backgroundImage: `radial-gradient(${spotlightColor} 1px, transparent 1px)`,
+            backgroundSize: '28px 28px',
+            maskImage: `radial-gradient(250px circle at ${position.x}px ${position.y}px, black 20%, transparent 100%)`,
+            WebkitMaskImage: `radial-gradient(250px circle at ${position.x}px ${position.y}px, black 20%, transparent 100%)`,
+          }}
+          aria-hidden="true"
+        />
+      )}
+      {!isMobile && (
+        <div
+          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out"
+          style={{
+            opacity,
+            background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, ${spotlightColor}, transparent 60%)`,
+            mixBlendMode: "screen",
+          }}
+          aria-hidden="true"
+        />
+      )}
       <div className="relative z-10 h-full">
         {children}
       </div>

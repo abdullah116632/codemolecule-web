@@ -94,6 +94,10 @@ export function Header() {
             if (window.location.pathname === "/") {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: "smooth" });
+              // Clear the hash from the URL so nav links work again
+              if (window.location.hash) {
+                window.history.pushState(null, "", window.location.pathname);
+              }
             }
           }}
         >

@@ -75,7 +75,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" data-font-theme={FONT_THEME} className={fontVariables}>
       <body className="min-h-screen">
-        <AnimatedBackground />
         <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
