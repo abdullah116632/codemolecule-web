@@ -8,6 +8,7 @@ export function SpotlightCard({
   as: Component = "div",
   tilt = false,
   dots = true,
+  spotlightColor = "rgba(34, 197, 94, 0.15)",
   ...props
 }) {
   const ref = useRef(null);
@@ -75,7 +76,7 @@ export function SpotlightCard({
           className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out"
           style={{
             opacity,
-            backgroundImage: `radial-gradient(rgb(34 197 94 / 0.15) 1px, transparent 1px)`,
+            backgroundImage: `radial-gradient(${spotlightColor.replace(/[\d.]+\)$/, '1)')} 1px, transparent 1px)`,
             backgroundSize: '28px 28px',
             maskImage: `radial-gradient(250px circle at ${position.x}px ${position.y}px, black 20%, transparent 100%)`,
             WebkitMaskImage: `radial-gradient(250px circle at ${position.x}px ${position.y}px, black 20%, transparent 100%)`,
@@ -87,7 +88,7 @@ export function SpotlightCard({
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out"
         style={{
           opacity,
-          background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, rgba(34, 197, 94, 0.15), transparent 60%)`,
+          background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, ${spotlightColor}, transparent 60%)`,
           mixBlendMode: "screen",
         }}
         aria-hidden="true"

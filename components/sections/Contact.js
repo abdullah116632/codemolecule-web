@@ -4,6 +4,7 @@ import { useLanguage } from "../LanguageProvider";
 import { FacebookIcon, Icon, LinkedInIcon, WhatsAppIcon } from "../Icons";
 import { Reveal } from "../Reveal";
 import { site, whatsappLink } from "@/lib/site.config";
+import { SpotlightCard } from "../SpotlightCard";
 
 const inputClass =
   "w-full rounded-xl border border-slate-200/90 bg-slate-50/70 px-4 py-3 text-[15px] text-ink placeholder:text-slate-400 outline-none transition-all duration-200 focus:bg-white focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/15 focus:shadow-sm";
@@ -32,6 +33,8 @@ export function Contact() {
       icon: <WhatsAppIcon className="h-6 w-6" />,
       gradient: "from-[#25D366] to-[#128C7E]",
       glow: "group-hover:shadow-[0_8px_24px_rgba(37,211,102,0.35)]",
+      borderHover: "hover:!border-[#25D366]/40",
+      spotlightColor: "rgba(37, 211, 102, 0.15)",
       badge: lang === "bn" ? "দ্রুত উত্তর" : "Fast Reply",
     },
     {
@@ -41,14 +44,8 @@ export function Contact() {
       icon: <FacebookIcon className="h-6 w-6" />,
       gradient: "from-[#1877F2] to-[#0D5EC8]",
       glow: "group-hover:shadow-[0_8px_24px_rgba(24,119,242,0.35)]",
-    },
-    {
-      label: c.linkedin,
-      value: "linkedin.com/company/codemolecule",
-      href: site.linkedin,
-      icon: <LinkedInIcon className="h-6 w-6" />,
-      gradient: "from-[#0A66C2] to-[#004182]",
-      glow: "group-hover:shadow-[0_8px_24px_rgba(10,102,194,0.35)]",
+      borderHover: "hover:!border-[#1877F2]/40",
+      spotlightColor: "rgba(24, 119, 242, 0.15)",
     },
     {
       label: c.email,
@@ -57,79 +54,97 @@ export function Contact() {
       icon: <Icon name="mail" className="h-6 w-6" />,
       gradient: "from-[#059669] to-[#047857]",
       glow: "group-hover:shadow-[0_8px_24px_rgba(5,150,105,0.35)]",
+      borderHover: "hover:!border-[#059669]/40",
+      spotlightColor: "rgba(5, 150, 105, 0.15)",
+    },
+    {
+      label: c.linkedin,
+      value: "linkedin.com/company/codemolecule",
+      href: site.linkedin,
+      icon: <LinkedInIcon className="h-6 w-6" />,
+      gradient: "from-[#0A66C2] to-[#004182]",
+      glow: "group-hover:shadow-[0_8px_24px_rgba(10,102,194,0.35)]",
+      borderHover: "hover:!border-[#0A66C2]/40",
+      spotlightColor: "rgba(10, 102, 194, 0.15)",
     },
   ];
 
   return (
     <section id="contact" className="relative px-3 sm:px-6 pb-16 sm:pb-24 lg:px-8 lg:pb-32">
       {/* Main Glass / Luminous Card */}
-      <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] border border-emerald-500/20 bg-gradient-to-br from-[#072417] via-[#051810] to-[#030e0a] px-4 sm:px-12 py-10 sm:py-20 lg:p-16 shadow-[0_30px_90px_-20px_rgba(5,24,16,0.7)]">
-        {/* Ambient Glowing Orbs */}
-        <div aria-hidden className="pointer-events-none absolute -top-32 -left-32 h-96 w-96 rounded-full bg-emerald-500/20 blur-[100px]" />
-        <div aria-hidden className="pointer-events-none absolute top-1/2 -right-32 h-96 w-96 rounded-full bg-teal-400/15 blur-[120px]" />
-        <div aria-hidden className="pointer-events-none absolute -bottom-24 left-1/3 h-80 w-80 rounded-full bg-emerald-600/15 blur-[90px]" />
+      <SpotlightCard dots={false} className="relative mx-auto max-w-7xl !rounded-[2rem] sm:!rounded-[2.5rem] !border-emerald-500/20 !bg-gradient-to-br from-[#072417] via-[#051810] to-[#030e0a] hover:!border-emerald-400/40 !shadow-[0_30px_90px_-20px_rgba(5,24,16,0.7)]">
+        <div className="relative px-4 sm:px-12 py-10 sm:py-20 lg:p-16 h-full">
+          {/* Ambient Glowing Orbs */}
+          <div aria-hidden className="pointer-events-none absolute -top-32 -left-32 h-96 w-96 rounded-full bg-emerald-500/20 blur-[100px]" />
+          <div aria-hidden className="pointer-events-none absolute top-1/2 -right-32 h-96 w-96 rounded-full bg-teal-400/15 blur-[120px]" />
+          <div aria-hidden className="pointer-events-none absolute -bottom-24 left-1/3 h-80 w-80 rounded-full bg-emerald-600/15 blur-[90px]" />
 
-        {/* Subtle Dotted Pattern Mesh */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.07)_1px,transparent_0)] bg-[size:28px_28px] opacity-80"
-        />
+          {/* Subtle Dotted Pattern Mesh */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.07)_1px,transparent_0)] bg-[size:28px_28px] opacity-80"
+          />
 
-        <div className="relative grid gap-12 lg:grid-cols-2 lg:gap-16 lg:items-center">
-          {/* Left Column: Heading & Interactive Channels */}
-          <Reveal className="text-white">
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-emerald-300 backdrop-blur-md">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
-              </span>
-              {c.eyebrow}
-            </div>
+          <div className="relative grid gap-12 lg:grid-cols-2 lg:gap-16 lg:items-center">
+            {/* Left Column: Heading & Interactive Channels */}
+            <Reveal className="text-white">
+              <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-emerald-300 backdrop-blur-md">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
+                </span>
+                {c.eyebrow}
+              </div>
 
-            <h2 className="font-display mt-4 text-3xl font-light tracking-tight sm:text-5xl lg:text-[46px] leading-[1.15]">
-              {c.title}
-            </h2>
-            <p className="mt-4 max-w-md text-base sm:text-lg text-emerald-100/75 leading-relaxed">
-              {c.subtitle}
-            </p>
+              <h2 className="font-display mt-4 text-3xl font-light tracking-tight sm:text-5xl lg:text-[46px] leading-[1.15]">
+                {c.title}
+              </h2>
+              <p className="mt-4 max-w-md text-base sm:text-lg text-emerald-100/75 leading-relaxed">
+                {c.subtitle}
+              </p>
 
-            <ul className="mt-10 space-y-3.5 w-full">
-              {channels.map((ch) => (
-                <li key={ch.label}>
-                  <a
-                    href={ch.href}
-                    target={ch.href.startsWith("mailto:") ? undefined : "_blank"}
-                    rel="noopener noreferrer"
-                    className={`group relative flex w-full items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-3 sm:gap-4 sm:p-4 backdrop-blur-md transition-all duration-300 ease-out hover:-translate-y-1 hover:border-emerald-400/30 hover:bg-white/[0.09] hover:shadow-xl ${ch.glow}`}
-                  >
-                    <div
-                      className={`flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${ch.gradient} text-white shadow-md transition-transform duration-300 ease-out group-hover:scale-110 group-hover:rotate-6`}
+              <ul className="mt-10 space-y-3.5 w-full">
+                {channels.map((ch) => (
+                  <li key={ch.label}>
+                    <SpotlightCard
+                      as="a"
+                      dots={false}
+                      spotlightColor={ch.spotlightColor}
+                      href={ch.href}
+                      target={ch.href.startsWith("mailto:") ? undefined : "_blank"}
+                      rel="noopener noreferrer"
+                      className={`block w-full !rounded-2xl !border-white/10 !bg-white/[0.04] backdrop-blur-md hover:!bg-white/[0.09] hover:!shadow-xl transition-all duration-300 ease-out hover:-translate-y-1 ${ch.borderHover} ${ch.glow}`}
                     >
-                      {ch.icon}
-                    </div>
-                    <div className="min-w-0 flex-1 overflow-hidden">
-                      <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                        <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-emerald-300/80">
-                          {ch.label}
-                        </span>
-                        {ch.badge && (
-                          <span className="rounded-full bg-emerald-400/20 px-1.5 py-0.5 text-[9px] sm:text-[10px] font-semibold text-emerald-300 whitespace-nowrap">
-                            {ch.badge}
+                      <div className="flex w-full h-full items-center gap-3 sm:gap-4 p-3 sm:p-4">
+                        <div
+                          className={`flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${ch.gradient} text-white shadow-md transition-transform duration-300 ease-out group-hover:scale-110 group-hover:rotate-6`}
+                        >
+                          {ch.icon}
+                        </div>
+                        <div className="min-w-0 flex-1 overflow-hidden">
+                          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                            <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-emerald-300/80">
+                              {ch.label}
+                            </span>
+                            {ch.badge && (
+                              <span className="rounded-full bg-emerald-400/20 px-1.5 py-0.5 text-[9px] sm:text-[10px] font-semibold text-emerald-300 whitespace-nowrap">
+                                {ch.badge}
+                              </span>
+                            )}
+                          </div>
+                          <span className="block truncate text-[13px] sm:text-[15px] font-medium text-white/95 transition-colors group-hover:text-emerald-200">
+                            {ch.value}
                           </span>
-                        )}
+                        </div>
+                        <span className="hidden xs:flex flex h-6 w-6 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-full bg-white/5 text-white/40 transition-all duration-300 group-hover:bg-emerald-500/20 group-hover:text-emerald-200 group-hover:translate-x-1">
+                          <Icon name="arrow" className="h-3 w-3 sm:h-4 sm:w-4" />
+                        </span>
                       </div>
-                      <span className="block truncate text-[13px] sm:text-[15px] font-medium text-white/95 transition-colors group-hover:text-emerald-200">
-                        {ch.value}
-                      </span>
-                    </div>
-                    <span className="hidden xs:flex flex h-6 w-6 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-full bg-white/5 text-white/40 transition-all duration-300 group-hover:bg-emerald-500/20 group-hover:text-emerald-200 group-hover:translate-x-1">
-                      <Icon name="arrow" className="h-3 w-3 sm:h-4 sm:w-4" />
-                    </span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
+                    </SpotlightCard>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
 
           {/* Right Column: High-End Frosted Glass Form */}
           <Reveal delay={120}>
@@ -272,7 +287,8 @@ export function Contact() {
             </div>
           </Reveal>
         </div>
-      </div>
+        </div>
+      </SpotlightCard>
     </section>
   );
 }
