@@ -56,8 +56,8 @@ export function ServiceDetail({ slug }) {
             <SpotlightCard as="aside" className="p-8 shadow-2xl shadow-slate-900/10 lg:sticky lg:top-28 !rounded-2xl !border-white/10 !bg-white/[0.04] backdrop-blur hover:!border-brand-400/40 hover:!bg-white/[0.07]">
               <p className="text-sm text-slate-500">{d.from}</p>
               <p className="font-display mt-1 text-4xl font-light tracking-tight text-white">{s.price}</p>
-              <div className="mt-5 flex items-center gap-3 rounded-2xl bg-[#151b23] px-4 py-3">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-100 text-[#4ADE80]">
+              <div className="mt-5 flex items-center gap-3 rounded-2xl bg-white/5 border border-white/10 px-4 py-3">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#2DD4BF]/10 text-[#4ADE80] ring-1 ring-white/10">
                   <Icon name="bolt" className="h-5 w-5" />
                 </span>
                 <div>
@@ -106,16 +106,18 @@ export function ServiceDetail({ slug }) {
             <p className="mt-4 text-lg text-slate-400">{d.includedSub}</p>
           </Reveal>
 
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-y-5 sm:gap-y-6 md:grid-cols-2 lg:grid-cols-3 md:gap-x-8">
             {s.features.map((f, i) => (
-              <Reveal key={f.title} delay={(i % 3) * 90}>
-                <SpotlightCard dots={false} className="h-full p-7 !rounded-2xl !border-white/10 !bg-white/[0.04] backdrop-blur hover:!border-brand-400/40 hover:!bg-white/[0.07]">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#2DD4BF]/10 text-[#4ADE80] ring-1 ring-white/10">
-                  <Icon name="check" className="h-5 w-5" />
-                </span>
-                <h3 className="font-display mt-5 text-lg font-bold text-white">{f.title}</h3>
-                <p className="mt-2 text-[15px] text-slate-400">{f.desc}</p>
-              </SpotlightCard>
+              <Reveal key={f.title} delay={(i % 3) * 60}>
+                <div className="flex items-start gap-4">
+                  <span className="flex shrink-0 h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-[#2DD4BF]/10 text-[#4ADE80] ring-1 ring-[#4ADE80]/20">
+                    <Icon name="check" className="h-4 w-4 sm:h-5 sm:w-5" />
+                  </span>
+                  <div>
+                    <h3 className="font-display text-[15px] sm:text-base font-bold text-white leading-tight">{f.title}</h3>
+                    <p className="mt-1.5 text-xs sm:text-sm text-slate-400 leading-relaxed">{f.desc}</p>
+                  </div>
+                </div>
               </Reveal>
             ))}
           </div>
@@ -149,18 +151,20 @@ export function ServiceDetail({ slug }) {
             <Eyebrow>{t.process.eyebrow}</Eyebrow>
             <h2 className="font-display mt-3 text-3xl font-light tracking-tight text-white sm:text-4xl">{d.process}</h2>
           </Reveal>
-          <ol className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+          <ol className="mt-10 grid gap-y-6 sm:gap-y-8 md:grid-cols-2 lg:grid-cols-5 md:gap-x-6">
             {t.process.steps.map((step, i) => {
               const num = String(i + 1).padStart(2, "0");
               return (
-                <Reveal as="li" key={step.title} delay={i * 80}>
-                  <SpotlightCard dots={false} className="h-full p-6 !rounded-2xl !border-white/10 !bg-white/[0.04] backdrop-blur hover:!border-brand-400/40 hover:!bg-white/[0.07]">
-                  <span className="font-display text-sm font-light text-brand-600">
-                    {lang === "bn" ? toBanglaDigits(num) : num}
-                  </span>
-                  <h3 className="font-display mt-3 text-lg font-bold text-white">{step.title}</h3>
-                  <p className="mt-2 text-[15px] text-slate-400">{step.desc}</p>
-                </SpotlightCard>
+                <Reveal as="li" key={step.title} delay={i * 60}>
+                  <div className="flex flex-col gap-2">
+                    <span className="font-display text-sm font-semibold tracking-wider text-brand-500">
+                      {lang === "bn" ? toBanglaDigits(num) : num}
+                    </span>
+                    <div>
+                      <h3 className="font-display text-[15px] sm:text-base font-bold text-white leading-tight">{step.title}</h3>
+                      <p className="mt-1.5 text-xs sm:text-sm text-slate-400 leading-relaxed">{step.desc}</p>
+                    </div>
+                  </div>
                 </Reveal>
               );
             })}
