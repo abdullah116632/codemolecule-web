@@ -68,7 +68,7 @@ function ServiceCard({ service, item, i, t }) {
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300"
         style={{
           opacity: spotlightOpacity,
-          backgroundImage: `radial-gradient(rgb(34 197 94 / 0.35) 1.5px, transparent 1.5px)`,
+          backgroundImage: `radial-gradient(rgb(34 197 94 / 0.15) 1px, transparent 1px)`,
           backgroundSize: "22px 22px",
           maskImage: `radial-gradient(220px circle at ${spotlightPos.x}px ${spotlightPos.y}px, black 30%, transparent 100%)`,
           WebkitMaskImage: `radial-gradient(220px circle at ${spotlightPos.x}px ${spotlightPos.y}px, black 30%, transparent 100%)`,

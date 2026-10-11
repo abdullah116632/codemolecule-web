@@ -7,7 +7,7 @@ export function SpotlightCard({
   className = "",
   as: Component = "div",
   tilt = false,
-  dots = true,
+  dots = false,
   spotlightColor = "rgba(34, 197, 94, 0.15)",
   ...props
 }) {
