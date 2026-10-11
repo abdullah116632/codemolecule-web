@@ -50,21 +50,188 @@ const baloo = Baloo_Da_2({
   weight: ["400", "500", "600", "700", "800"],
 });
 
+import { site } from "@/lib/site.config";
+
 export const metadata = {
   metadataBase: new URL("https://codemolecule.com"),
-  title: "Code Molecule Beautiful websites for your business",
+  title: {
+    default: "Code Molecule — Websites, Web Applications & Mobile Apps",
+    template: "%s — Code Molecule",
+  },
   description:
-    "Code Molecule designs and builds fast, modern landing pages, portfolios and business websites in Bangladesh. Fixed prices, fast delivery, you own everything.",
+    "Code Molecule designs and builds modern websites, custom web applications, and iOS & Android mobile apps. Fast delivery, fixed pricing, and clean code.",
+  keywords: [
+    "Code Molecule",
+    "web development",
+    "mobile app development",
+    "iOS apps",
+    "Android apps",
+    "Flutter app development",
+    "React Native",
+    "web applications",
+    "custom software",
+    "landing pages",
+    "business websites",
+    "portfolio websites",
+    "software company Bangladesh",
+    "web design agency",
+  ],
+  authors: [{ name: "Code Molecule", url: "https://codemolecule.com" }],
+  creator: "Code Molecule",
+  publisher: "Code Molecule",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "Code Molecule Beautiful websites for your business",
-    description: "Landing pages, portfolios and business websites delivered in days.",
+    title: "Code Molecule — Websites, Web Applications & Mobile Apps",
+    description:
+      "Modern websites, custom web applications, and iOS & Android mobile apps. High quality, fixed pricing, and fast delivery for businesses and startups.",
     url: "https://codemolecule.com",
     siteName: "Code Molecule",
+    locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "/icon-512.png",
+        width: 512,
+        height: 512,
+        alt: "Code Molecule",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Code Molecule — Websites, Web Applications & Mobile Apps",
+    description:
+      "Modern websites, custom web applications, and iOS & Android mobile apps. High quality, fixed pricing, and fast delivery for businesses and startups.",
+    images: ["/icon-512.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 
-import AnimatedBackground from "@/components/AnimatedBackground";
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "Code Molecule",
+  url: "https://codemolecule.com",
+  logo: "https://codemolecule.com/icon-512.png",
+  image: "https://codemolecule.com/icon-512.png",
+  description:
+    "Code Molecule designs and builds modern websites, custom web applications, and iOS & Android mobile apps for businesses and startups.",
+  email: site.email,
+  telephone: site.whatsappDisplay,
+  sameAs: [site.facebook, site.linkedin, site.instagram],
+  areaServed: {
+    "@type": "Country",
+    name: "Bangladesh",
+  },
+  knowsAbout: [
+    "Web Development",
+    "Mobile App Development",
+    "Android Apps",
+    "iOS Apps",
+    "Web Applications",
+    "Landing Pages",
+    "Business Websites",
+    "Portfolio Websites",
+    "Flutter",
+    "React Native",
+    "Next.js",
+  ],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Digital Services",
+    itemListElement: [
+      {
+        "@type": "OfferCatalog",
+        name: "Websites & Web Development",
+        itemListElement: [
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Landing Pages",
+              description: "Focused, high-converting landing pages for products, offers, and marketing campaigns.",
+            },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Portfolio Websites",
+              description: "Elegant personal portfolio websites for creatives, freelancers, and professionals.",
+            },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Business Websites",
+              description: "Complete multi-page business websites for shops, companies, clinics, and organizations.",
+            },
+          },
+        ],
+      },
+      {
+        "@type": "OfferCatalog",
+        name: "Web Applications",
+        itemListElement: [
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Custom Web Applications",
+              description: "Custom dashboards, booking systems, admin panels, inventory management, and business portals.",
+            },
+          },
+        ],
+      },
+      {
+        "@type": "OfferCatalog",
+        name: "Mobile App Development",
+        itemListElement: [
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "iOS & Android Mobile Apps",
+              description: "Cross-platform mobile applications built with Flutter or React Native published under your store accounts.",
+            },
+          },
+        ],
+      },
+      {
+        "@type": "OfferCatalog",
+        name: "Hosting & Care",
+        itemListElement: [
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Hosting & Maintenance Care",
+              description: "Fast hosting setup, free SSL certificate, daily backups, uptime monitoring, and small monthly updates.",
+            },
+          },
+        ],
+      },
+    ],
+  },
+};
 
 export default function RootLayout({ children }) {
   let fontVariables = "";
@@ -74,6 +241,12 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en" data-font-theme={FONT_THEME} className={fontVariables}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="min-h-screen">
         <LanguageProvider>{children}</LanguageProvider>
       </body>

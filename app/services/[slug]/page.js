@@ -15,9 +15,25 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const service = getService(slug);
   if (!service) return {};
+  const description = `${service.en.tagline} ${service.en.summary}`;
   return {
-    title: `${service.en.title} — Code Molecule`,
-    description: `${service.en.tagline} ${service.en.summary}`,
+    title: service.en.title,
+    description,
+    alternates: {
+      canonical: `/services/${slug}`,
+    },
+    openGraph: {
+      title: `${service.en.title} — Code Molecule`,
+      description,
+      url: `https://codemolecule.com/services/${slug}`,
+      siteName: "Code Molecule",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${service.en.title} — Code Molecule`,
+      description,
+    },
   };
 }
 
