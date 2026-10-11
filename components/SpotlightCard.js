@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 export function SpotlightCard({
   children,
@@ -15,9 +15,19 @@ export function SpotlightCard({
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
   const [tiltState, setTiltState] = useState({ rotateX: 0, rotateY: 0, isHovered: false });
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.matchMedia("(hover: none) and (pointer: coarse)").matches);
+    };
+    checkMobile();
+    // Optional: add event listener if you expect device capability to change (like rotating a hybrid device), 
+    // but run-once is usually sufficient for touch detection.
+  }, []);
 
   const handleMouseMove = (e) => {
-    if (!ref.current) return;
+    if (isMobile || !ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -33,10 +43,12 @@ export function SpotlightCard({
   };
 
   const handleMouseEnter = () => {
+    if (isMobile) return;
     setOpacity(1);
   };
 
   const handleMouseLeave = () => {
+    if (isMobile) return;
     setOpacity(0);
     if (tilt) {
       setTiltState({ rotateX: 0, rotateY: 0, isHovered: false });
@@ -71,7 +83,7 @@ export function SpotlightCard({
       } ${className}`}
       {...props}
     >
-      {dots && (
+      {!isMobile && dots && (
         <div
           className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out"
           style={{
@@ -84,15 +96,17 @@ export function SpotlightCard({
           aria-hidden="true"
         />
       )}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out"
-        style={{
-          opacity,
-          background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, ${spotlightColor}, transparent 60%)`,
-          mixBlendMode: "screen",
-        }}
-        aria-hidden="true"
-      />
+      {!isMobile && (
+        <div
+          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out"
+          style={{
+            opacity,
+            background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, ${spotlightColor}, transparent 60%)`,
+            mixBlendMode: "screen",
+          }}
+          aria-hidden="true"
+        />
+      )}
       <div className="relative z-10 h-full">
         {children}
       </div>

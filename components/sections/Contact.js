@@ -70,10 +70,10 @@ export function Contact() {
   ];
 
   return (
-    <section id="contact" className="relative px-3 sm:px-6 pb-16 sm:pb-24 lg:px-8 lg:pb-32">
+    <section id="contact" className="relative px-3 sm:px-6 pb-12 sm:pb-24 lg:px-8 lg:pb-32">
       {/* Main Glass / Luminous Card */}
-      <SpotlightCard dots={false} className="relative mx-auto max-w-7xl !rounded-[2rem] sm:!rounded-[2.5rem] !border-emerald-500/20 !bg-gradient-to-br from-[#072417] via-[#051810] to-[#030e0a] hover:!border-emerald-400/40 !shadow-[0_30px_90px_-20px_rgba(5,24,16,0.7)]">
-        <div className="relative px-4 sm:px-12 py-10 sm:py-20 lg:p-16 h-full">
+      <SpotlightCard dots={false} className="relative mx-auto max-w-7xl !rounded-[1.5rem] sm:!rounded-[2.5rem] !border-emerald-500/20 !bg-gradient-to-br from-[#072417] via-[#051810] to-[#030e0a] hover:!border-emerald-400/40 !shadow-[0_30px_90px_-20px_rgba(5,24,16,0.7)]">
+        <div className="relative px-4 sm:px-12 py-8 sm:py-20 lg:p-16 h-full">
           {/* Ambient Glowing Orbs */}
           <div aria-hidden className="pointer-events-none absolute -top-32 -left-32 h-96 w-96 rounded-full bg-emerald-500/20 blur-[100px]" />
           <div aria-hidden className="pointer-events-none absolute top-1/2 -right-32 h-96 w-96 rounded-full bg-teal-400/15 blur-[120px]" />
@@ -81,9 +81,9 @@ export function Contact() {
 
 
 
-          <div className="relative grid gap-12 lg:grid-cols-2 lg:gap-16 lg:items-center">
+          <div className="relative grid gap-8 lg:grid-cols-2 lg:gap-16 lg:items-center">
             {/* Left Column: Heading & Interactive Channels */}
-            <Reveal className="text-white">
+            <Reveal className="text-white order-2 lg:order-1">
               <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-emerald-300 backdrop-blur-md">
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
@@ -92,14 +92,14 @@ export function Contact() {
                 {c.eyebrow}
               </div>
 
-              <h2 className="font-display mt-4 text-3xl font-light tracking-tight sm:text-5xl lg:text-[46px] leading-[1.15]">
+              <h2 className="font-display mt-2 sm:mt-4 text-2xl font-light tracking-tight sm:text-5xl lg:text-[46px] leading-[1.15]">
                 {c.title}
               </h2>
-              <p className="mt-4 max-w-md text-base sm:text-lg text-emerald-100/75 leading-relaxed">
+              <p className="mt-2 sm:mt-4 max-w-md text-sm sm:text-lg text-emerald-100/75 leading-relaxed">
                 {c.subtitle}
               </p>
 
-              <ul className="mt-10 space-y-3.5 w-full">
+              <ul className="mt-6 sm:mt-10 space-y-2.5 sm:space-y-3.5 w-full">
                 {channels.map((ch) => (
                   <li key={ch.label}>
                     <SpotlightCard
@@ -111,7 +111,7 @@ export function Contact() {
                       rel="noopener noreferrer"
                       className={`block w-full !rounded-2xl !border-white/10 !bg-white/[0.04] backdrop-blur-md hover:!bg-white/[0.09] hover:!shadow-xl transition-all duration-300 ease-out hover:-translate-y-1 ${ch.borderHover} ${ch.glow}`}
                     >
-                      <div className="flex w-full h-full items-center gap-3 sm:gap-4 p-3 sm:p-4">
+                      <div className="flex w-full h-full items-center gap-3 sm:gap-4 p-2.5 sm:p-4">
                         <div
                           className={`flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${ch.gradient} text-white shadow-md transition-transform duration-300 ease-out group-hover:scale-110 group-hover:rotate-6`}
                         >
@@ -143,7 +143,7 @@ export function Contact() {
             </Reveal>
 
           {/* Right Column: High-End Frosted Glass Form */}
-          <Reveal delay={120}>
+          <Reveal delay={120} className="order-1 lg:order-2">
             <div id="contact-form-container" className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950/60 p-4 sm:p-9 shadow-[0_25px_60px_rgba(0,0,0,0.6)] backdrop-blur-2xl ring-1 ring-white/5 before:absolute before:inset-x-0 before:top-0 before:h-[2px] before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent">
               {/* Inner Ambient Glow */}
               <div aria-hidden className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
