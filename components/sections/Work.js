@@ -9,20 +9,28 @@ import cplPreview from "@/public/projects/cpl27.png";
 import expensePreview from "@/public/projects/expensetracker.png";
 import portfolioPreview from "@/public/projects/arman-portfolio.png";
 
-const projects = [
-  { title: "Auction webapp", type: "Cricket Tournament Web App", url: "https://cpl27.codemolecule.com/", image: cplPreview },
-  { title: "Personal finance mobile app", type: "Web Application", url: "https://expensetracker.codemolecule.com/", image: expensePreview },
-  { title: "Personal portfolio", type: "Personal Portfolio", url: "https://myportfolio-three-lyart-69.vercel.app/", image: portfolioPreview },
-];
+const projectsData = {
+  en: [
+    { title: "Auction Web App", type: "Cricket Tournament Platform", url: "https://cpl27.codemolecule.com/", image: cplPreview },
+    { title: "Personal Finance App", type: "Expense Tracking Web App", url: "https://expensetracker.codemolecule.com/", image: expensePreview },
+    { title: "Personal Portfolio", type: "Modern Portfolio Website", url: "https://myportfolio-three-lyart-69.vercel.app/", image: portfolioPreview },
+  ],
+  bn: [
+    { title: "অকশন ওয়েব প্ল্যাটফর্ম", type: "ক্রিকেট টুর্নামেন্ট লাইভ অ্যাপ", url: "https://cpl27.codemolecule.com/", image: cplPreview },
+    { title: "পার্সোনাল ফাইন্যান্স অ্যাপ", type: "এক্সপেন্স ট্র্যাকিং ওয়েব অ্যাপ্লিকেশন", url: "https://expensetracker.codemolecule.com/", image: expensePreview },
+    { title: "পার্সোনাল পোর্টফোলিও", type: "মডার্ন পোর্টফোলিও ওয়েবসাইট", url: "https://myportfolio-three-lyart-69.vercel.app/", image: portfolioPreview },
+  ],
+};
 
 const copy = {
-  en: { eyebrow: "Our Work", title: "Projects we are proud of", subtitle: "A selection of our recent live projects showing the style and quality you can expect." },
-  bn: {"eyebrow":"আমাদের কাজ","title":"যে প্রজেক্টগুলো নিয়ে আমরা গর্বিত","subtitle":"আমাদের সাম্প্রতিক লাইভ প্রজেক্টের কয়েকটি — কাজের ধরন ও মান দেখে নিন।"},
+  en: { eyebrow: "Our Work", title: "Projects we are proud of", subtitle: "A selection of our recent live projects showing the style and quality you can expect.", liveBadge: "Live" },
+  bn: { eyebrow: "আমাদের কাজ", title: "যে প্রজেক্টগুলো নিয়ে আমরা গর্বিত", subtitle: "আমাদের সাম্প্রতিক লাইভ প্রজেক্টের কয়েকটি — কাজের ধরন ও মান দেখে নিন।", liveBadge: "লাইভ" },
 };
 
 export function Work() {
   const { lang } = useLanguage();
   const heading = copy[lang] || copy.en;
+  const projects = projectsData[lang] || projectsData.en;
   return (
     <section id="work" className="relative bg-transparent pb-16 pt-8 sm:pb-20 sm:pt-8">
       <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
@@ -33,7 +41,7 @@ export function Work() {
         </Reveal>
         <Reveal className="mt-12 sm:mt-16">
           <MobileCarousel dark gridClass="md:grid-cols-2 xl:grid-cols-3">
-            {projects.map((project, index) => (
+            {projects.map((project) => (
               <div key={project.url} className="flex w-full h-full">
                 <div className="w-full flex-1">
                   <SpotlightCard
@@ -58,7 +66,7 @@ export function Work() {
                       </div>
                       <span className="relative inline-flex shrink-0 items-center gap-1.5 rounded-full border border-emerald-400/20 px-3 py-1 text-xs font-medium text-emerald-300 transition-colors duration-200 group-hover:border-emerald-400/40 group-hover:bg-emerald-500/10 group-hover:text-emerald-400 pointer-events-auto">
                         <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_0_2px_rgba(16,185,129,0.12)]" />
-                        Live
+                        {heading.liveBadge}
                       </span>
                     </div>
                   </SpotlightCard>

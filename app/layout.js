@@ -59,10 +59,15 @@ export const metadata = {
     template: "%s — Code Molecule",
   },
   description:
-    "Code Molecule designs and builds modern websites, custom web applications, and iOS & Android mobile apps. Fast delivery, fixed pricing, and clean code.",
+    "Code Molecule designs and builds modern websites, custom web applications, and iOS & Android mobile apps. Based in Dhaka, Bangladesh. Fast delivery, fixed pricing, and clean code.",
   keywords: [
     "Code Molecule",
+    "CodeMolecule",
+    "Code Molecule BD",
+    "Code Molecule Bangladesh",
     "web development",
+    "software company Bangladesh",
+    "software company Dhaka",
     "mobile app development",
     "iOS apps",
     "Android apps",
@@ -73,7 +78,6 @@ export const metadata = {
     "landing pages",
     "business websites",
     "portfolio websites",
-    "software company Bangladesh",
     "web design agency",
   ],
   authors: [{ name: "Code Molecule", url: "https://codemolecule.com" }],
@@ -90,10 +94,11 @@ export const metadata = {
   openGraph: {
     title: "Code Molecule — Websites, Web Applications & Mobile Apps",
     description:
-      "Modern websites, custom web applications, and iOS & Android mobile apps. High quality, fixed pricing, and fast delivery for businesses and startups.",
+      "Modern websites, custom web applications, and iOS & Android mobile apps. High quality, fixed pricing, and fast delivery for businesses and startups in Bangladesh and worldwide.",
     url: "https://codemolecule.com",
     siteName: "Code Molecule",
     locale: "en_US",
+    alternateLocale: ["bn_BD"],
     type: "website",
     images: [
       {
@@ -122,42 +127,114 @@ export const metadata = {
       "max-snippet": -1,
     },
   },
+  other: {
+    "geo.region": "BD-13",
+    "geo.placename": "Dhaka",
+    "geo.position": "23.8103;90.4125",
+    "ICBM": "23.8103, 90.4125",
+  },
 };
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  name: "Code Molecule",
-  url: "https://codemolecule.com",
-  logo: "https://codemolecule.com/icon-512.png",
-  image: "https://codemolecule.com/icon-512.png",
-  description:
-    "Code Molecule designs and builds modern websites, custom web applications, and iOS & Android mobile apps for businesses and startups.",
-  email: site.email,
-  telephone: site.whatsappDisplay,
-  sameAs: [site.facebook, site.linkedin, site.instagram],
-  areaServed: {
-    "@type": "Country",
-    name: "Bangladesh",
-  },
-  knowsAbout: [
-    "Web Development",
-    "Mobile App Development",
-    "Android Apps",
-    "iOS Apps",
-    "Web Applications",
-    "Landing Pages",
-    "Business Websites",
-    "Portfolio Websites",
-    "Flutter",
-    "React Native",
-    "Next.js",
-  ],
-  hasOfferCatalog: {
-    "@type": "OfferCatalog",
-    name: "Digital Services",
-    itemListElement: [
-      {
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://codemolecule.com/#organization",
+      name: "Code Molecule",
+      alternateName: [
+        "Code Molecule",
+        "CodeMolecule",
+        "Code Molecule BD",
+        "Code Molecule Bangladesh",
+        "Code Molecule Software",
+      ],
+      legalName: "Code Molecule",
+      url: "https://codemolecule.com",
+      logo: "https://codemolecule.com/icon-512.png",
+      image: "https://codemolecule.com/icon-512.png",
+      description:
+        "Code Molecule is a digital studio and software company based in Dhaka, Bangladesh, designing and building modern websites, custom web applications, and iOS & Android mobile apps.",
+      email: site.email,
+      telephone: site.whatsappDisplay,
+      sameAs: [site.facebook, site.linkedin, site.instagram],
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Dhaka",
+        addressCountry: "BD",
+      },
+      areaServed: [
+        {
+          "@type": "Country",
+          name: "Bangladesh",
+        },
+        {
+          "@type": "AdministrativeArea",
+          name: "Worldwide",
+        },
+      ],
+      foundingLocation: {
+        "@type": "Place",
+        name: "Dhaka, Bangladesh",
+      },
+      knowsAbout: [
+        "Web Development",
+        "Mobile App Development",
+        "Android Apps",
+        "iOS Apps",
+        "Web Applications",
+        "Landing Pages",
+        "Business Websites",
+        "Portfolio Websites",
+        "Flutter",
+        "React Native",
+        "Next.js",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://codemolecule.com/#website",
+      url: "https://codemolecule.com",
+      name: "Code Molecule",
+      alternateName: ["Code Molecule", "CodeMolecule", "Code Molecule BD"],
+      publisher: {
+        "@id": "https://codemolecule.com/#organization",
+      },
+      inLanguage: ["en", "bn"],
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://codemolecule.com/#service",
+      name: "Code Molecule",
+      alternateName: ["Code Molecule", "CodeMolecule", "Code Molecule BD"],
+      url: "https://codemolecule.com",
+      parentOrganization: {
+        "@id": "https://codemolecule.com/#organization",
+      },
+      logo: "https://codemolecule.com/icon-512.png",
+      image: "https://codemolecule.com/icon-512.png",
+      description:
+        "Code Molecule designs and builds modern websites, custom web applications, and iOS & Android mobile apps for businesses and startups.",
+      email: site.email,
+      telephone: site.whatsappDisplay,
+      priceRange: "$$",
+      currenciesAccepted: "BDT, USD",
+      paymentAccepted: "Cash, Bank Transfer, bKash, Nagad",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Dhaka",
+        addressCountry: "BD",
+      },
+      sameAs: [site.facebook, site.linkedin, site.instagram],
+      areaServed: {
+        "@type": "Country",
+        name: "Bangladesh",
+      },
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Digital Services",
+        itemListElement: [
+          {
         "@type": "OfferCatalog",
         name: "Websites & Web Development",
         itemListElement: [
@@ -231,6 +308,8 @@ const jsonLd = {
       },
     ],
   },
+},
+],
 };
 
 export default function RootLayout({ children }) {
