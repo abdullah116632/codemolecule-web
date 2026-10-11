@@ -11,13 +11,13 @@ import portfolioPreview from "@/public/projects/arman-portfolio.png";
 
 const projectsData = {
   en: [
-    { title: "Auction Web App", type: "Cricket Tournament Platform", url: "https://cpl27.codemolecule.com/", image: cplPreview },
-    { title: "Personal Finance App", type: "Expense Tracking Web App", url: "https://expensetracker.codemolecule.com/", image: expensePreview },
+    { title: "Auction Web App", type: "Cricket Tournament Auction Platform", url: "https://cpl27.codemolecule.com/", image: cplPreview },
+    { title: "Personal Finance App", type: "Expense Tracking Mobile App", url: "https://expensetracker.codemolecule.com/", image: expensePreview },
     { title: "Personal Portfolio", type: "Modern Portfolio Website", url: "https://myportfolio-three-lyart-69.vercel.app/", image: portfolioPreview },
   ],
   bn: [
-    { title: "অকশন ওয়েব প্ল্যাটফর্ম", type: "ক্রিকেট টুর্নামেন্ট লাইভ অ্যাপ", url: "https://cpl27.codemolecule.com/", image: cplPreview },
-    { title: "পার্সোনাল ফাইন্যান্স অ্যাপ", type: "এক্সপেন্স ট্র্যাকিং ওয়েব অ্যাপ্লিকেশন", url: "https://expensetracker.codemolecule.com/", image: expensePreview },
+    { title: "অকশন ওয়েব প্ল্যাটফর্ম", type: "ক্রিকেট টুর্নামেন্ট অকশন প্ল্যাটফর্ম", url: "https://cpl27.codemolecule.com/", image: cplPreview },
+    { title: "পার্সোনাল ফাইন্যান্স অ্যাপ", type: "এক্সপেন্স ট্র্যাকিং মোবাইল অ্যাপ", url: "https://expensetracker.codemolecule.com/", image: expensePreview },
     { title: "পার্সোনাল পোর্টফোলিও", type: "মডার্ন পোর্টফোলিও ওয়েবসাইট", url: "https://myportfolio-three-lyart-69.vercel.app/", image: portfolioPreview },
   ],
 };
