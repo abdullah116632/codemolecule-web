@@ -109,7 +109,7 @@ export function ServiceDetail({ slug }) {
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {s.features.map((f, i) => (
               <Reveal key={f.title} delay={(i % 3) * 90}>
-                <SpotlightCard className="h-full p-7 !rounded-2xl !border-white/10 !bg-white/[0.04] backdrop-blur hover:!border-brand-400/40 hover:!bg-white/[0.07]">
+                <SpotlightCard dots={false} className="h-full p-7 !rounded-2xl !border-white/10 !bg-white/[0.04] backdrop-blur hover:!border-brand-400/40 hover:!bg-white/[0.07]">
                 <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#2DD4BF]/10 text-[#4ADE80] ring-1 ring-white/10">
                   <Icon name="check" className="h-5 w-5" />
                 </span>
@@ -154,7 +154,7 @@ export function ServiceDetail({ slug }) {
               const num = String(i + 1).padStart(2, "0");
               return (
                 <Reveal as="li" key={step.title} delay={i * 80}>
-                  <SpotlightCard className="h-full p-6 !rounded-2xl !border-white/10 !bg-white/[0.04] backdrop-blur hover:!border-brand-400/40 hover:!bg-white/[0.07]">
+                  <SpotlightCard dots={false} className="h-full p-6 !rounded-2xl !border-white/10 !bg-white/[0.04] backdrop-blur hover:!border-brand-400/40 hover:!bg-white/[0.07]">
                   <span className="font-display text-sm font-light text-brand-600">
                     {lang === "bn" ? toBanglaDigits(num) : num}
                   </span>
@@ -221,6 +221,7 @@ export function ServiceDetail({ slug }) {
               const oTheme = serviceIconThemes[services.indexOf(o) % serviceIconThemes.length];
               return (
               <SpotlightCard
+                dots={false}
                 as={Link}
                 key={o.slug}
                 href={`/services/${o.slug}`}
