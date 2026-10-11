@@ -34,6 +34,16 @@ body {
   overflow-x: hidden;
 }
 
+::selection {
+  background-color: var(--color-brand-500);
+  color: var(--color-canvas);
+}
+
+::-moz-selection {
+  background-color: var(--color-brand-500);
+  color: var(--color-canvas);
+}
+
 /* =========================================================
    MANROPE (BOLD) THEME OVERRIDES
    When switching to Manrope, revert font families and restore the heavy weights
