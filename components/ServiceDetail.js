@@ -28,7 +28,6 @@ export function ServiceDetail({ slug }) {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden pt-28 pb-16 sm:pt-36 sm:pb-24">
-        <div className="bg-grid absolute inset-0 mask-[radial-gradient(ellipse_at_top,black_30%,transparent_75%)]" />
         <div className="absolute -top-40 right-0 h-128 w-lg rounded-full bg-brand-200/40 blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -54,7 +53,7 @@ export function ServiceDetail({ slug }) {
               <p className="mt-6 max-w-2xl text-lg text-slate-400">{s.intro}</p>
             </div>
 
-            <SpotlightCard as="aside" className="p-8 shadow-2xl shadow-slate-900/10 lg:sticky lg:top-28">
+            <SpotlightCard as="aside" className="p-8 shadow-2xl shadow-slate-900/10 lg:sticky lg:top-28 !rounded-2xl !border-white/10 !bg-white/[0.04] backdrop-blur hover:!border-brand-400/40 hover:!bg-white/[0.07]">
               <p className="text-sm text-slate-500">{d.from}</p>
               <p className="font-display mt-1 text-4xl font-light tracking-tight text-white">{s.price}</p>
               <div className="mt-5 flex items-center gap-3 rounded-2xl bg-[#151b23] px-4 py-3">
@@ -110,7 +109,7 @@ export function ServiceDetail({ slug }) {
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {s.features.map((f, i) => (
               <Reveal key={f.title} delay={(i % 3) * 90}>
-                <SpotlightCard className="h-full p-7">
+                <SpotlightCard className="h-full p-7 !rounded-2xl !border-white/10 !bg-white/[0.04] backdrop-blur hover:!border-brand-400/40 hover:!bg-white/[0.07]">
                 <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#2DD4BF]/10 text-[#4ADE80] ring-1 ring-white/10">
                   <Icon name="check" className="h-5 w-5" />
                 </span>
@@ -155,7 +154,7 @@ export function ServiceDetail({ slug }) {
               const num = String(i + 1).padStart(2, "0");
               return (
                 <Reveal as="li" key={step.title} delay={i * 80}>
-                  <SpotlightCard className="h-full p-6">
+                  <SpotlightCard className="h-full p-6 !rounded-2xl !border-white/10 !bg-white/[0.04] backdrop-blur hover:!border-brand-400/40 hover:!bg-white/[0.07]">
                   <span className="font-display text-sm font-light text-brand-600">
                     {lang === "bn" ? toBanglaDigits(num) : num}
                   </span>
@@ -194,21 +193,22 @@ export function ServiceDetail({ slug }) {
 
       {/* CTA */}
       <section className="px-4 pb-20 sm:px-6 lg:px-8">
-        <Reveal className="relative mx-auto max-w-7xl overflow-hidden rounded-4xl bg-linear-to-br from-brand-700 via-brand-800 to-ink px-6 py-14 text-center text-white sm:px-12 sm:py-16">
-          <div className="bg-grid absolute inset-0 opacity-20 invert" />
-          <div className="relative">
-            <h2 className="font-display text-3xl font-light tracking-tight sm:text-4xl">{d.ctaTitle}</h2>
-            <p className="mx-auto mt-4 max-w-xl text-lg text-brand-100/90">{d.ctaSub}</p>
-            <a
+        <Reveal className="relative mx-auto max-w-7xl">
+          <SpotlightCard className="relative overflow-hidden !rounded-[2.5rem] !border-white/10 !bg-white/[0.04] backdrop-blur hover:!border-brand-400/40 hover:!bg-white/[0.07] px-6 py-14 text-center text-white sm:px-12 sm:py-16">
+            <div className="relative">
+              <h2 className="font-display text-3xl font-light tracking-tight sm:text-4xl">{d.ctaTitle}</h2>
+              <p className="mx-auto mt-4 max-w-xl text-lg text-slate-300">{d.ctaSub}</p>
+              <a
               href={quoteLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-8 group btn-fancy btn-shimmer inline-flex items-center justify-center gap-2.5 rounded-full bg-white px-7 py-4 font-bold text-brand-950 shadow-xl transition hover:-translate-y-0.5 hover:bg-[#2DD4BF]/10 hover:shadow-2xl"
+              className="mt-8 group btn-fancy btn-shimmer btn-glow-brand inline-flex items-center justify-center gap-2.5 rounded-full bg-brand-600 px-7 py-4 font-bold text-white shadow-xl transition hover:-translate-y-0.5 hover:bg-brand-700"
             >
-              <WhatsAppIcon className="h-5 w-5 text-[#25D366] transition-transform duration-200 group-hover:scale-110" />
+              <WhatsAppIcon className="h-5 w-5 text-white transition-transform duration-200 group-hover:scale-110" />
               <span>{d.ctaPrimary}</span>
             </a>
           </div>
+          </SpotlightCard>
         </Reveal>
       </section>
 
@@ -224,7 +224,7 @@ export function ServiceDetail({ slug }) {
                 as={Link}
                 key={o.slug}
                 href={`/services/${o.slug}`}
-                className="group flex items-center gap-3 p-4"
+                className="group flex items-center gap-3 p-4 !rounded-2xl !border-white/10 !bg-white/[0.04] backdrop-blur hover:!border-brand-400/40 hover:!bg-white/[0.07]"
               >
                 <div
                   className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${oTheme.gradient} text-white shadow-sm transition-transform duration-300 ease-out group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-md`}
