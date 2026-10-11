@@ -7,6 +7,7 @@ export function SpotlightCard({
   className = "",
   as: Component = "div",
   tilt = false,
+  dots = true,
   ...props
 }) {
   const ref = useRef(null);
@@ -69,17 +70,19 @@ export function SpotlightCard({
       } ${className}`}
       {...props}
     >
-      <div
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out"
-        style={{
-          opacity,
-          backgroundImage: `radial-gradient(rgb(34 197 94 / 0.15) 1px, transparent 1px)`,
-          backgroundSize: '28px 28px',
-          maskImage: `radial-gradient(250px circle at ${position.x}px ${position.y}px, black 20%, transparent 100%)`,
-          WebkitMaskImage: `radial-gradient(250px circle at ${position.x}px ${position.y}px, black 20%, transparent 100%)`,
-        }}
-        aria-hidden="true"
-      />
+      {dots && (
+        <div
+          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out"
+          style={{
+            opacity,
+            backgroundImage: `radial-gradient(rgb(34 197 94 / 0.15) 1px, transparent 1px)`,
+            backgroundSize: '28px 28px',
+            maskImage: `radial-gradient(250px circle at ${position.x}px ${position.y}px, black 20%, transparent 100%)`,
+            WebkitMaskImage: `radial-gradient(250px circle at ${position.x}px ${position.y}px, black 20%, transparent 100%)`,
+          }}
+          aria-hidden="true"
+        />
+      )}
       <div
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out"
         style={{
