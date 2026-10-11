@@ -65,6 +65,9 @@ export function Footer() {
               </a>
             </li>
             <li>{site.domain}</li>
+            {t.footer.location && (
+              <li className="text-slate-400">{t.footer.location}</li>
+            )}
           </ul>
         </div>
       </div>
