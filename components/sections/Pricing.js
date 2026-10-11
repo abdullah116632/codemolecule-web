@@ -73,25 +73,7 @@ function PricingCard({ plan, p, t }) {
       onMouseLeave={() => setOpacity(0)}
       className="group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] p-5 sm:p-8 backdrop-blur transition-colors duration-300 hover:shadow-2xl hover:shadow-brand-950/60 hover:border-brand-400/40 hover:bg-white/[0.07]"
     >
-      {/* 
-        [OPTION 1 & 3] Dotted Grid Spotlight Layer:
-        - In Option 1: 24px grid on clean background
-        - In Option 3: 28px grid to align with background
-        - In Option 2: Hidden (no inner dots)
-      */}
-      {(SPOTLIGHT_OPTION === 1 || SPOTLIGHT_OPTION === 3) && (
-        <div
-          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-in-out"
-          style={{
-            opacity,
-            backgroundImage: `radial-gradient(rgb(34 197 94 / 0.15) 1px, transparent 1px)`,
-            backgroundSize: "28px 28px",
-            maskImage: `radial-gradient(250px circle at ${position.x}px ${position.y}px, black 20%, transparent 100%)`,
-            WebkitMaskImage: `radial-gradient(250px circle at ${position.x}px ${position.y}px, black 20%, transparent 100%)`,
-          }}
-          aria-hidden="true"
-        />
-      )}
+
 
       {/* Soft Color Glow Spotlight */}
       <div

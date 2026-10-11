@@ -79,11 +79,7 @@ export function Contact() {
           <div aria-hidden className="pointer-events-none absolute top-1/2 -right-32 h-96 w-96 rounded-full bg-teal-400/15 blur-[120px]" />
           <div aria-hidden className="pointer-events-none absolute -bottom-24 left-1/3 h-80 w-80 rounded-full bg-emerald-600/15 blur-[90px]" />
 
-          {/* Subtle Dotted Pattern Mesh */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.07)_1px,transparent_0)] bg-[size:28px_28px] opacity-80"
-          />
+
 
           <div className="relative grid gap-12 lg:grid-cols-2 lg:gap-16 lg:items-center">
             {/* Left Column: Heading & Interactive Channels */}
