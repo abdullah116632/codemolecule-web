@@ -157,6 +157,15 @@ const jsonLd = {
         "Code Molecule is a digital studio and software company based in Dhaka, Bangladesh, designing and building modern websites, custom web applications, and iOS & Android mobile apps.",
       email: site.email,
       telephone: site.whatsappDisplay,
+      contactPoint: [
+        {
+          "@type": "ContactPoint",
+          telephone: site.whatsappDisplay,
+          contactType: "customer service",
+          email: site.email,
+          availableLanguage: ["English", "Bengali"],
+        },
+      ],
       sameAs: [site.facebook, site.linkedin, site.instagram],
       address: {
         "@type": "PostalAddress",
