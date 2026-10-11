@@ -10,9 +10,9 @@ import expensePreview from "@/public/projects/expensetracker.png";
 import portfolioPreview from "@/public/projects/arman-portfolio.png";
 
 const projects = [
-  { title: "CPL 27", type: "Cricket Tournament Web App", url: "https://cpl27.codemolecule.com/", image: cplPreview },
-  { title: "Expense Tracker", type: "Web Application", url: "https://expensetracker.codemolecule.com/", image: expensePreview },
-  { title: "Arman Hossain", type: "Personal Portfolio", url: "https://myportfolio-three-lyart-69.vercel.app/", image: portfolioPreview },
+  { title: "Auction webapp", type: "Cricket Tournament Web App", url: "https://cpl27.codemolecule.com/", image: cplPreview },
+  { title: "Personal finance mobile app", type: "Web Application", url: "https://expensetracker.codemolecule.com/", image: expensePreview },
+  { title: "Personal portfolio", type: "Personal Portfolio", url: "https://myportfolio-three-lyart-69.vercel.app/", image: portfolioPreview },
 ];
 
 const copy = {
