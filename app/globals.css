@@ -98,22 +98,22 @@ html[data-lang="en"] .logo-text {
   background-size: 80px 80px;
 }
 
-/* The fixed molecule mesh dissolves beneath the top bar, so it never reads as
-   a net behind the navigation (most visible while the page is pulled down). */
+/* Keep the top of the page completely clear. The fixed molecule mesh only
+   starts much further down, so pulling the page down never reveals a net. */
 .ambient-mesh {
   -webkit-mask-image: linear-gradient(
     to bottom,
     transparent 0,
-    transparent 148px,
-    rgb(0 0 0 / 0.35) 210px,
-    #000 340px
+    transparent 220px,
+    rgb(0 0 0 / 0.25) 300px,
+    #000 460px
   );
   mask-image: linear-gradient(
     to bottom,
     transparent 0,
-    transparent 148px,
-    rgb(0 0 0 / 0.35) 210px,
-    #000 340px
+    transparent 220px,
+    rgb(0 0 0 / 0.25) 300px,
+    #000 460px
   );
 }
 

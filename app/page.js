@@ -16,6 +16,9 @@ import { Contact } from "@/components/sections/Contact";
 export default function Home() {
   return (
     <>
+      {/* Keep the pull/overscroll area the same deep black as the hero instead
+          of the slightly greener body canvas. */}
+      <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-20 bg-[#050a0e]" />
       <Header />
       <main>
         <AnimatedBackground />
