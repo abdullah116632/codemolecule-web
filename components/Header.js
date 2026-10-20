@@ -84,7 +84,10 @@ export function Header() {
           : "border-white/5 bg-transparent"
       }`}
     >
-      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-2 px-3 sm:gap-4 sm:px-4 sm:px-6 lg:px-8">
+      {/* Quiet bloom of light rising beneath the bar — a soft curve, never a hard glow. */}
+      <div aria-hidden="true" className="header-aura" />
+
+      <div className="relative z-10 mx-auto flex h-18 max-w-7xl items-center justify-between gap-2 px-3 sm:gap-4 sm:px-4 sm:px-6 lg:px-8">
         <Link 
           href="/" 
           aria-label="Code Molecule home" 
