@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Molecule - Dark Text (Light / Neutral Background)</title>
+  
+  <!-- Nunito Font for Code Molecule typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================
+       CSS VARIABLES & THEME SETUP
+       ========================================================= */
+    :root {
+      --bg-page: #f8fafc;     /* Default light background for dark text */
+      --c-dark: #1aa04a;      /* Primary Brand Green */
+      --c-light: #70d494;     /* Secondary Light Green */
+      --icon-white: #ffffff;  /* White devices outline */
+      --icon-grey: #1a1a1a;   /* Dark screen & server dots */
+      --text-dark: #0f172a;   /* Deep Dark / Charcoal for "Code" */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-page);
+      color: var(--text-dark);
+      font-family: 'Nunito', ui-sans-serif, system-ui, -apple-system, sans-serif;
+      padding: 24px;
+      transition: background 0.3s ease;
+    }
+
+    /* =========================================================
+       CODE MOLECULE BRAND LOGO (DARK "CODE" TEXT VERSION)
+       ========================================================= */
+    .codemolecule-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      text-decoration: none;
+      user-select: none;
+      line-height: 1;
+    }
+
+    /* Logo Mark Container */
+    .codemolecule-brand .brand-mark {
+      position: relative;
+      width: 72px;
+      height: 72px;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0 4px 12px rgba(26, 160, 74, 0.18));
+    }
+
+    .codemolecule-brand .brand-mark svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Brand Typography */
+    .codemolecule-brand .brand-text {
+      font-family: 'Nunito', ui-sans-serif, system-ui, sans-serif;
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    /* "Code" in dark text */
+    .codemolecule-brand .brand-text .code-word {
+      color: var(--text-dark);
+      transition: color 0.2s ease;
+    }
+
+    /* "Molecule" in gradient */
+    .codemolecule-brand .brand-text .gradient-text {
+      background: linear-gradient(135deg, #16A34A 0%, #22C55E 50%, #0D9488 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* =========================================================
+       PREVIEW CONTROLS & UTILITIES
+       ========================================================= */
+    .preview-stage {
+      padding: 48px;
+      border-radius: 24px;
+      background: rgba(0, 0, 0, 0.03);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 32px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    }
+
+    .controls-card {
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: 16px;
+      padding: 20px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+      max-width: 820px;
+      width: 100%;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    .control-group label {
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    .control-btn {
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .control-btn:hover {
+      background: #e2e8f0;
+    }
+
+    .control-btn.active {
+      background: #1aa04a;
+      border-color: #1aa04a;
+      color: #ffffff;
+    }
+
+    input[type="range"] {
+      cursor: pointer;
+      accent-color: #1aa04a;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================
+       PREVIEW STAGE
+       ========================================== -->
+  <div class="preview-stage" id="previewStage">
+    
+    <!-- BRAND LOGO COMPONENT START -->
+    <a href="#" class="codemolecule-brand" id="brandUnit">
+      <!-- Logo Mark -->
+      <span class="brand-mark" id="brandMark">
+        <svg
+          viewBox="0 0 1932 1932"
+          xmlns="http://www.w3.org/2000/svg"
+          role="img"
+          aria-label="Code Molecule Logo"
+        >
+          <!-- 'C' Shape -->
+          <path
+            d="M1153 478 A520 520 0 1 0 1153 1442"
+            fill="none"
+            stroke="var(--c-dark)"
+            stroke-width="210"
+            stroke-linecap="round"
+          />
+
+          <!-- Connector Lines -->
+          <g stroke="var(--c-light)" stroke-width="70" stroke-linecap="round" fill="none">
+            <path d="M1110 880 L1400 670" />
+            <path d="M1110 1060 L1390 1270" />
+          </g>
+
+          <!-- Central Hub Server -->
+          <g>
+            <circle cx="958" cy="968" r="212" fill="var(--c-light)" />
+            <g fill="var(--icon-white)">
+              <rect x="830" y="872" width="254" height="55" rx="22" />
+              <rect x="830" y="941" width="254" height="53" />
+              <rect x="830" y="1008" width="254" height="55" rx="22" />
+            </g>
+            <!-- Server indicator dots in dark #1a1a1a -->
+            <g fill="var(--icon-grey)">
+              <circle cx="1014" cy="899" r="9" />
+              <circle cx="1047" cy="899" r="12" />
+              <circle cx="1014" cy="967" r="9" />
+              <circle cx="1047" cy="967" r="12" />
+              <circle cx="1014" cy="1036" r="9" />
+              <circle cx="1047" cy="1036" r="12" />
+              <circle cx="867" cy="967" r="7" />
+              <circle cx="889" cy="967" r="7" />
+              <circle cx="912" cy="967" r="7" />
+              <circle cx="867" cy="1036" r="7" />
+              <circle cx="889" cy="1036" r="7" />
+              <circle cx="912" cy="1036" r="7" />
+            </g>
+          </g>
+
+          <!-- Top Node: Laptop -->
+          <g>
+            <circle cx="1471" cy="583" r="174" fill="var(--c-light)" />
+            <rect x="1373" y="500" width="196" height="136" rx="14" fill="var(--icon-white)" />
+            <!-- Dark Screen #1a1a1a -->
+            <rect x="1393" y="520" width="156" height="99" fill="var(--icon-grey)" />
+            <path d="M1357 641 H1583 Q1580 660 1560 660 H1380 Q1360 660 1357 641 Z" fill="var(--icon-white)" />
+          </g>
+
+          <!-- Bottom Node: Phone -->
+          <g>
+            <circle cx="1467" cy="1335" r="174" fill="var(--c-light)" />
+            <rect x="1397" y="1220" width="140" height="228" rx="22" fill="var(--icon-white)" />
+            <!-- Dark Screen #1a1a1a -->
+            <rect x="1415" y="1246" width="105" height="156" fill="var(--icon-grey)" />
+            <!-- Dark Button #1a1a1a -->
+            <circle cx="1467" cy="1423" r="10" fill="var(--icon-grey)" />
+          </g>
+        </svg>
+      </span>
+
+      <!-- Brand Typography with DARK "Code" text -->
+      <span class="brand-text" id="brandText">
+        <span class="code-word" id="codeWord">Code</span><span class="gradient-text">Molecule</span>
+      </span>
+    </a>
+    <!-- BRAND LOGO COMPONENT END -->
+
+  </div>
+
+  <!-- ==========================================
+       PREVIEW CONTROLS
+       ========================================== -->
+  <div class="controls-card">
+    <div class="control-group">
+      <label for="sizeRange">Scale:</label>
+      <input type="range" id="sizeRange" min="32" max="140" value="72" oninput="updateLogoScale(this.value)">
+      <span id="sizeValue" style="color:#64748b; font-size: 13px; min-width: 42px;">72px</span>
+    </div>
+
+    <div class="control-group">
+      <label>Background:</label>
+      <button class="control-btn active" onclick="setBackground('#f8fafc', '#0f172a', this)">Light</button>
+      <button class="control-btn" onclick="setBackground('#ffffff', '#111827', this)">Pure White</button>
+      <button class="control-btn" onclick="setBackground('#f1f5f9', '#000000', this)">Gray 100</button>
+      <button class="control-btn" onclick="setBackground('#e2e8f0', '#0f172a', this)">Gray 200</button>
+    </div>
+
+    <div class="control-group" style="margin-left: auto;">
+      <button class="control-btn" style="background:#1aa04a; color:#fff; font-weight:800; border-color:#1aa04a;" onclick="copyComponentCode()">
+        📋 Copy HTML Code
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function updateLogoScale(val) {
+      const mark = document.getElementById("brandMark");
+      const text = document.getElementById("brandText");
+      const label = document.getElementById("sizeValue");
+
+      mark.style.width = val + "px";
+      mark.style.height = val + "px";
+      text.style.fontSize = Math.round(val * 0.47) + "px";
+      label.innerText = val + "px";
+    }
+
+    function setBackground(bgColor, textColor, btn) {
+      document.body.style.background = bgColor;
+      document.documentElement.style.setProperty('--text-dark', textColor);
+      
+      document.querySelectorAll('.control-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+    }
+
+    function copyComponentCode() {
+      const brandHtml = document.getElementById("brandUnit").outerHTML;
+      navigator.clipboard.writeText(brandHtml).then(() => {
+        alert("Dark-text Brand Logo HTML copied to clipboard!");
+      }).catch(err => {
+        console.error("Copy failed", err);
+      });
+    }
+  </script>
+
+</body>
+</html>
+
