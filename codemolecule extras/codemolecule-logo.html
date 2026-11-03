@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Molecule - Standalone Brand Logo</title>
+  
+  <!-- Nunito Font for Code Molecule typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================
+       CSS VARIABLES & THEME SETUP
+       ========================================================= */
+    :root {
+      --bg-dark: #0a0b0d;
+      --t: 7s;               /* Animation cycle duration */
+      --c-dark: #1aa04a;      /* Primary Brand Green */
+      --c-light: #70d494;     /* Secondary Light Green */
+      --icon-white: #ffffff;  /* White devices outline */
+      --icon-grey: #1a1a1a;   /* Dark screen & server dots */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-dark);
+      color: #ffffff;
+      font-family: 'Nunito', ui-sans-serif, system-ui, -apple-system, sans-serif;
+      padding: 24px;
+      transition: background 0.3s ease;
+    }
+
+    /* =========================================================
+       STANDALONE CODE MOLECULE BRAND LOGO UNIT
+       (You can copy this section directly into any project)
+       ========================================================= */
+    .codemolecule-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      text-decoration: none;
+      user-select: none;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    /* Responsive scaling container */
+    .codemolecule-brand .brand-mark {
+      position: relative;
+      width: 72px;
+      height: 72px;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0 4px 12px rgba(26, 160, 74, 0.15));
+    }
+
+    .codemolecule-brand .brand-mark svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Brand Typography */
+    .codemolecule-brand .brand-text {
+      font-family: 'Nunito', ui-sans-serif, system-ui, sans-serif;
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: #ffffff;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .codemolecule-brand .brand-text .gradient-text {
+      background: linear-gradient(135deg, #22C55E 0%, #4ADE80 50%, #2DD4BF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* =========================================================
+       SVG ANIMATIONS
+       ========================================================= */
+    .live-logo .drops circle {
+      fill: var(--c-dark);
+    }
+
+    /* Central Server Pulsing */
+    .live-logo .hub {
+      transform-origin: 958px 968px;
+      animation: live-hub var(--t) infinite ease-out;
+    }
+
+    @keyframes live-hub {
+      0%, 20%  { transform: scale(1); }
+      25%      { transform: scale(1.08); }
+      29%      { transform: scale(1.16); }
+      34%      { transform: scale(0.98); }
+      38%, 70% { transform: scale(1); }
+      74%      { transform: scale(0.95); }
+      80%, 100%{ transform: scale(1); }
+    }
+
+    .live-logo .tint {
+      fill: var(--c-dark);
+      transform-box: fill-box;
+      transform-origin: center;
+      transform: scale(0.001);
+      animation: live-tint var(--t) infinite ease-in-out;
+    }
+
+    @keyframes live-tint {
+      0%, 22%   { transform: scale(0.001); }
+      30%, 36%  { transform: scale(1); }
+      58%, 100% { transform: scale(0.001); }
+    }
+
+    .live-logo .glow {
+      fill: #ffffff;
+      opacity: 0;
+      animation: live-glow var(--t) infinite ease-out;
+    }
+
+    @keyframes live-glow {
+      0%, 25%  { opacity: 0; }
+      30%      { opacity: 0.5; }
+      41%, 100%{ opacity: 0; }
+    }
+
+    /* Liquid Connector Fill Flow */
+    .live-logo .fill-line {
+      stroke-dasharray: 100 100;
+      stroke-dashoffset: 100;
+      animation: live-fill-line var(--t) infinite ease-in-out;
+    }
+
+    @keyframes live-fill-line {
+      0%, 31%      { stroke-dashoffset: 100; opacity: 1; }
+      60%, 66%     { stroke-dashoffset: 0;   opacity: 1; }
+      72%          { stroke-dashoffset: 0;   opacity: 0; }
+      72.01%, 100% { stroke-dashoffset: 100; opacity: 1; }
+    }
+
+    /* Device Pop Animation */
+    .live-logo .pop {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: live-pop var(--t) infinite;
+    }
+
+    @keyframes live-pop {
+      0%, 60%  { transform: scale(1);    animation-timing-function: ease-out; }
+      62.5%    { transform: scale(1.3);  animation-timing-function: ease-in-out; }
+      65.5%    { transform: scale(0.94); animation-timing-function: ease-out; }
+      68%      { transform: scale(1.03); animation-timing-function: ease-out; }
+      70%, 100%{ transform: scale(1); }
+    }
+
+    .live-logo .flash {
+      fill: var(--c-light);
+      animation: live-flash var(--t) infinite ease-in-out;
+    }
+
+    @keyframes live-flash {
+      0%, 60%    { fill: var(--c-light); }
+      62.5%, 65% { fill: var(--c-dark); }
+      72%, 100%  { fill: var(--c-light); }
+    }
+
+    .live-logo .burst {
+      fill: none;
+      stroke: var(--c-dark);
+      stroke-width: 12;
+      opacity: 0;
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: live-burst var(--t) infinite ease-out;
+    }
+
+    @keyframes live-burst {
+      0%, 60%  { transform: scale(1);    opacity: 0; }
+      61%      { transform: scale(1);    opacity: 0.9; }
+      69%, 100%{ transform: scale(1.55); opacity: 0; }
+    }
+
+    /* Server LED Blinking */
+    .live-logo .led {
+      animation: live-led-blink 1.2s steps(2, jump-none) infinite;
+    }
+    .live-logo .led.l2 { animation-delay: -0.4s; }
+    .live-logo .led.l3 { animation-delay: -0.8s; }
+
+    @keyframes live-led-blink {
+      0%   { opacity: 1; }
+      100% { opacity: 0.2; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .live-logo * { animation: none !important; }
+      .live-logo .fill-line, .live-logo .burst, .live-logo .glow, .live-logo .tint { opacity: 0; }
+    }
+
+    /* =========================================================
+       PAGE PREVIEW CONTROLS & UTILITIES
+       ========================================================= */
+    .preview-stage {
+      padding: 48px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 32px;
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+    }
+
+    .controls-card {
+      background: #11141a;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 20px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+      max-width: 800px;
+      width: 100%;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    .control-group label {
+      color: #94a3b8;
+      font-weight: 600;
+    }
+
+    .control-btn {
+      background: rgba(255, 255, 255, 0.08);
+      color: #f1f5f9;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .control-btn:hover {
+      background: rgba(255, 255, 255, 0.16);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .control-btn.active {
+      background: #1aa04a;
+      border-color: #22c55e;
+      color: #ffffff;
+    }
+
+    input[type="range"] {
+      cursor: pointer;
+      accent-color: #22c55e;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================
+       PREVIEW STAGE
+       ========================================== -->
+  <div class="preview-stage" id="previewStage">
+    
+    <!-- BRAND LOGO COMPONENT START -->
+    <a href="#" class="codemolecule-brand" id="brandUnit">
+      <!-- 1. Live Animated Logo Mark -->
+      <span class="brand-mark" id="brandMark">
+        <svg
+          class="live-logo"
+          id="liveLogoSvg"
+          viewBox="0 0 1932 1932"
+          xmlns="http://www.w3.org/2000/svg"
+          role="img"
+          aria-label="Code Molecule Live Logo"
+        >
+          <defs>
+            <filter id="goo" filterUnits="userSpaceOnUse" x="0" y="0" width="1932" height="1932" color-interpolation-filters="sRGB">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="26" />
+              <feColorMatrix mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 24 -12" />
+            </filter>
+          </defs>
+
+          <!-- Big 'C' Shape -->
+          <g>
+            <path
+              d="M1153 478 A520 520 0 1 0 1153 1442"
+              fill="none"
+              stroke="var(--c-dark)"
+              stroke-width="210"
+              stroke-linecap="round"
+            />
+          </g>
+
+          <!-- Connector Base Lines -->
+          <g stroke="var(--c-light)" stroke-width="70" stroke-linecap="round" fill="none">
+            <path d="M1110 880 L1400 670" />
+            <path d="M1110 1060 L1390 1270" />
+          </g>
+
+          <!-- Flowing Liquid Droplets -->
+          <g filter="url(#goo)">
+            <g stroke="var(--c-dark)" stroke-width="70" stroke-linecap="round" fill="none">
+              <path class="fill-line" pathLength="100" d="M1110 880 L1400 670" />
+              <path class="fill-line" pathLength="100" d="M1110 1060 L1390 1270" />
+            </g>
+            <g id="stream" class="drops"></g>
+          </g>
+
+          <!-- Central Hub Server -->
+          <g class="hub">
+            <circle cx="958" cy="968" r="212" fill="var(--c-light)" />
+            <circle class="tint" cx="958" cy="968" r="212" />
+            <circle class="glow" cx="958" cy="968" r="212" />
+            <g fill="var(--icon-white)">
+              <rect x="830" y="872" width="254" height="55" rx="22" />
+              <rect x="830" y="941" width="254" height="53" />
+              <rect x="830" y="1008" width="254" height="55" rx="22" />
+            </g>
+            <!-- Server indicator dots in dark #1a1a1a -->
+            <g fill="var(--icon-grey)">
+              <circle cx="1014" cy="899" r="9" />
+              <circle cx="1047" cy="899" r="12" />
+              <circle cx="1014" cy="967" r="9" />
+              <circle cx="1047" cy="967" r="12" />
+              <circle cx="1014" cy="1036" r="9" />
+              <circle cx="1047" cy="1036" r="12" />
+              <circle class="led l1" cx="867" cy="967" r="7" />
+              <circle class="led l2" cx="889" cy="967" r="7" />
+              <circle class="led l3" cx="912" cy="967" r="7" />
+              <circle class="led l3" cx="867" cy="1036" r="7" />
+              <circle class="led l1" cx="889" cy="1036" r="7" />
+              <circle class="led l2" cx="912" cy="1036" r="7" />
+            </g>
+          </g>
+
+          <!-- Top Node: Laptop -->
+          <g class="pop">
+            <circle class="burst" cx="1471" cy="583" r="174" />
+            <circle class="flash" cx="1471" cy="583" r="174" />
+            <rect x="1373" y="500" width="196" height="136" rx="14" fill="var(--icon-white)" />
+            <!-- Dark Screen #1a1a1a -->
+            <rect x="1393" y="520" width="156" height="99" fill="var(--icon-grey)" />
+            <path d="M1357 641 H1583 Q1580 660 1560 660 H1380 Q1360 660 1357 641 Z" fill="var(--icon-white)" />
+          </g>
+
+          <!-- Bottom Node: Phone -->
+          <g class="pop">
+            <circle class="burst" cx="1467" cy="1335" r="174" />
+            <circle class="flash" cx="1467" cy="1335" r="174" />
+            <rect x="1397" y="1220" width="140" height="228" rx="22" fill="var(--icon-white)" />
+            <!-- Dark Screen #1a1a1a -->
+            <rect x="1415" y="1246" width="105" height="156" fill="var(--icon-grey)" />
+            <!-- Dark Button #1a1a1a -->
+            <circle cx="1467" cy="1423" r="10" fill="var(--icon-grey)" />
+          </g>
+        </svg>
+      </span>
+
+      <!-- 2. Typography: Code Molecule -->
+      <span class="brand-text" id="brandText">
+        <span>Code</span><span class="gradient-text">Molecule</span>
+      </span>
+    </a>
+    <!-- BRAND LOGO COMPONENT END -->
+
+  </div>
+
+  <!-- ==========================================
+       PREVIEW CONTROLS (Easily customize & copy)
+       ========================================== -->
+  <div class="controls-card">
+    <div class="control-group">
+      <label for="sizeRange">Scale:</label>
+      <input type="range" id="sizeRange" min="32" max="140" value="72" oninput="updateLogoScale(this.value)">
+      <span id="sizeValue" style="color:#94a3b8; font-size: 13px; min-width: 42px;">72px</span>
+    </div>
+
+    <div class="control-group">
+      <label>Background:</label>
+      <button class="control-btn active" onclick="setBackground('#0a0b0d', this)">Dark</button>
+      <button class="control-btn" onclick="setBackground('#000000', this)">Black</button>
+      <button class="control-btn" onclick="setBackground('#0f172a', this)">Slate</button>
+      <button class="control-btn" onclick="setBackground('transparent', this)">None</button>
+    </div>
+
+    <div class="control-group" style="margin-left: auto;">
+      <button class="control-btn" style="background:#22c55e; color:#000; font-weight:800;" onclick="copyComponentCode()">
+        📋 Copy HTML Code
+      </button>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       JAVASCRIPT FOR ANIMATION & CONTROLS
+       ========================================== -->
+  <script>
+    // 1. Dynamic Liquid Droplets Streaming Animation
+    (function initDroplets() {
+      const NS = "http://www.w3.org/2000/svg";
+      const sLayer = document.getElementById("stream");
+      if (!sLayer) return;
+
+      const T = 7000;
+      const rnd = (i) => {
+        const x = Math.sin(i * 127.1 + 311.7) * 43758.5453;
+        return x - Math.floor(x);
+      };
+
+      const paths = [
+        "M1110 880 L1400 670",   // Hub to laptop
+        "M1110 1060 L1390 1270"  // Hub to phone
+      ];
+
+      paths.forEach((d, k) => {
+        for (let j = 0; j < 7; j++) {
+          const c = document.createElementNS(NS, "circle");
+          c.setAttribute("r", (34 + rnd(j + k * 9) * 12).toFixed(1));
+          c.style.offsetPath = `path('${d}')`;
+          c.style.offsetRotate = "0deg";
+          sLayer.appendChild(c);
+
+          const b = 0.31 + j * 0.03;
+          const e = b + 0.1;
+          if (typeof c.animate === "function") {
+            c.animate(
+              [
+                { offsetDistance: "0%", opacity: 0, offset: 0 },
+                { offsetDistance: "0%", opacity: 0, offset: Math.max(0, b - 0.001) },
+                { offsetDistance: "0%", opacity: 1, offset: b, easing: "ease-in-out" },
+                { offsetDistance: "100%", opacity: 1, offset: e },
+                { offsetDistance: "100%", opacity: 0, offset: Math.min(1, e + 0.001) },
+                { offsetDistance: "100%", opacity: 0, offset: 1 },
+              ],
+              { duration: T, iterations: Infinity }
+            );
+          }
+        }
+      });
+    })();
+
+    // 2. Interactive Scale Controller
+    function updateLogoScale(val) {
+      const mark = document.getElementById("brandMark");
+      const text = document.getElementById("brandText");
+      const label = document.getElementById("sizeValue");
+
+      mark.style.width = val + "px";
+      mark.style.height = val + "px";
+      text.style.fontSize = Math.round(val * 0.47) + "px";
+      label.innerText = val + "px";
+    }
+
+    // 3. Background Switcher
+    function setBackground(color, btn) {
+      document.body.style.background = color === 'transparent' ? '#161920' : color;
+      document.getElementById('previewStage').style.background = color === 'transparent' ? 'transparent' : 'rgba(255, 255, 255, 0.02)';
+      
+      document.querySelectorAll('.control-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+    }
+
+    // 4. One-Click Copy HTML
+    function copyComponentCode() {
+      const brandHtml = document.getElementById("brandUnit").outerHTML;
+      navigator.clipboard.writeText(brandHtml).then(() => {
+        alert("Brand logo HTML copied to clipboard!");
+      }).catch(err => {
+        console.error("Copy failed", err);
+      });
+    }
+  </script>
+
+</body>
+</html>
+

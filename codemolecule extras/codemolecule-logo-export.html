@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Molecule - Brand Logo (Direct SVG Exporter)</title>
+  
+  <!-- Nunito Font for Code Molecule typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-page: #f0f2f5;
+      --c-dark: #1aa04a;      /* Primary Brand Green */
+      --c-light: #70d494;     /* Secondary Light Green */
+      --icon-white: #ffffff;  /* White devices outline */
+      --icon-grey: #1a1a1a;   /* Dark screen & server dots */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-page);
+      font-family: 'Nunito', ui-sans-serif, system-ui, -apple-system, sans-serif;
+      padding: 24px;
+      transition: background 0.3s ease;
+    }
+
+    /* =========================================================
+       INSPECTION & PREVIEW STAGE
+       ========================================================= */
+    .preview-stage {
+      padding: 40px 60px;
+      border-radius: 20px;
+      background: #f8fafc;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Container for the logo */
+    #logo-export-wrapper {
+      display: inline-block;
+      line-height: 0;
+    }
+
+    /* Responsive display size */
+    #logo-export-wrapper svg {
+      width: 480px;
+      height: auto;
+      max-width: 100%;
+      display: block;
+    }
+
+    /* =========================================================
+       CONTROLS & ACTION BUTTONS
+       ========================================================= */
+    .controls-card {
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 16px;
+      padding: 20px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+      max-width: 840px;
+      width: 100%;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    .control-group label {
+      color: #64748b;
+      font-weight: 700;
+    }
+
+    .btn {
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-bg {
+      background: #f1f5f9;
+      color: #334155;
+      border-color: #cbd5e1;
+    }
+    .btn-bg:hover { background: #e2e8f0; }
+    .btn-bg.active {
+      background: #0f172a;
+      color: #ffffff;
+      border-color: #0f172a;
+    }
+
+    .btn-copy {
+      background: #0f172a;
+      color: #ffffff;
+    }
+    .btn-copy:hover {
+      background: #1e293b;
+    }
+
+    .btn-download {
+      background: #1aa04a;
+      color: #ffffff;
+    }
+    .btn-download:hover {
+      background: #15803d;
+    }
+
+    input[type="range"] {
+      cursor: pointer;
+      accent-color: #1aa04a;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       ★ EXACT STANDALONE LOGO UNIT (DIRECT SVG) ★
+       This element below can be directly exported, copied, or downloaded as SVG!
+       ============================================================ -->
+  <div class="preview-stage" id="previewStage">
+    
+    <div id="logo-export-wrapper">
+      <svg
+        id="codemolecule-svg"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 510 110"
+        fill="none"
+        width="100%"
+        height="100%"
+      >
+        <defs>
+          <!-- Molecule Green-Teal Gradient -->
+          <linearGradient id="cm-molecule-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#16a34a" />
+            <stop offset="50%" stop-color="#22c55e" />
+            <stop offset="100%" stop-color="#0d9488" />
+          </linearGradient>
+
+          <!-- Embedded Nunito Google Font link inside SVG for universal standalone rendering -->
+          <style>
+            @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@800&amp;display=swap');
+            .cm-brand-text {
+              font-family: 'Nunito', ui-sans-serif, system-ui, -apple-system, sans-serif;
+              font-weight: 800;
+              letter-spacing: -0.025em;
+            }
+          </style>
+        </defs>
+
+        <!-- 1. BRAND MARK (ICON) -->
+        <g transform="translate(5, 5) scale(0.05176)">
+          <!-- Big 'C' Shape -->
+          <path
+            d="M1153 478 A520 520 0 1 0 1153 1442"
+            fill="none"
+            stroke="#1aa04a"
+            stroke-width="210"
+            stroke-linecap="round"
+          />
+
+          <!-- Connector Lines -->
+          <g stroke="#70d494" stroke-width="70" stroke-linecap="round" fill="none">
+            <path d="M1110 880 L1400 670" />
+            <path d="M1110 1060 L1390 1270" />
+          </g>
+
+          <!-- Central Hub Server -->
+          <g>
+            <circle cx="958" cy="968" r="212" fill="#70d494" />
+            <!-- White Server Faceplates -->
+            <g fill="#ffffff">
+              <rect x="830" y="872" width="254" height="55" rx="22" />
+              <rect x="830" y="941" width="254" height="53" />
+              <rect x="830" y="1008" width="254" height="55" rx="22" />
+            </g>
+            <!-- Server indicator dots in dark #1a1a1a -->
+            <g fill="#1a1a1a">
+              <circle cx="1014" cy="899" r="9" />
+              <circle cx="1047" cy="899" r="12" />
+              <circle cx="1014" cy="967" r="9" />
+              <circle cx="1047" cy="967" r="12" />
+              <circle cx="1014" cy="1036" r="9" />
+              <circle cx="1047" cy="1036" r="12" />
+              <circle cx="867" cy="967" r="7" />
+              <circle cx="889" cy="967" r="7" />
+              <circle cx="912" cy="967" r="7" />
+              <circle cx="867" cy="1036" r="7" />
+              <circle cx="889" cy="1036" r="7" />
+              <circle cx="912" cy="1036" r="7" />
+            </g>
+          </g>
+
+          <!-- Top Node: Laptop -->
+          <g>
+            <circle cx="1471" cy="583" r="174" fill="#70d494" />
+            <rect x="1373" y="500" width="196" height="136" rx="14" fill="#ffffff" />
+            <!-- Dark Screen #1a1a1a -->
+            <rect x="1393" y="520" width="156" height="99" fill="#1a1a1a" />
+            <path d="M1357 641 H1583 Q1580 660 1560 660 H1380 Q1360 660 1357 641 Z" fill="#ffffff" />
+          </g>
+
+          <!-- Bottom Node: Phone -->
+          <g>
+            <circle cx="1467" cy="1335" r="174" fill="#70d494" />
+            <rect x="1397" y="1220" width="140" height="228" rx="22" fill="#ffffff" />
+            <!-- Dark Screen #1a1a1a -->
+            <rect x="1415" y="1246" width="105" height="156" fill="#1a1a1a" />
+            <!-- Dark Button #1a1a1a -->
+            <circle cx="1467" cy="1423" r="10" fill="#1a1a1a" />
+          </g>
+        </g>
+
+        <!-- 2. BRAND TYPOGRAPHY -->
+        <text x="124" y="70" class="cm-brand-text" font-size="50">
+          <!-- Pure Black 'Code' text -->
+          <tspan fill="#000000">Code </tspan>
+          <!-- Gradient 'Molecule' text -->
+          <tspan fill="url(#cm-molecule-grad)">Molecule</tspan>
+        </text>
+      </svg>
+    </div>
+
+  </div>
+
+  <!-- ============================================================
+       PREVIEW CONTROLS & DIRECT CONVERTER TOOLBAR
+       ============================================================ -->
+  <div class="controls-card">
+    <div class="control-group">
+      <label for="widthRange">Preview Size:</label>
+      <input type="range" id="widthRange" min="200" max="750" value="480" oninput="updateWidth(this.value)">
+      <span id="widthValue" style="color:#64748b; font-size: 13px; min-width: 45px;">480px</span>
+    </div>
+
+    <div class="control-group">
+      <label>Background:</label>
+      <button class="btn btn-bg active" onclick="setBackground('#f0f2f5', '#f8fafc', this)">Light</button>
+      <button class="btn btn-bg" onclick="setBackground('#ffffff', '#ffffff', this)">Pure White</button>
+      <button class="btn btn-bg" onclick="setBackground('#e2e8f0', '#ffffff', this)">Gray</button>
+      <button class="btn btn-bg" onclick="setBackground('transparent', 'transparent', this)">Transparent</button>
+    </div>
+
+    <div class="control-group" style="margin-left: auto;">
+      <!-- Direct Copy SVG Button -->
+      <button class="btn btn-copy" onclick="copySvgCode()">
+        📋 Copy SVG Code
+      </button>
+
+      <!-- Direct Download SVG File Button -->
+      <button class="btn btn-download" onclick="downloadSvgFile()">
+        ⬇️ Download .svg
+      </button>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SCRIPTS: DIRECT CONVERSION & EXPORT
+       ============================================================ -->
+  <script>
+    function updateWidth(val) {
+      document.querySelector('#logo-export-wrapper svg').style.width = val + 'px';
+      document.getElementById('widthValue').innerText = val + 'px';
+    }
+
+    function setBackground(bodyBg, stageBg, btn) {
+      document.body.style.background = bodyBg === 'transparent' ? '#181b22' : bodyBg;
+      document.getElementById('previewStage').style.background = stageBg === 'transparent' ? 'transparent' : stageBg;
+      document.getElementById('previewStage').style.border = stageBg === 'transparent' ? '2px dashed rgba(255,255,255,0.2)' : '1px solid rgba(0,0,0,0.08)';
+      
+      document.querySelectorAll('.btn-bg').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+    }
+
+    // 1. Direct Copy SVG XML to Clipboard
+    function copySvgCode() {
+      const svgEl = document.getElementById('codemolecule-svg');
+      const svgCode = svgEl.outerHTML;
+      navigator.clipboard.writeText(svgCode).then(() => {
+        alert("SVG code copied directly to your clipboard!");
+      }).catch(err => {
+        console.error("Copy failed", err);
+      });
+    }
+
+    // 2. Direct Download as clean .svg file
+    function downloadSvgFile() {
+      const svgEl = document.getElementById('codemolecule-svg');
+      const svgBlob = new Blob([svgEl.outerHTML], { type: 'image/svg+xml;charset=utf-8' });
+      const blobUrl = URL.createObjectURL(svgBlob);
+      
+      const downloadLink = document.createElement('a');
+      downloadLink.href = blobUrl;
+      downloadLink.download = 'codemolecule-logo.svg';
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+      URL.revokeObjectURL(blobUrl);
+    }
+  </script>
+
+</body>
+</html>
+

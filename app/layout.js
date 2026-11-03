@@ -1,5 +1,7 @@
 import { Lato, Manrope, Nunito, Hind_Siliguri, Noto_Sans_Bengali, Anek_Bangla, Baloo_Da_2 } from "next/font/google";
 import { LanguageProvider } from "@/components/LanguageProvider";
+import { SmoothScroll } from "@/components/SmoothScroll";
+import "lenis/dist/lenis.css";
 import "./globals.css";
 
 /* =========================================================
@@ -336,6 +338,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="min-h-screen">
+        <SmoothScroll />
         <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
